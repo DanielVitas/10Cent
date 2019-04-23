@@ -3,9 +3,6 @@ package logic.boards.twoDimensionalBoard;
 import logic.boards.Board;
 import logic.boards.exceptions.InvalidMoveException;
 import logic.boards.Move;
-import logic.boards.exceptions.InvalidShapeException;
-import display.shape.Rectangle;
-import display.shape.Shape;
 
 public class TwoDimensionalBoard extends Board {
 
@@ -22,15 +19,6 @@ public class TwoDimensionalBoard extends Board {
     @Override
     protected boolean validMove(Move move) {
         return move instanceof TwoDimensionalMove;
-    }
-
-    @Override
-    public void paint(Shape area) throws InvalidShapeException {
-        if (area instanceof Rectangle) {
-            // narise se v respektiven kvader
-        } else {
-            throw new InvalidShapeException(this, area);
-        }
     }
 
 }

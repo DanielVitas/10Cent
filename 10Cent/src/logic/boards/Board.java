@@ -1,10 +1,9 @@
 package logic.boards;
 
+import display.DisplayComponent;
 import logic.boards.exceptions.InvalidMoveException;
-import logic.boards.exceptions.InvalidShapeException;
-import display.shape.Shape;
 
-public abstract class Board {
+public abstract class Board implements DisplayComponent {
 
     public Board() {
 
@@ -24,7 +23,5 @@ public abstract class Board {
     protected abstract Board selectSubBoard(Move move);
 
     protected abstract boolean validMove(Move move);
-
-    public abstract void paint(Shape area) throws InvalidShapeException;
 
 }
