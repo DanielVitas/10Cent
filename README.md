@@ -1,6 +1,6 @@
 # 10Cent
-Projektna naloga pri predmetu Programiranje 2
+Projektna naloga pri predmetu Programiranje 2.
 
-# test
-todo
-> [] hahaha
+# TODO
+* abstrakti za display
+* audio
