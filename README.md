@@ -2,6 +2,5 @@
 Projektna naloga pri predmetu Programiranje 2.
 
 # TODO
-* abstrakti za display
+* osnove poteka igre
 * audio
-* text2
