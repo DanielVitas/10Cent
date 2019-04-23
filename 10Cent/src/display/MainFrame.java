@@ -7,13 +7,14 @@ public class MainFrame extends JFrame {
 
     public static int targetedFramerate = 60;
 
-    private MainPanel panel;
+    public MainPanel panel;
     private RepaintThread repaintThread;
 
     public MainFrame() {
         super();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        panel = new MainPanel(new Dimension(400, 600));
+        panel = new MainPanel(new Dimension(600, 400));
+        add(panel);
         repaintThread = new RepaintThread(panel);
         repaintThread.start();
     }

@@ -4,6 +4,8 @@ import logic.boards.Board;
 import logic.boards.exceptions.InvalidMoveException;
 import logic.boards.Move;
 
+import java.awt.*;
+
 public class TwoDimensionalBoard extends Board {
 
     @Override
@@ -22,7 +24,7 @@ public class TwoDimensionalBoard extends Board {
     }
 
     @Override
-    public void paint(double x, double y) {
+    public void paint(double x, double y, Graphics g) {
 
     }
 }

@@ -4,6 +4,11 @@ import logic.boards.Board;
 import logic.boards.Move;
 import logic.boards.exceptions.InvalidMoveException;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 public class FinalBoard extends Board {
 
     public FinalBoard() {
@@ -27,7 +32,13 @@ public class FinalBoard extends Board {
     }
 
     @Override
-    public void paint(double x, double y) {
-
+    public void paint(double x, double y, Graphics g) {
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/images/image.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        g.drawImage(img, 0, 0, null);
     }
 }
