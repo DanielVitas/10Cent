@@ -1,4 +1,4 @@
 package logic.AI;
 
-public class MiniMax {
+public class MiniMax extends AI {
 }

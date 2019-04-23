@@ -1,4 +1,4 @@
 package logic.AI;
 
-public class AI {
+public abstract class AI {
 }
