@@ -6,20 +6,22 @@ import static display.MainFrame.targetedFramerate;
 
 public class RepaintThread extends Thread {
 
-    private JPanel panel;
+    private MainPanel panel;
 
-    public RepaintThread(JPanel panel) {
+    public RepaintThread(MainPanel panel) {
         this.panel = panel;
     }
 
     @Override
     public void run() {
-        panel.repaint();
+        while (true) {
+            panel.manualRepaint();
 
-        try {
-            Thread.sleep(1000 / targetedFramerate);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            try {
+                Thread.sleep(1000 / targetedFramerate);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         super();
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         panel = new MainPanel(new Dimension(400, 600));
         repaintThread = new RepaintThread(panel);
         repaintThread.start();

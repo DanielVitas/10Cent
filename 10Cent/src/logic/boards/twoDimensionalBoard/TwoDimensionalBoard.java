@@ -21,4 +21,8 @@ public class TwoDimensionalBoard extends Board {
         return move instanceof TwoDimensionalMove;
     }
 
+    @Override
+    public void paint(double x, double y) {
+
+    }
 }
