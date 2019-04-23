@@ -2,7 +2,7 @@ package logic.boards;
 
 import logic.boards.exceptions.InvalidMoveException;
 import logic.boards.exceptions.InvalidShapeException;
-import logic.graphics.shapes.Shape;
+import display.shape.Shape;
 
 public abstract class Board {
 

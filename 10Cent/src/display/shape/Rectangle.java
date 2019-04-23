@@ -1,4 +1,4 @@
-package logic.graphics.shapes;
+package display.shape;
 
 public class Rectangle extends Shape {
 

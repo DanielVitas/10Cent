@@ -4,8 +4,8 @@ import logic.boards.Board;
 import logic.boards.Move;
 import logic.boards.exceptions.InvalidMoveException;
 import logic.boards.exceptions.InvalidShapeException;
-import logic.graphics.shapes.Shape;
-import logic.graphics.shapes.Rectangle;
+import display.shape.Shape;
+import display.shape.Rectangle;
 
 public class FinalBoard extends Board {
 

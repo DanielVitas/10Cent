@@ -4,8 +4,8 @@ import logic.boards.Move;
 import logic.boards.exceptions.InvalidShapeException;
 import logic.boards.finalBoard.FinalMove;
 import logic.boards.twoDimensionalBoard.TwoDimensionalBoard;
-import logic.graphics.shapes.Rectangle;
-import logic.graphics.shapes.Shape;
+import display.shape.Rectangle;
+import display.shape.Shape;
 
 public class TenCent {
 

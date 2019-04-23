@@ -4,8 +4,8 @@ import logic.boards.Board;
 import logic.boards.exceptions.InvalidMoveException;
 import logic.boards.Move;
 import logic.boards.exceptions.InvalidShapeException;
-import logic.graphics.shapes.Rectangle;
-import logic.graphics.shapes.Shape;
+import display.shape.Rectangle;
+import display.shape.Shape;
 
 public class TwoDimensionalBoard extends Board {
 

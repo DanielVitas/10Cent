@@ -1,7 +1,7 @@
 package logic.boards.exceptions;
 
 import logic.boards.Board;
-import logic.graphics.shapes.Shape;
+import display.shape.Shape;
 
 public class InvalidShapeException extends Exception {
 
