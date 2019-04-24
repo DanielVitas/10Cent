@@ -29,8 +29,14 @@ public abstract class Board implements DisplayComponent {
         Board subBoard = selectSubBoard(move);
         if (subBoard != null)  // subBoard is null only if the current board is final
             return subBoard.play(move.getNextMove());
-        return false;  // this value is not used, instead FinalBoard decides weather the move was legal
+        return true;  // this value is only used in FinalBoard's play
     }
+
+    protected void setOutcome(Player player) {
+        outcome = player;
+    }
+
+    protected abstract void decideOutcome();
 
     protected abstract Board selectSubBoard(Move move);
 

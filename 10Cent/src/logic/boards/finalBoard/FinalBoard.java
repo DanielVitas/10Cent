@@ -14,7 +14,7 @@ import java.io.IOException;
 public class FinalBoard extends Board {
 
     /*
-    1x1 board, only one that can assume final value.
+    The most basic 1x1 board. Players effectively place their tokens onto this board.
      */
 
     public FinalBoard() {
@@ -23,8 +23,18 @@ public class FinalBoard extends Board {
 
     @Override
     public boolean play(Move move) throws InvalidMoveException {
-        super.play(move);
+        if (!super.play(move))
+            return false;
+
+        setOutcome(((FinalMove) move).player);
+
         return true;
+    }
+
+    // FinalBoards is too simple for decideOutcome to have any meaning
+    @Override
+    protected void decideOutcome() {
+
     }
 
     @Override
