@@ -4,12 +4,17 @@ import logic.boards.finalBoard.FinalBoard;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class MainPanel extends JPanel {
+
+    /*
+    Displayed on MainFrame.
+     */
 
     private List<DisplayComponent> displayComponents = new ArrayList<>();
 
@@ -26,7 +31,7 @@ public class MainPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (DisplayComponent displayComponent : displayComponents)
-            displayComponent.paint(0, 0, g);
+            displayComponent.paint(new Coordinates(0, 0), g);
     }
 
 }

@@ -2,6 +2,10 @@ package logic.boards;
 
 public abstract class Move {
 
+    /*
+    Each Board comes with respective Move.
+     */
+
     private Move nextMove;
 
     public Move() {

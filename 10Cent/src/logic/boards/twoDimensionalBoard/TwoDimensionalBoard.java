@@ -1,5 +1,6 @@
 package logic.boards.twoDimensionalBoard;
 
+import display.Coordinates;
 import logic.boards.Board;
 import logic.boards.exceptions.InvalidMoveException;
 import logic.boards.Move;
@@ -24,7 +25,7 @@ public class TwoDimensionalBoard extends Board {
     }
 
     @Override
-    public void paint(double x, double y, Graphics g) {
+    public void paint(Coordinates coordinates, Graphics g) {
 
     }
 }
