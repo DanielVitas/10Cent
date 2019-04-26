@@ -1,9 +1,12 @@
 package logic.boards;
 
+import display.Coordinates;
 import display.DisplayComponent;
 import logic.boards.exceptions.InvalidMoveException;
 import logic.players.Empty;
 import logic.players.Player;
+
+import java.awt.*;
 
 public abstract class Board implements DisplayComponent {
 
@@ -29,6 +32,9 @@ public abstract class Board implements DisplayComponent {
         Board subBoard = selectSubBoard(move);
         if (subBoard != null)  // subBoard is null only if the current board is final
             return subBoard.play(move.getNextMove());
+
+        decideOutcome();  // has no meaning in FinalBoard
+
         return true;  // this value is only used in FinalBoard's play
     }
 

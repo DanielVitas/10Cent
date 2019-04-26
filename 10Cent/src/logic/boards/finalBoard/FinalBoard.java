@@ -1,6 +1,7 @@
 package logic.boards.finalBoard;
 
 import display.Coordinates;
+import display.Images;
 import logic.boards.Board;
 import logic.boards.Move;
 import logic.boards.exceptions.InvalidMoveException;
@@ -51,10 +52,10 @@ public class FinalBoard extends Board {
     public void paint(Coordinates coordinates, Graphics g) {
         BufferedImage img = null;
         try {
-            img = ImageIO.read(getClass().getResource("/resources/images/image.png"));
+            img = ImageIO.read(getClass().getResource("/resources/images/cross/default/image00.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        g.drawImage(img, (int) coordinates.getX(), (int) coordinates.getX(), null);
+        g.drawImage(img, (int) coordinates.getX(), (int) coordinates.getY(), null);
     }
 }

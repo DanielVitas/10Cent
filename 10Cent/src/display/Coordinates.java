@@ -14,6 +14,10 @@ public class Coordinates extends Point2D {
         setLocation(x, y);
     }
 
+    public Coordinates add(double x, double y) {
+        return new Coordinates(this.x + x, this.y + y);
+    }
+
     @Override
     public double getX() {
         return x;

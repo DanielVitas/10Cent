@@ -10,17 +10,22 @@ public interface DisplayComponent {
 
     int priority = 0;  // lower priority gets painted first (background)
 
-    List<Shape> hitBoxes = new ArrayList<>();  // hitboxes should be empty if object is not interactive
+    List<DisplayComponent> subComponents = new ArrayList<>();  // often useful, only stores DisplayComponents
+    List<Shape> hitBoxes = new ArrayList<>();  // hit-boxes should be empty if object is not interactive
 
     Comparator<DisplayComponent> comparator = Comparator.comparingInt(DisplayComponent::getPriority);
 
-    void paint(Coordinates coordinates, Graphics g);  // is given point of origin
+    // is given point of origin
+    default void paint(Coordinates coordinates, Graphics g) {
+        for (DisplayComponent displayComponent : subComponents)
+            displayComponent.paint(coordinates, g);
+    }
 
     default int getPriority() {
         return priority;
     }
 
-    // should be overriden if necessary
+    // should be overridden if necessary
     default boolean contains(Coordinates coordinates) {
         for (Shape shape : hitBoxes)
             if (shape.contains(coordinates))
