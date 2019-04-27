@@ -1,24 +1,46 @@
 package logic.boards.finalBoard;
 
+import display.frame.Coordinates;
 import logic.boards.Board;
 import logic.boards.Move;
 import logic.boards.exceptions.InvalidMoveException;
+import logic.players.Token;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.awt.event.MouseEvent;
 
 public class FinalBoard extends Board {
 
+    /*
+    The most basic 1x1 board. Players effectively place their tokens onto this board.
+     */
+
+    public Token token;
+
     public FinalBoard() {
         super();
+        token = Board.empty.newToken();  // creates new EmptyToken
+        token.animateDefault();
+        hitBoxes.add(new Rectangle(100, 100));
     }
 
     @Override
     public boolean play(Move move) throws InvalidMoveException {
-        super.play(move);
+        if (!super.play(move))
+            return false;
+
+        token = ((FinalMove) move).player.newToken();
+        token.animatePlace();
+        decideOutcome();
+
         return true;
+    }
+
+    //
+    @Override
+    protected void decideOutcome() {
+        if (token.player != Board.empty)  // only to avoid setOutcome being called twice
+            setOutcome(token.player);
     }
 
     @Override
@@ -32,13 +54,12 @@ public class FinalBoard extends Board {
     }
 
     @Override
-    public void paint(double x, double y, Graphics g) {
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/images/image.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        g.drawImage(img, 0, 0, null);
+    public void paint(Coordinates coordinates, Graphics g) {
+        token.paint(coordinates, g);
+    }
+
+    @Override
+    public void interact(Coordinates coordinates, MouseEvent mouseEvent) {
+        System.out.println("Clicked.");
     }
 }
