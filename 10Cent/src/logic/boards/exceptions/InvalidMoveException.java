@@ -6,7 +6,7 @@ import logic.boards.Move;
 public class InvalidMoveException extends Exception {
 
     /*
-    When playing Move onto Board, move type must match boards otherwise this exception is thrown
+    When playing Move onto Board, move type must match boards otherwise this exception is thrown.
      */
 
     public InvalidMoveException(Board board, Move move) {

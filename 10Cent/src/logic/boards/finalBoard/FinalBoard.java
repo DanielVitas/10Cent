@@ -1,16 +1,13 @@
 package logic.boards.finalBoard;
 
-import display.Coordinates;
-import display.Images;
+import display.frame.Coordinates;
 import logic.boards.Board;
 import logic.boards.Move;
 import logic.boards.exceptions.InvalidMoveException;
+import logic.players.Token;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.awt.event.MouseEvent;
 
 public class FinalBoard extends Board {
 
@@ -18,8 +15,13 @@ public class FinalBoard extends Board {
     The most basic 1x1 board. Players effectively place their tokens onto this board.
      */
 
+    public Token token;
+
     public FinalBoard() {
         super();
+        token = Board.empty.newToken();  // creates new EmptyToken
+        token.animateDefault();
+        hitBoxes.add(new Rectangle(100, 100));
     }
 
     @Override
@@ -27,15 +29,18 @@ public class FinalBoard extends Board {
         if (!super.play(move))
             return false;
 
-        setOutcome(((FinalMove) move).player);
+        token = ((FinalMove) move).player.newToken();
+        token.animatePlace();
+        decideOutcome();
 
         return true;
     }
 
-    // FinalBoards is too simple for decideOutcome to have any meaning
+    //
     @Override
     protected void decideOutcome() {
-
+        if (token.player != Board.empty)  // only to avoid setOutcome being called twice
+            setOutcome(token.player);
     }
 
     @Override
@@ -50,12 +55,11 @@ public class FinalBoard extends Board {
 
     @Override
     public void paint(Coordinates coordinates, Graphics g) {
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/images/cross/default/image00.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        g.drawImage(img, (int) coordinates.getX(), (int) coordinates.getY(), null);
+        token.paint(coordinates, g);
+    }
+
+    @Override
+    public void interact(Coordinates coordinates, MouseEvent mouseEvent) {
+        System.out.println("Clicked.");
     }
 }

@@ -1,14 +1,11 @@
 package logic.boards;
 
-import display.Coordinates;
-import display.DisplayComponent;
+import display.frame.DisplayObject;
 import logic.boards.exceptions.InvalidMoveException;
-import logic.players.Empty;
+import logic.players.empty.Empty;
 import logic.players.Player;
 
-import java.awt.*;
-
-public abstract class Board implements DisplayComponent {
+public abstract class Board extends DisplayObject {
 
     /*
     Board on which the game is played. Implementation of sub-boards is left to the final classes.

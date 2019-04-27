@@ -1,20 +1,22 @@
-import display.Images;
-import display.MainFrame;
+import display.Controller;
+import display.frame.Coordinates;
+import display.images.Images;
+import display.frame.MainFrame;
 import logic.boards.exceptions.InvalidMoveException;
-import logic.boards.finalBoard.FinalBoard;
 import logic.boards.twoDimensionalBoard.TwoDimensionalBoard;
+
+import java.nio.file.Paths;
 
 public class TenCent {
 
     public static void main(String[] args) throws InvalidMoveException {
 
+        Images.loadImages(Paths.get(Images.resourcesPath,"images").toString());
+
         MainFrame mainFrame = new MainFrame();
-        TwoDimensionalBoard board = new TwoDimensionalBoard(2);
-        mainFrame.panel.addDisplayComponent(board);
+        new Controller(mainFrame);
         mainFrame.pack();
         mainFrame.setVisible(true);
-
-        Images.getFileNames(Images.resourcesPath + "/images/cross/default","");
 
     }
 

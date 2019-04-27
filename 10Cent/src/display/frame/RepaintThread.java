@@ -1,13 +1,13 @@
-package display;
+package display.frame;
 
 import javax.swing.*;
 
-import static display.MainFrame.targetedFramerate;
+import static display.frame.MainFrame.targetedFramerate;
 
 public class RepaintThread extends Thread {
 
     /*
-    Thread, only meant to constantly call repaint, so the animations are fluid.
+    Thread, only meant to constantly call repaint, so the images are fluid.
      */
 
     private JPanel panel;

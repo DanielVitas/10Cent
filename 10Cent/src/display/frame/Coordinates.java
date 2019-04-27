@@ -1,5 +1,6 @@
-package display;
+package display.frame;
 
+import java.awt.*;
 import java.awt.geom.Point2D;
 
 public class Coordinates extends Point2D {
@@ -14,8 +15,20 @@ public class Coordinates extends Point2D {
         setLocation(x, y);
     }
 
+    public Coordinates(Point point) {
+        this(point.x, point.y);
+    }
+
     public Coordinates add(double x, double y) {
         return new Coordinates(this.x + x, this.y + y);
+    }
+
+    public Coordinates add(Coordinates coordinates) {
+        return new Coordinates(this.x + coordinates.x, this.y + coordinates.y);
+    }
+
+    public Coordinates flip() {
+        return new Coordinates(-this.x, -this.y);
     }
 
     @Override
