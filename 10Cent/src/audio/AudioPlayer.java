@@ -1,57 +1,65 @@
 package audio;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+public class AudioPlayer {
+    // This is a "static" object providing sound and music playing functions
 
-import java.io.File;
-
-public enum AudioPlayer {
-    /* string points to file name, soundPercent allows us to set
-    loudness of certain file in the code and audioType tells if
-    it is a sound or a song
-     */
-    TEST("test.mp3",1 ,false),
-    TESTT("test.wav",1,true);
-
-    private static final String FILEPATH_MUSIC = "10Cent/src/resources/audio/songs/";
-    private static final String FILEPATH_SOUND = "10Cent/src/resources/audio/sounds/";
-
-    private final double localSound;
     private static double globalSound;
+    private static double soundsSound;
+    private static double musicsSound;
+    private static MusicPlayer[] musicPlayers = MusicPlayer.values();
+    private static SoundPlayer[] soundPlayers = SoundPlayer.values();
 
-    private MediaPlayer mediaPlayer;
-    private final boolean audioType;
+    public static void setup(){
 
-    AudioPlayer(String string, int soundPercent, Boolean audioType){
-        this.localSound = soundPercent;
-        this.audioType = audioType;
-        if (audioType){
-            Media media = new Media(new File(FILEPATH_SOUND + string).toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
-        } else {
-            Media media = new Media(new File(FILEPATH_MUSIC + string).toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setVolume(localSound);
-            //TODO mediaPlayer.setOnEndOfMedia();
+    }
+
+    public static void setGlobalSound(double percent){
+        globalSound = percent;}
+
+    public static double getGlobalSound(){return globalSound;}
+
+    public static void setSoundsSound(double percent){
+        soundsSound = percent;
+        updateSound();
+    }
+
+    public static double getSoundsSound(){return soundsSound;}
+
+    public static void setMusicsSound(double percent){
+        musicsSound = percent;
+        updateSound();
+    }
+
+    public static double getMusicsSound(){return musicsSound;}
+
+
+
+    // MusicPlayer methods
+    public static void play(MusicPlayer musicPlayer){musicPlayer.mediaPlayer.play();}
+
+    public static void pause(MusicPlayer musicPlayer) {musicPlayer.mediaPlayer.pause();}
+
+    public static void stop(MusicPlayer musicPlayer) {musicPlayer.mediaPlayer.stop();}
+
+
+    // SoundPlayer methods
+    public static void play(SoundPlayer soundPlayer) {
+        soundPlayer.mediaPlayer.stop();
+        soundPlayer.mediaPlayer.play();
+    }
+
+    public static void pause(SoundPlayer soundPlayer) {soundPlayer.mediaPlayer.pause();}
+
+    public static void stop(SoundPlayer soundPlayer) {soundPlayer.mediaPlayer.stop();}
+
+    // Private methods
+    private static void updateSound(){
+        for(MusicPlayer player : musicPlayers){
+            player.mediaPlayer.setVolume(globalSound*player.localSound*musicsSound);
+        }
+        for(SoundPlayer player : soundPlayers){
+            player.mediaPlayer.setVolume(globalSound*player.localSound*soundsSound);
         }
     }
-
-    public void play(){
-        if(audioType){
-            mediaPlayer.stop();
-            mediaPlayer.play();
-        }
-        mediaPlayer.play();
-    }
-
-    public void pause() {mediaPlayer.pause();} //maybe use currentlyPlaying
-
-    public void stop() {
-        mediaPlayer.stop();
-    }
-
-    public void setGlobalSound(double percent){globalSound = percent;}
-
-    public void setVolume(double percent) {mediaPlayer.setVolume(percent*localSound*globalSound);}
 
 }
