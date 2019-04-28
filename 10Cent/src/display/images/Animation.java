@@ -14,7 +14,7 @@ public class Animation extends Thread implements DisplayComponent {
     sub-component.
      */
 
-    private final static Coordinates coordinates = new Coordinates(0, 0);
+    public Coordinates coordinates = new Coordinates(0, 0);
     public Dimension dimension;
 
     public Image image;

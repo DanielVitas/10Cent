@@ -25,7 +25,7 @@ public class FinalBoard extends Board {
         super();
         token = Board.empty.newToken(slotDimension);  // creates new EmptyToken
         token.animateDefault();
-        hitBoxes.add(new Rectangle(100, 100));
+        hitBoxes.add(new Rectangle(10, 10));
     }
 
     @Override

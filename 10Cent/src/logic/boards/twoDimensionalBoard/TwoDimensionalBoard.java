@@ -34,7 +34,8 @@ public class TwoDimensionalBoard extends Board {
                 boards[i][j] = installBoard();
                 boardCoordinates[i][j] = slotCoordinates(i, j).scale(new Scale(i, j));
             }
-        hitBoxes.add(new Rectangle((int) getDimension().width, (int) getDimension().height));
+        // fix contains method?
+        // hitBoxes.add(new Rectangle((int) getDimension().width, (int) getDimension().height));
     }
 
     private Coordinates slotCoordinates(int i, int j) {

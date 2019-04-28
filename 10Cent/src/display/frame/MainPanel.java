@@ -3,16 +3,16 @@ package display.frame;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
+import display.widgets.Button;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainPanel extends JPanel  implements MouseListener {
+public class MainPanel extends JPanel  implements MouseListener, MouseMotionListener {
 
     /*
     Displayed on MainFrame.
@@ -25,9 +25,18 @@ public class MainPanel extends JPanel  implements MouseListener {
 
         addMouseListener(this);
 
-        JButton button = new JButton("Button text");
-        button.setVisible(false);
-        add(button);
+        Button button = new Button("Button text", new Dimension(100, 100));
+        addDisplayComponent(button);
+        JButton button2 = new JButton("Button text");
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.out.println("Clicked");
+                button.doClick();
+            }
+        });
+        button2.setBounds(200, 0, 100, 100);
+        add(button2);
         Component[] a = getComponents();
         a = null;
 
@@ -84,4 +93,13 @@ public class MainPanel extends JPanel  implements MouseListener {
 
     }
 
+    @Override
+    public void mouseDragged(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent mouseEvent) {
+
+    }
 }
