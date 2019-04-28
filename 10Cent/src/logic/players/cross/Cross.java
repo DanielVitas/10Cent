@@ -1,5 +1,6 @@
 package logic.players.cross;
 
+import display.frame.misc.Dimension;
 import logic.players.Player;
 import logic.players.Token;
 
@@ -10,7 +11,7 @@ public class Cross extends Player {
     }
 
     @Override
-    public Token newToken() {
-        return new CrossToken(this);
+    public Token newToken(Dimension dimension) {
+        return new CrossToken(this, dimension);
     }
 }

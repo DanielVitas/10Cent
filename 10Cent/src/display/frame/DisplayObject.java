@@ -1,5 +1,8 @@
 package display.frame;
 
+import display.frame.misc.Coordinates;
+import display.frame.misc.Scale;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +19,9 @@ public class DisplayObject implements DisplayComponent {
     }
 
     @Override
-    public void paint(Coordinates coordinates, Graphics g) {
+    public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         for (DisplayComponent subComponent : subComponents)
-            subComponent.paint(coordinates.add(subComponent.getCoordinates()), g);
+            subComponent.paint(coordinates.add(subComponent.getCoordinates()), scale, g);
     }
 
     @Override

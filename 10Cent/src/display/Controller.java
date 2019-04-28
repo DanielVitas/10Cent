@@ -6,23 +6,23 @@ import display.screens.Screen;
 
 public final class Controller {
 
-    private MainFrame mainFrame;
-    private Screen screen;
+    private static MainFrame mainFrame;
+    private static Screen screen;
 
-    public Controller(MainFrame mainFrame) {
-        this.mainFrame = mainFrame;
+    public static void install(MainFrame mainFrame) {
+        Controller.mainFrame = mainFrame;
         switchScreen(new GameScreen());
     }
 
-    public void switchScreen(Screen screen) {
-        screen.previousScreen = this.screen;
-        if (this.screen != null)
-            this.screen.unload(mainFrame);
+    public static void switchScreen(Screen screen) {
+        screen.previousScreen = Controller.screen;
+        if (Controller.screen != null)
+            Controller.screen.unload(mainFrame);
         screen.load(mainFrame);
-        this.screen = screen;
+        Controller.screen = screen;
     }
 
-    public void back() {
+    public static void back() {
         if (screen.previousScreen == null)
             return;
         screen.unload(mainFrame);

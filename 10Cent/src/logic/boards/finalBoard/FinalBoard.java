@@ -1,6 +1,8 @@
 package logic.boards.finalBoard;
 
-import display.frame.Coordinates;
+import display.frame.misc.Coordinates;
+import display.frame.misc.Dimension;
+import display.frame.misc.Scale;
 import logic.boards.Board;
 import logic.boards.Move;
 import logic.boards.exceptions.InvalidMoveException;
@@ -16,10 +18,12 @@ public class FinalBoard extends Board {
      */
 
     public Token token;
+    public Dimension slotDimension = new Dimension(10, 10);
+
 
     public FinalBoard() {
         super();
-        token = Board.empty.newToken();  // creates new EmptyToken
+        token = Board.empty.newToken(slotDimension);  // creates new EmptyToken
         token.animateDefault();
         hitBoxes.add(new Rectangle(100, 100));
     }
@@ -29,7 +33,7 @@ public class FinalBoard extends Board {
         if (!super.play(move))
             return false;
 
-        token = ((FinalMove) move).player.newToken();
+        token = ((FinalMove) move).player.newToken(slotDimension);
         token.animatePlace();
         decideOutcome();
 
@@ -54,12 +58,17 @@ public class FinalBoard extends Board {
     }
 
     @Override
-    public void paint(Coordinates coordinates, Graphics g) {
-        token.paint(coordinates, g);
+    public Dimension getDimension() {
+        return slotDimension;
     }
 
     @Override
-    public void interact(Coordinates coordinates, MouseEvent mouseEvent) {
+    public void paint(Coordinates coordinates, Scale scale, Graphics g) {
+        token.paint(coordinates, scale, g);
+    }
+
+    @Override
+    public void clicked(Coordinates coordinates, MouseEvent mouseEvent) {
         System.out.println("Clicked.");
     }
 }

@@ -1,4 +1,4 @@
-package display.frame;
+package display.frame.misc;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -9,12 +9,13 @@ public class Coordinates extends Point2D {
     Implementation of abstract class Point2D.
      */
 
-    double x, y;
+    private double x, y;
 
     public Coordinates(double x, double y) {
         setLocation(x, y);
     }
 
+    @Deprecated
     public Coordinates(Point point) {
         this(point.x, point.y);
     }
@@ -29,6 +30,10 @@ public class Coordinates extends Point2D {
 
     public Coordinates flip() {
         return new Coordinates(-this.x, -this.y);
+    }
+
+    public Coordinates scale(Scale scale) {
+        return new Coordinates(x * scale.horizontal, y * scale.vertical);
     }
 
     @Override

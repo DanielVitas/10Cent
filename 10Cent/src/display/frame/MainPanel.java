@@ -1,5 +1,9 @@
 package display.frame;
 
+import display.frame.misc.Coordinates;
+import display.frame.misc.Dimension;
+import display.frame.misc.Scale;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -17,7 +21,7 @@ public class MainPanel extends JPanel  implements MouseListener {
     private List<DisplayComponent> displayComponents = new ArrayList<>();
 
     public MainPanel(Dimension preferredSize) {
-        setPreferredSize(preferredSize);
+        setPreferredSize(preferredSize.getAwtDimension());
 
         addMouseListener(this);
     }
@@ -35,15 +39,19 @@ public class MainPanel extends JPanel  implements MouseListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (DisplayComponent displayComponent : displayComponents)
-            displayComponent.paint(displayComponent.getCoordinates(), g);
+            displayComponent.paint(displayComponent.getCoordinates(), MainFrame.getScale(), g);
     }
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
+        Scale scale = MainFrame.getScale();
+        double x = mouseEvent.getX() / scale.horizontal;
+        double y = mouseEvent.getY() / scale.vertical;
+        System.out.println("Clicked at " + "(" + x + ", " + y + ")");
         for (DisplayComponent displayComponent : displayComponents) {
-            Coordinates coordinates = displayComponent.getCoordinates().flip().add(mouseEvent.getX(), mouseEvent.getY());
+            Coordinates coordinates = displayComponent.getCoordinates().flip().add(x, y);
             if (displayComponent.contains(coordinates)) {
-                displayComponent.interact(coordinates, mouseEvent);
+                displayComponent.clicked(coordinates, mouseEvent);
                 return;
             }
         }

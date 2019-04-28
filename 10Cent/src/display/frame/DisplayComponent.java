@@ -1,5 +1,8 @@
 package display.frame;
 
+import display.frame.misc.Coordinates;
+import display.frame.misc.Scale;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.Comparator;
@@ -8,8 +11,8 @@ public interface DisplayComponent {
 
     Comparator<DisplayComponent> comparator = Comparator.comparingInt(DisplayComponent::getDisplayPriority);
 
-    // is given point of origin
-    void paint(Coordinates coordinates, Graphics g);
+    // is given point of origin (unscaled) and scale
+    void paint(Coordinates coordinates, Scale scale, Graphics g);
 
     // lower priority gets painted first (background)
     int getDisplayPriority();
@@ -22,7 +25,8 @@ public interface DisplayComponent {
         return false;
     }
 
-    default void interact(Coordinates coordinates, MouseEvent mouseEvent) {
+    // coordinates are relative to the clicked object's origin
+    default void clicked(Coordinates coordinates, MouseEvent mouseEvent) {
         assert false;  // isn't called if contains returns false
     }
 }

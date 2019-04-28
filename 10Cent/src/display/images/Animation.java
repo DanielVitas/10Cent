@@ -1,7 +1,9 @@
 package display.images;
 
 import display.frame.DisplayComponent;
-import display.frame.Coordinates;
+import display.frame.misc.Coordinates;
+import display.frame.misc.Dimension;
+import display.frame.misc.Scale;
 
 import java.awt.*;
 
@@ -13,6 +15,7 @@ public class Animation extends Thread implements DisplayComponent {
      */
 
     private final static Coordinates coordinates = new Coordinates(0, 0);
+    public Dimension dimension;
 
     public Image image;
     private String[] imagePaths;
@@ -49,9 +52,7 @@ public class Animation extends Thread implements DisplayComponent {
     }
 
     // should be overridden, is called after animation finishes
-    protected void finished() {
-
-    }
+    protected void finished() {}
 
     @Override
     public void run() {
@@ -69,13 +70,19 @@ public class Animation extends Thread implements DisplayComponent {
     }
 
     @Override
-    public void paint(Coordinates coordinates, Graphics g) {
-        g.drawImage(image, (int) coordinates.getX(), (int) coordinates.getY(), null);
+    public void paint(Coordinates coordinates, Scale scale, Graphics g) {
+        Coordinates scaledCoordinates = coordinates.scale(scale);
+        Dimension scaledDimension;
+        if (dimension == null)
+            scaledDimension = (new Dimension(image)).scale(scale);
+        else
+            scaledDimension = dimension.scale(scale);
+        g.drawImage(image, (int) scaledCoordinates.getX(), (int) scaledCoordinates.getY(), (int) scaledDimension.width, (int) scaledDimension.height, null);
     }
 
     @Override
     public int getDisplayPriority() {
-        return 0;  // has no meaning in animation
+        return 0;  // can be overridden
     }
 
     @Override

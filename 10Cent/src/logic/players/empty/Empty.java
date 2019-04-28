@@ -1,5 +1,6 @@
 package logic.players.empty;
 
+import display.frame.misc.Dimension;
 import logic.players.Player;
 import logic.players.Token;
 
@@ -10,8 +11,8 @@ public class Empty extends Player {
     }
 
     @Override
-    public Token newToken() {
-        return new EmptyToken(this);
+    public Token newToken(Dimension dimension) {
+        return new EmptyToken(this, dimension);
     }
 
 }

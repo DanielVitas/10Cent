@@ -1,6 +1,7 @@
 package logic.boards;
 
 import display.frame.DisplayObject;
+import display.frame.misc.Dimension;
 import logic.boards.exceptions.InvalidMoveException;
 import logic.players.empty.Empty;
 import logic.players.Player;
@@ -44,5 +45,7 @@ public abstract class Board extends DisplayObject {
     protected abstract Board selectSubBoard(Move move);
 
     protected abstract boolean validMove(Move move);
+
+    public abstract Dimension getDimension();
 
 }

@@ -37,7 +37,7 @@ public final class Images {
 
     public static void add(String imagePath) {
         try {
-            BufferedImage image = ImageIO.read(new File(imagePath));
+            Image image = ImageIO.read(new File(imagePath));
             images.put(imagePath, image);
         } catch (IOException e) {
             System.out.println("Image not found on: " + imagePath);
