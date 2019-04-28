@@ -68,7 +68,7 @@ public class FinalBoard extends Board {
     }
 
     @Override
-    public void clicked(Coordinates coordinates, MouseEvent mouseEvent) {
+    public void clicked(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
         System.out.println("Clicked.");
     }
 }

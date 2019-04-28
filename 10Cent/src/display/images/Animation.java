@@ -71,13 +71,12 @@ public class Animation extends Thread implements DisplayComponent {
 
     @Override
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
-        Coordinates scaledCoordinates = coordinates.scale(scale);
         Dimension scaledDimension;
         if (dimension == null)
             scaledDimension = (new Dimension(image)).scale(scale);
         else
             scaledDimension = dimension.scale(scale);
-        g.drawImage(image, (int) scaledCoordinates.getX(), (int) scaledCoordinates.getY(), (int) scaledDimension.width, (int) scaledDimension.height, null);
+        g.drawImage(image, (int) coordinates.getX(), (int) coordinates.getY(), (int) scaledDimension.width, (int) scaledDimension.height, null);
     }
 
     @Override

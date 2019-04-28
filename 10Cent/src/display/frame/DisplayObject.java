@@ -18,10 +18,14 @@ public class DisplayObject implements DisplayComponent {
         subComponents.sort(DisplayComponent.comparator);
     }
 
+    protected void removeSubComponent(DisplayComponent subComponent) {
+        subComponents.remove(subComponent);
+    }
+
     @Override
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         for (DisplayComponent subComponent : subComponents)
-            subComponent.paint(coordinates.add(subComponent.getCoordinates()), scale, g);
+            subComponent.paint(coordinates.add(subComponent.getCoordinates().scale(scale)), scale, g);
     }
 
     @Override
@@ -36,7 +40,7 @@ public class DisplayObject implements DisplayComponent {
 
     // non-interactive objects should have empty hit-boxes
     @Override
-    public boolean contains(Coordinates coordinates) {
+    public boolean contains(Coordinates coordinates, Scale scale) {
         for (Shape shape : hitBoxes)
             if (shape.contains(coordinates))
                 return true;

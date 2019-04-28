@@ -20,7 +20,12 @@ public abstract class Token extends DisplayObject {
 
     public Animation animateDefault() {
         String path = Paths.get(directoryPath, "default").toString();
-        Animation animation = new Animation(path, new long[]{500}, true);
+        Animation animation = new Animation(path, new long[]{500}, true){
+            @Override
+            protected void finished() {
+                removeSubComponent(this);
+            }
+        };
         animation.dimension = dimension;
         addSubComponent(animation);
         animation.start();

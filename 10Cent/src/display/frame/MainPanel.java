@@ -24,6 +24,13 @@ public class MainPanel extends JPanel  implements MouseListener {
         setPreferredSize(preferredSize.getAwtDimension());
 
         addMouseListener(this);
+
+        JButton button = new JButton("Button text");
+        button.setVisible(false);
+        add(button);
+        Component[] a = getComponents();
+        a = null;
+
     }
 
     public void addDisplayComponent(DisplayComponent displayComponent) {
@@ -39,7 +46,7 @@ public class MainPanel extends JPanel  implements MouseListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (DisplayComponent displayComponent : displayComponents)
-            displayComponent.paint(displayComponent.getCoordinates(), MainFrame.getScale(), g);
+            displayComponent.paint(displayComponent.getCoordinates().scale(MainFrame.getScale()), MainFrame.getScale(), g);
     }
 
     @Override
@@ -50,8 +57,8 @@ public class MainPanel extends JPanel  implements MouseListener {
         System.out.println("Clicked at " + "(" + x + ", " + y + ")");
         for (DisplayComponent displayComponent : displayComponents) {
             Coordinates coordinates = displayComponent.getCoordinates().flip().add(x, y);
-            if (displayComponent.contains(coordinates)) {
-                displayComponent.clicked(coordinates, mouseEvent);
+            if (displayComponent.contains(coordinates, new Scale(1, 1))) {
+                displayComponent.clicked(coordinates, new Scale(1, 1), mouseEvent);
                 return;
             }
         }

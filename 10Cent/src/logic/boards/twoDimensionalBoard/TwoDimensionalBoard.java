@@ -55,8 +55,6 @@ public class TwoDimensionalBoard extends Board {
     @Override
     protected void decideOutcome() {
 
-
-
     }
 
     @Override
@@ -81,20 +79,38 @@ public class TwoDimensionalBoard extends Board {
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         super.paint(coordinates, scale, g);
 
+        Graphics2D g2 = (Graphics2D) g;
+        g.setColor(Color.black);
+        g2.setStroke(new BasicStroke(2f));
+
+        // temporary
+        for (int i = 1; i < size; i++) {
+                Coordinates c1 = coordinates.add(slotCoordinates(i, 0).scale(scale));
+                Coordinates c2 = coordinates.add(slotCoordinates(i, size).scale(scale));
+                g.drawLine((int) c1.getX(), (int) c1.getY(), (int) c2.getX(), (int) c2.getY());
+            }
+        for (int j = 1; j < size; j++) {
+            Coordinates c1 = coordinates.add(slotCoordinates(0, j).scale(scale));
+            Coordinates c2 = coordinates.add(slotCoordinates(size, j).scale(scale));
+            g.drawLine((int) c1.getX(), (int) c1.getY(), (int) c2.getX(), (int) c2.getY());
+        }
+
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++)
-                boards[i][j].paint(coordinates.add(slotCoordinates(i, j)),
+                boards[i][j].paint(coordinates.add(slotCoordinates(i, j).scale(scale)),
                         boards[i][j].getDimension().getScale(slotDimension.scale(scale)), g);
     }
 
     @Override
-    public void clicked(Coordinates coordinates, MouseEvent mouseEvent) {
+    public void clicked(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
         for (int i = 0; i < size; i++)
-            for (int j = 0; j < size; j++)
-                if (boards[i][j].contains(boardCoordinates[i][j].flip().add(coordinates))) {
-                    boards[i][j].clicked(boardCoordinates[i][j].flip().add(coordinates), mouseEvent);
+            for (int j = 0; j < size; j++) {
+                Scale newScale = boards[i][j].getDimension().getScale(slotDimension.scale(scale));
+                if (boards[i][j].contains(boardCoordinates[i][j].scale(scale).flip().add(coordinates), newScale)) {
+                    boards[i][j].clicked(boardCoordinates[i][j].flip().scale(scale).add(coordinates), newScale, mouseEvent);
                     return;
                 }
+            }
     }
 
 }
