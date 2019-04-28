@@ -1,11 +1,16 @@
 package audio;
 
+import java.nio.file.Paths;
+
 public class AudioPlayer {
     // This is a "static" object providing sound and music playing functions
 
-    private static double globalSound;
-    private static double soundsSound;
-    private static double musicsSound;
+    public static final String FILEPATH_MUSIC = Paths.get("10Cent","src","resources","audio","songs","").toString();
+    public static final String FILEPATH_SOUND = Paths.get("10Cent","src","resources","audio","sounds","").toString();
+
+    private static double globalVolume;
+    private static double soundVolume;
+    private static double musicVolume;
     private static MusicPlayer[] musicPlayers = MusicPlayer.values();
     private static SoundPlayer[] soundPlayers = SoundPlayer.values();
 
@@ -14,23 +19,23 @@ public class AudioPlayer {
     }
 
     public static void setGlobalSound(double percent){
-        globalSound = percent;}
+        globalVolume = percent;}
 
-    public static double getGlobalSound(){return globalSound;}
+    public static double getGlobalSound(){return globalVolume;}
 
     public static void setSoundsSound(double percent){
-        soundsSound = percent;
+        soundVolume = percent;
         updateSound();
     }
 
-    public static double getSoundsSound(){return soundsSound;}
+    public static double getSoundsSound(){return soundVolume;}
 
     public static void setMusicsSound(double percent){
-        musicsSound = percent;
+        musicVolume = percent;
         updateSound();
     }
 
-    public static double getMusicsSound(){return musicsSound;}
+    public static double getMusicsSound(){return musicVolume;}
 
 
 
@@ -55,10 +60,10 @@ public class AudioPlayer {
     // Private methods
     private static void updateSound(){
         for(MusicPlayer player : musicPlayers){
-            player.mediaPlayer.setVolume(globalSound*player.localSound*musicsSound);
+            player.mediaPlayer.setVolume(globalVolume*player.localVolume*musicVolume);
         }
         for(SoundPlayer player : soundPlayers){
-            player.mediaPlayer.setVolume(globalSound*player.localSound*soundsSound);
+            player.mediaPlayer.setVolume(globalVolume*player.localVolume*soundVolume);
         }
     }
 
