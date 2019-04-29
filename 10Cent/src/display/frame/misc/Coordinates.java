@@ -36,6 +36,14 @@ public class Coordinates extends Point2D {
         return new Coordinates(x * scale.horizontal, y * scale.vertical);
     }
 
+    public int getIntegerX() {
+        return (int) x;
+    }
+
+    public int getIntegerY() {
+        return (int) y;
+    }
+
     @Override
     public double getX() {
         return x;

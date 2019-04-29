@@ -66,9 +66,4 @@ public class FinalBoard extends Board {
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         token.paint(coordinates, scale, g);
     }
-
-    @Override
-    public void clicked(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
-        System.out.println("Clicked.");
-    }
 }

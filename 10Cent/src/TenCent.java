@@ -1,4 +1,4 @@
-import display.Controller;
+import display.screens.Controller;
 import display.images.Images;
 import display.frame.MainFrame;
 import logic.boards.exceptions.InvalidMoveException;
