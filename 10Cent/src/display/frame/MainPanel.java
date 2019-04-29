@@ -3,16 +3,16 @@ package display.frame;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
+import display.widgets.buttons.Button;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainPanel extends JPanel  implements MouseListener {
+public class MainPanel extends JPanel  implements MouseListener, MouseMotionListener {
 
     /*
     Displayed on MainFrame.
@@ -24,11 +24,12 @@ public class MainPanel extends JPanel  implements MouseListener {
         setPreferredSize(preferredSize.getAwtDimension());
 
         addMouseListener(this);
+        addMouseMotionListener(this);
     }
 
     public void addDisplayComponent(DisplayComponent displayComponent) {
         displayComponents.add(displayComponent);
-        Collections.sort(displayComponents, DisplayComponent.comparator);
+        Collections.sort(displayComponents, DisplayComponent.COMPARATOR);
     }
 
     public void removeDisplayComponent(DisplayComponent displayComponent) {
@@ -39,32 +40,35 @@ public class MainPanel extends JPanel  implements MouseListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (DisplayComponent displayComponent : displayComponents)
-            displayComponent.paint(displayComponent.getCoordinates(), MainFrame.getScale(), g);
+            displayComponent.paint(displayComponent.getCoordinates().scale(MainFrame.getScale()), MainFrame.getScale(), g);
     }
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        Scale scale = MainFrame.getScale();
-        double x = mouseEvent.getX() / scale.horizontal;
-        double y = mouseEvent.getY() / scale.vertical;
-        System.out.println("Clicked at " + "(" + x + ", " + y + ")");
-        for (DisplayComponent displayComponent : displayComponents) {
-            Coordinates coordinates = displayComponent.getCoordinates().flip().add(x, y);
-            if (displayComponent.contains(coordinates)) {
-                displayComponent.clicked(coordinates, mouseEvent);
-                return;
-            }
-        }
+
     }
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-
+        if (Mouse.hovered != null) {
+            Coordinates mouseCoordinates = Mouse.getCoordinates(mouseEvent);
+            Coordinates coordinates = Mouse.hovered.getCoordinates().flip().add(mouseCoordinates);
+            Mouse.hovered.press(coordinates, Scale.noScale, mouseEvent);
+        }
+        Mouse.pressed = true;
     }
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
-
+        if (Mouse.hovered != null) {
+            Coordinates mouseCoordinates = Mouse.getCoordinates(mouseEvent);
+            Coordinates coordinates = Mouse.hovered.getCoordinates().flip().add(mouseCoordinates);
+            if (Mouse.hovered.contains(coordinates, Scale.noScale))
+                Mouse.hovered.click(coordinates, Scale.noScale, mouseEvent);
+            else
+                Mouse.hovered.release(coordinates, Scale.noScale, mouseEvent);
+        }
+        Mouse.pressed = false;
     }
 
     @Override
@@ -77,4 +81,34 @@ public class MainPanel extends JPanel  implements MouseListener {
 
     }
 
+    @Override
+    public void mouseDragged(MouseEvent mouseEvent) {
+        if (Mouse.hovered == null)
+            return;
+        Coordinates mouseCoordinates = Mouse.getCoordinates(mouseEvent);
+        Coordinates coordinates = Mouse.hovered.getCoordinates().flip().add(mouseCoordinates);
+        Mouse.hovered.drag(coordinates, Scale.noScale, mouseEvent);
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent mouseEvent) {
+        if (Mouse.pressed)
+            return;
+        Coordinates mouseCoordinates = Mouse.getCoordinates(mouseEvent);
+        for (DisplayComponent displayComponent : displayComponents) {
+            Coordinates coordinates = displayComponent.getCoordinates().flip().add(mouseCoordinates);
+            if (displayComponent.contains(coordinates, Scale.noScale)) {
+                if (Mouse.hovered != displayComponent) {
+                    if (Mouse.hovered != null)
+                        Mouse.hovered.unhover(mouseCoordinates, Scale.noScale, mouseEvent);
+                    displayComponent.hover(coordinates, Scale.noScale, mouseEvent);
+                    Mouse.hovered = displayComponent;
+                }
+                return;
+            }
+        }
+        if (Mouse.hovered != null)
+            Mouse.hovered.unhover(mouseCoordinates, Scale.noScale, mouseEvent);
+        Mouse.hovered = null;
+    }
 }

@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 public class EmptyToken extends Token {
 
     public EmptyToken(Player player, Dimension dimension) {
-        super(player, dimension, Paths.get(Images.resourcesPath,"images", "empty").toString());
+        super(player, dimension, Paths.get(Images.resourcesPath,"images", "tokens", "empty").toString());
     }
 
 }

@@ -1,23 +1,21 @@
-import audio.AudioPlayer;
-import audio.MusicPlayer;
-import display.MainFrame;
-import javafx.embed.swing.JFXPanel;
-import logic.boards.finalBoard.FinalBoard;
+import display.screens.Controller;
+import display.images.Images;
+import display.frame.MainFrame;
+import logic.boards.exceptions.InvalidMoveException;
+
+import java.nio.file.Paths;
 
 public class TenCent {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws InvalidMoveException {
+
+        Images.loadImages(Paths.get(Images.resourcesPath,"images").toString());
 
         MainFrame mainFrame = new MainFrame();
-        FinalBoard board = new FinalBoard();
-        mainFrame.panel.addDisplayComponent(board);
+        Controller.install(mainFrame);
         mainFrame.pack();
         mainFrame.setVisible(true);
 
-        JFXPanel panel = new JFXPanel();
-
-        AudioPlayer.play(MusicPlayer.TEST);
-    }
     }
 
-
+}

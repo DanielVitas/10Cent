@@ -1,8 +1,6 @@
-package display;
+package display.screens;
 
 import display.frame.MainFrame;
-import display.screens.GameScreen;
-import display.screens.Screen;
 
 public final class Controller {
 

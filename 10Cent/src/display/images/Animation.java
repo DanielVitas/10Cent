@@ -1,20 +1,20 @@
 package display.images;
 
 import display.frame.DisplayComponent;
+import display.frame.DisplayObject;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
 
 import java.awt.*;
 
-public class Animation extends Thread implements DisplayComponent {
+public class Animation extends DisplayObject implements Runnable {
 
     /*
     Stores image paths and delays. Thread continuously changes image with respective delays. Should always be
     sub-component.
      */
 
-    private final static Coordinates coordinates = new Coordinates(0, 0);
     public Dimension dimension;
 
     public Image image;
@@ -22,11 +22,18 @@ public class Animation extends Thread implements DisplayComponent {
     private long[] delays;
     private boolean loop;
 
+    private Thread thread;
+
     // delays will be applied by module (the list can be shorter than imageNames - often singleton)
     public Animation(String[] imagePaths, long[] delays, boolean loop) {
         this.imagePaths = imagePaths;
         this.delays = delays;
         this.loop = loop;
+    }
+
+    public void start() {
+        thread = new Thread(this);
+        thread.start();
     }
 
     // images will be displayed in alphabetical order
@@ -56,7 +63,7 @@ public class Animation extends Thread implements DisplayComponent {
 
     @Override
     public void run() {
-        while (loop)
+        do {
             for (int i = 0; i < imagePaths.length; i++) {
                 image = Images.get(imagePaths[i]);
 
@@ -66,28 +73,18 @@ public class Animation extends Thread implements DisplayComponent {
                     e.printStackTrace();
                 }
             }
+        } while (loop);
         finished();
     }
 
     @Override
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
-        Coordinates scaledCoordinates = coordinates.scale(scale);
         Dimension scaledDimension;
         if (dimension == null)
             scaledDimension = (new Dimension(image)).scale(scale);
         else
             scaledDimension = dimension.scale(scale);
-        g.drawImage(image, (int) scaledCoordinates.getX(), (int) scaledCoordinates.getY(), (int) scaledDimension.width, (int) scaledDimension.height, null);
-    }
-
-    @Override
-    public int getDisplayPriority() {
-        return 0;  // can be overridden
-    }
-
-    @Override
-    public Coordinates getCoordinates() {
-        return coordinates;  // always (0, 0)
+        g.drawImage(image, coordinates.getIntegerX(), coordinates.getIntegerY(), scaledDimension.getIntegerWidth(), scaledDimension.getIntegerHeight(), null);
     }
 
 }
