@@ -7,7 +7,7 @@ import java.io.File;
 import java.nio.file.Paths;
 
 public enum MusicPlayer {
-    TEST("test.mp3", 1);
+    TEST("test.mp3", 100);
 
     final double localVolume;
     MediaPlayer mediaPlayer;

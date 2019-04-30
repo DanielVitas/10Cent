@@ -7,7 +7,7 @@ import java.io.File;
 import java.nio.file.Paths;
 
 public enum SoundPlayer {
-    TEST("test.wav", 1);
+    TEST("test.wav", 100);
 
 
 
