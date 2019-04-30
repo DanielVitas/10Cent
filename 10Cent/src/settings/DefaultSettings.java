@@ -6,19 +6,22 @@ import java.util.Set;
 
 final class DefaultSettings {
 
-    private final static double defaultGlobalVolume = 100;
-    private final static double defaultSoundVolume = 100;
-    private final static double defaultMusicVolume = 100;
+    private final static double DEFAULT_GLOBAL_VOLUME = 100;
+    private final static double DEFAULT_SOUND_VOLUME = 100;
+    private final static double DEFAULT_MUSIC_VOLUME = 100;
+    private final static boolean DEFAULT_WINDOWED_MODE = true;
 
     static void writeDefault(){
         try{
             PrintWriter out = new PrintWriter(new FileWriter(Settings.SETTINGS_FILE));
             writeDefaultHead(out);
             out.println("#Audio");
-            out.println("globalVolume = " + defaultGlobalVolume);
-            out.println("soundVolume = " + defaultSoundVolume);
-            out.println("musicVolume = " + defaultMusicVolume);
-            out.close();
+            out.println("globalVolume = " + DEFAULT_GLOBAL_VOLUME);
+            out.println("soundVolume = " + DEFAULT_SOUND_VOLUME);
+            out.println("musicVolume = " + DEFAULT_MUSIC_VOLUME);
+            out.println();
+            out.println("# Screen");
+            out.println("windowedMode = " + DEFAULT_WINDOWED_MODE);
         } catch (Exception e) {
             System.out.println(e);
         }

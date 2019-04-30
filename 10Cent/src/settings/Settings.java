@@ -1,6 +1,9 @@
 package settings;
 
 import audio.AudioPlayer;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.sun.org.glassfish.gmbal.Description;
+import display.frame.MainFrame;
 
 import java.io.*;
 import java.nio.file.Paths;
@@ -12,9 +15,11 @@ public final class Settings {
     public static double globalVolume;
     public static double soundVolume;
     public static double musicVolume;
+    public static boolean windowedMode;
+
 
     // settingCount is the number of settings
-    private static final int settingCount = 3;
+    private static final int settingCount = 4;
 
     public static void setup(){
         read();
@@ -60,6 +65,11 @@ public final class Settings {
                         musicVolume = Double.valueOf(splitLine[1]);
                         counter++;
                         break;
+
+                    case("windowedMode"):
+                        windowedMode = Boolean.valueOf(splitLine[1]);
+                        counter++;
+                        break;
                 }
 
             }
@@ -78,6 +88,7 @@ public final class Settings {
     }
 
     private static void apply(){
+        MainFrame.switchToWindowed();
         AudioPlayer.updateSound();
     }
 
@@ -89,6 +100,9 @@ public final class Settings {
             out.println("globalVolume = " + globalVolume);
             out.println("soundVolume = " + soundVolume);
             out.println("musicVolume = " + musicVolume);
+            out.println();
+            out.println("# Screen");
+            out.println("windowedMode = " + windowedMode);
             out.close();
         } catch (Exception e) {
             System.out.println(e);

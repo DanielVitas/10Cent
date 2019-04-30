@@ -1,11 +1,15 @@
 package audio;
 
+import javafx.embed.swing.JFXPanel;
 import settings.Settings;
 
 import java.nio.file.Paths;
 
 public class AudioPlayer {
     // This is a "static" object providing sound and music playing functions
+
+    // MediaPlayer from javafx library needs Toolkit to be initialized, JFXPanel does it for us.
+    private static final JFXPanel panel = new JFXPanel();
 
     public static final String FILEPATH_MUSIC = Paths.get("10Cent","src","resources","audio","songs","").toString();
     public static final String FILEPATH_SOUND = Paths.get("10Cent","src","resources","audio","sounds","").toString();
