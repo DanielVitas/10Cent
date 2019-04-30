@@ -14,36 +14,38 @@ public abstract class Token extends DisplayObject {
 
     public Token(Player player, Dimension dimension, String directoryPath) {
         this.player = player;
-        this.directoryPath = directoryPath;
         this.dimension = dimension;
+        this.directoryPath = directoryPath;
+
+        installAnimations();
     }
 
-    public Animation animateDefault() {
-        String path = Paths.get(directoryPath, "default").toString();
-        Animation animation = new Animation(path, new long[]{500}, true){
-            @Override
-            protected void finished() {
-                removeSubComponent(this);
-            }
-        };
+    protected void installAnimations() {
+        Animation animation;
+        String path;
+
+        path = Paths.get(directoryPath, "default").toString();
+        animation = new Animation(path, new long[]{500}, true);
         animation.dimension = dimension;
-        addSubComponent(animation);
-        animation.start();
-        return animation;
-    }
+        addAnimation("default", animation);
 
-    public Animation animatePlace() {
-        String path = Paths.get(directoryPath, "place").toString();
-        Animation animation = new Animation(path, new long[]{500}, false) {
+        path = Paths.get(directoryPath, "place").toString();
+        animation = new Animation(path, new long[]{500}, false) {
             @Override
             protected void finished() {
                 animateDefault();
             }
         };
         animation.dimension = dimension;
-        addSubComponent(animation);
-        animation.start();
-        return animation;
+        addAnimation("place", animation);
+    }
+
+    public void animateDefault() {
+        animate("default");
+    }
+
+    public void animatePlace() {
+        animate("place");
     }
 
 }

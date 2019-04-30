@@ -25,7 +25,7 @@ public class FinalBoard extends Board {
         super();
         token = Board.empty.newToken(slotDimension);  // creates new EmptyToken
         token.animateDefault();
-        hitBoxes.add(new Rectangle(100, 100));
+        hitBoxes.add(new Rectangle(10, 10));
     }
 
     @Override
@@ -65,10 +65,5 @@ public class FinalBoard extends Board {
     @Override
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         token.paint(coordinates, scale, g);
-    }
-
-    @Override
-    public void clicked(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
-        System.out.println("Clicked.");
     }
 }

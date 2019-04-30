@@ -15,6 +15,14 @@ public class Dimension {
         this(image.getWidth(null), image.getHeight(null));
     }
 
+    public int getIntegerWidth() {
+        return (int) width;
+    }
+
+    public int getIntegerHeight() {
+        return (int) height;
+    }
+
     @Deprecated
     public java.awt.Dimension getAwtDimension() {
         return new java.awt.Dimension((int) width, (int) height);
