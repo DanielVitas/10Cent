@@ -5,7 +5,7 @@ import audio.AudioPlayer;
 import java.io.*;
 import java.nio.file.Paths;
 
-public class Settings {
+public final class Settings {
 
     public static final String SETTINGS_FILE = Paths.get("10Cent", "src", "resources", "settings", "settings").toString();
 
