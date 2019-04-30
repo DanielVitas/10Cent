@@ -4,19 +4,18 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+import java.nio.file.Paths;
 
 public enum SoundPlayer {
-    TEST("test.wav", 1);
+    TEST("test.wav", 100);
 
-    private static final String FILEPATH_SOUND = "10Cent/src/resources/audio/sounds/";
-
-    final double localSound;
+    final double localVolume;
     MediaPlayer mediaPlayer;
 
-    SoundPlayer(String fileName, double soundPercent){
-        this.localSound = soundPercent;
-        Media media = new Media(new File(FILEPATH_SOUND + fileName).toURI().toString());
+    SoundPlayer(String fileName, double soundPercent) {
+        this.localVolume = soundPercent;
+        Media media = new Media(new File(Paths.get(AudioPlayer.FILEPATH_SOUND ,fileName).toString()).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setVolume(localSound);
+        mediaPlayer.setVolume(localVolume);
     }
 }
