@@ -28,6 +28,16 @@ public class GameScreen extends Screen {
         };
         button.coordinates = new Coordinates(10, 10);
         addDisplayComponent(button, mainFrame.panel);
+
+        NormalButton settings = new NormalButton("Settings", new Dimension(10,10)) {
+            @Override
+            public void clicked() {
+                Controller.switchScreen(new SettingsScreen());
+            }
+        };
+        settings.coordinates = new Coordinates(20,20);
+        addDisplayComponent(settings, mainFrame.panel);
+
     }
 
 }

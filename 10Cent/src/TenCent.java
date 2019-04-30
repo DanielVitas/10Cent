@@ -16,8 +16,6 @@ public class TenCent {
 
         Images.loadImages(Paths.get(Images.resourcesPath,"images").toString());
 
-
-
         MainFrame mainFrame = new MainFrame();
         Controller.install(mainFrame);
         mainFrame.pack();
@@ -25,8 +23,6 @@ public class TenCent {
 
         Settings.setup();
 
-        SettingsScreen screen = new SettingsScreen();
-        Controller.switchScreen(screen);
     }
 
 }

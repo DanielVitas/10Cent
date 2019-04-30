@@ -22,11 +22,17 @@ public class AudioPlayer {
     }
 
     // MusicPlayer methods
-    public static void play(MusicPlayer musicPlayer){musicPlayer.mediaPlayer.play();}
+    public static void play(MusicPlayer musicPlayer) {
+        musicPlayer.mediaPlayer.play();
+    }
 
-    public static void pause(MusicPlayer musicPlayer) {musicPlayer.mediaPlayer.pause();}
+    public static void pause(MusicPlayer musicPlayer) {
+        musicPlayer.mediaPlayer.pause();
+    }
 
-    public static void stop(MusicPlayer musicPlayer) {musicPlayer.mediaPlayer.stop();}
+    public static void stop(MusicPlayer musicPlayer) {
+        musicPlayer.mediaPlayer.stop();
+    }
 
 
     // SoundPlayer methods
@@ -35,9 +41,13 @@ public class AudioPlayer {
         soundPlayer.mediaPlayer.play();
     }
 
-    public static void pause(SoundPlayer soundPlayer) {soundPlayer.mediaPlayer.pause();}
+    public static void pause(SoundPlayer soundPlayer) {
+        soundPlayer.mediaPlayer.pause();
+    }
 
-    public static void stop(SoundPlayer soundPlayer) {soundPlayer.mediaPlayer.stop();}
+    public static void stop(SoundPlayer soundPlayer) {
+        soundPlayer.mediaPlayer.stop();
+    }
 
     // Other methods
     public static void updateSound(){

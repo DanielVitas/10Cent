@@ -2,6 +2,7 @@ package display.frame;
 
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
+import display.screens.SettingsScreen;
 import settings.Settings;
 
 import javax.swing.*;
@@ -32,14 +33,24 @@ public class MainFrame extends JFrame {
     }
 
     //Takes windowedMode setting from  Settings and switches to Fullscreen if false and to Windowed if true
-    public static void switchToWindowed(){
+    public synchronized static void switchToWindowed(){
+        mainFrame.dispose();
+        mainFrame.setUndecorated(!Settings.windowedMode);
         if(Settings.windowedMode){
-            mainFrame.setExtendedState(JFrame.NORMAL);
+            mainFrame.setSize(Settings.windowSizeX,Settings.windowSizeY);
+            mainFrame.setLocation(Settings.windowLocationX,Settings.windowLocationY);
         } else {
             mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         }
-        mainFrame.dispose();
-        mainFrame.setUndecorated(!Settings.windowedMode);
         mainFrame.setVisible(true);
+    }
+
+    public static void saveSizeAndLoc(){
+        if(Settings.windowedMode && SettingsScreen.windowed){
+            Settings.windowSizeX = mainFrame.getSize().width;
+            Settings.windowSizeY = mainFrame.getSize().height;
+            Settings.windowLocationX = mainFrame.getLocation().x;
+            Settings.windowLocationY = mainFrame.getLocation().y;
+        }
     }
 }

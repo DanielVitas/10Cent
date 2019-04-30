@@ -9,11 +9,17 @@ import settings.Settings;
 
 public class SettingsScreen extends Screen{
 
+    public static boolean windowed;
+
     @Override
     public void load(MainFrame mainFrame){
+        windowed = Settings.windowedMode;
+
         NormalButton backButton = new NormalButton("Back", new Dimension(20, 10)) {
             @Override
-            public void clicked() { Controller.back(); }
+            public void clicked() {
+                Controller.back();
+            }
         };
         backButton.coordinates = new Coordinates(15, 80);
         addDisplayComponent(backButton, mainFrame.panel);
@@ -30,8 +36,13 @@ public class SettingsScreen extends Screen{
         NormalButton windowMode = new NormalButton(getWindowMode(), new Dimension(20, 10)) {
             @Override
             public void clicked() {
-               Settings.windowedMode = !Settings.windowedMode;
-               this.label.text=getWindowMode();
+                if(!Settings.windowedMode && !windowed) {
+                    windowed = false;
+                } else {
+                    windowed = true;
+                }
+                Settings.windowedMode = !Settings.windowedMode;
+                this.label.text=getWindowMode();
             }
         };
         windowMode.coordinates = new Coordinates(50,50);

@@ -16,17 +16,20 @@ public final class Settings {
     public static double soundVolume;
     public static double musicVolume;
     public static boolean windowedMode;
-
+    public static int windowSizeX;
+    public static int windowSizeY;
+    public static int windowLocationX;
+    public static int windowLocationY;
 
     // settingCount is the number of settings
-    private static final int settingCount = 4;
+    private static final int settingCount = 8;
 
-    public static void setup(){
+    public static void setup() {
         read();
         apply();
     }
 
-    public static void save(){
+    public static void save() {
         apply();
         write();
     }
@@ -70,6 +73,27 @@ public final class Settings {
                         windowedMode = Boolean.valueOf(splitLine[1]);
                         counter++;
                         break;
+
+                    case("windowSizeX"):
+                        windowSizeX = Integer.valueOf(splitLine[1]);
+                        counter++;
+                        break;
+
+                    case("windowSizeY"):
+                        windowSizeY = Integer.valueOf(splitLine[1]);
+                        counter++;
+                        break;
+
+                    case("windowLocationX"):
+                        windowLocationX = Integer.valueOf(splitLine[1]);
+                        counter++;
+                        break;
+
+                    case("windowLocationY"):
+                        windowLocationY = Integer.valueOf(splitLine[1]);
+                        counter++;
+                        break;
+
                 }
 
             }
@@ -87,12 +111,13 @@ public final class Settings {
 
     }
 
-    private static void apply(){
+    private static void apply() {
+        MainFrame.saveSizeAndLoc();
         MainFrame.switchToWindowed();
         AudioPlayer.updateSound();
     }
 
-    private static void write(){
+    private static void write() {
         try{
             PrintWriter out = new PrintWriter(new FileWriter(SETTINGS_FILE));
             DefaultSettings.writeDefaultHead(out);
@@ -103,6 +128,10 @@ public final class Settings {
             out.println();
             out.println("# Screen");
             out.println("windowedMode = " + windowedMode);
+            out.println("windowSizeX = " + windowSizeX);
+            out.println("windowSizeY = " + windowSizeY);
+            out.println("windowLocationX = " + windowLocationX);
+            out.println("windowLocationY = " + windowLocationY);
             out.close();
         } catch (Exception e) {
             System.out.println(e);

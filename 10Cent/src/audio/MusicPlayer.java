@@ -12,7 +12,7 @@ public enum MusicPlayer {
     final double localVolume;
     MediaPlayer mediaPlayer;
 
-    MusicPlayer(String fileName, double soundPercent){
+    MusicPlayer(String fileName, double soundPercent) {
         this.localVolume = soundPercent;
         Media media = new Media(new File(Paths.get(AudioPlayer.FILEPATH_MUSIC ,fileName).toString()).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
