@@ -1,0 +1,6 @@
+# Corrupting settings will restore them to their defaults
+
+# Audio
+globalVolume = 100.0
+soundVolume = 100.0
+musicVolume = 25.0
