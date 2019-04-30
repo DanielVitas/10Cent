@@ -48,20 +48,6 @@ public abstract class Button extends DisplayObject {
         animation = new Animation(path, new long[]{500}, true);
         animation.dimension = dimension;
         addAnimation("pressed", animation);
-
-        path = Paths.get(directoryPath, "clicked").toString();
-        Button button = this;
-        animation = new Animation(path, new long[]{500}, false) {
-            @Override
-            protected void finished() {
-                if (Mouse.hovered == button)
-                    animateHovered();
-                else
-                    animateDefault();
-            }
-        };
-        animation.dimension = dimension;
-        addAnimation("clicked", animation);
     }
 
     public void animateDefault() {
@@ -77,7 +63,10 @@ public abstract class Button extends DisplayObject {
     }
 
     public void animateClicked() {
-        animate("clicked");
+        if (Mouse.hovered == this)
+            animateHovered();
+        else
+            animateDefault();
     }
 
     @Override

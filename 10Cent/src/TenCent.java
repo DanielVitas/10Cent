@@ -1,6 +1,7 @@
 import display.screens.Controller;
 import display.images.Images;
 import display.frame.MainFrame;
+import display.screens.GameScreen;
 import logic.boards.exceptions.InvalidMoveException;
 
 import java.nio.file.Paths;

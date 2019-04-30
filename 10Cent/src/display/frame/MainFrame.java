@@ -4,6 +4,8 @@ import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MainFrame extends JFrame {
 
@@ -18,10 +20,21 @@ public class MainFrame extends JFrame {
         super();
         mainFrame = this;
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                onClose();
+                super.windowClosing(windowEvent);
+            }
+        });
         panel = new MainPanel(new Dimension(600, 600));
         add(panel);
         repaintThread = new RepaintThread(panel);
         repaintThread.start();
+    }
+
+    private void onClose() {
+
     }
 
     @Deprecated

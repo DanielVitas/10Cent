@@ -59,4 +59,10 @@ public class Coordinates extends Point2D {
         x = v;
         y = v1;
     }
+
+    @Override
+    public String toString() {
+        return "(" + getX() + ", " + getY() + ")";
+    }
+
 }
