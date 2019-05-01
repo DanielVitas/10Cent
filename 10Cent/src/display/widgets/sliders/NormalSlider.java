@@ -28,5 +28,4 @@ public class NormalSlider extends HorizontalSlider{
         animate("default");
     }
 
-
 }

@@ -3,6 +3,7 @@ package display.frame;
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
 import display.screens.SettingsScreen;
+import javafx.embed.swing.JFXPanel;
 import settings.Settings;
 
 import javax.swing.*;
@@ -37,7 +38,8 @@ public class MainFrame extends JFrame {
     }
 
     private void onClose() {
-
+        saveSizeAndLoc();
+        Settings.save();
     }
 
     @Deprecated
@@ -49,17 +51,20 @@ public class MainFrame extends JFrame {
     public synchronized static void switchToWindowed(){
         mainFrame.dispose();
         mainFrame.setUndecorated(!Settings.windowedMode);
+        mainFrame.setVisible(true);
         if(Settings.windowedMode){
+            mainFrame.setExtendedState(JFrame.NORMAL);
             mainFrame.setSize(Settings.windowSizeX,Settings.windowSizeY);
             mainFrame.setLocation(Settings.windowLocationX,Settings.windowLocationY);
         } else {
             mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         }
-        mainFrame.setVisible(true);
+
+
     }
 
     public static void saveSizeAndLoc(){
-        if(Settings.windowedMode && SettingsScreen.windowed){
+        if(Settings.windowedMode){
             Settings.windowSizeX = mainFrame.getSize().width;
             Settings.windowSizeY = mainFrame.getSize().height;
             Settings.windowLocationX = mainFrame.getLocation().x;

@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 public abstract class Slider extends DisplayObject {
 
     protected Dimension dimension;
-    private Node node;
+    protected Node node;
 
     public Slider(Dimension dimension) {
         this.dimension = dimension;

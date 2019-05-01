@@ -24,6 +24,10 @@ public final class Settings {
     // settingCount is the number of settings
     private static final int settingCount = 8;
 
+    public static boolean getWindowedMode() {
+        return windowedMode;
+    }
+
     public static void setup() {
         read();
         apply();
@@ -112,7 +116,6 @@ public final class Settings {
     }
 
     private static void apply() {
-        MainFrame.saveSizeAndLoc();
         MainFrame.switchToWindowed();
         AudioPlayer.updateSound();
     }

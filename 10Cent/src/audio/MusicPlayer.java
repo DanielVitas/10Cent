@@ -10,7 +10,7 @@ public enum MusicPlayer {
     TEST("test.mp3", 100);
 
     final double localVolume;
-    MediaPlayer mediaPlayer;
+    protected MediaPlayer mediaPlayer;
 
     MusicPlayer(String fileName, double soundPercent) {
         this.localVolume = soundPercent;
