@@ -6,5 +6,5 @@ Projektna naloga pri predmetu Programiranje 2.
 - [ ] redesign osnov izrisovanja?
 - [ ] osnove poteka igre
 - [x] audio
-- [x] settings menu
+- [ ] settings menu
 - [x] settings file

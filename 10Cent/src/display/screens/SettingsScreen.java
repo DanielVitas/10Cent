@@ -5,10 +5,12 @@ import audio.MusicPlayer;
 import display.frame.MainFrame;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
+import display.widgets.Label;
 import display.widgets.buttons.NormalButton;
 import display.widgets.sliders.NormalSlider;
 import settings.Settings;
 
+import java.awt.*;
 import java.util.Set;
 
 
@@ -18,18 +20,35 @@ public class SettingsScreen extends Screen{
 
     @Override
     public void load(MainFrame mainFrame){
-        NormalSlider globalVolume = new NormalSlider(new Dimension(20,10));
-        globalVolume.coordinates = new Coordinates(10,30);
+
+        Label globalVolumeLabel = new Label("Master Volume", new Font("Courier", Font.PLAIN,  (int) (25 * Label.FONT_SIZE / 13)), Color.BLACK);
+        globalVolumeLabel.coordinates = new Coordinates(1,7);
+        addDisplayComponent(globalVolumeLabel, mainFrame.panel);
+
+        Label musicVolumeLabel = new Label("Music Volume", new Font("Courier", Font.PLAIN,  (int) (25 * Label.FONT_SIZE / 13)), Color.BLACK);
+        musicVolumeLabel.coordinates = new Coordinates(1,22);
+        addDisplayComponent(musicVolumeLabel, mainFrame.panel);
+
+        Label soundVolumeLabel = new Label("Sound Volume", new Font("Courier", Font.PLAIN,  (int) (25 * Label.FONT_SIZE / 13)), Color.BLACK);
+        soundVolumeLabel.coordinates = new Coordinates(1,37);
+        addDisplayComponent(soundVolumeLabel, mainFrame.panel);
+
+        Label fullscreenLabel = new Label("Screen Mode", new Font("Courier", Font.PLAIN,  (int) (25 * Label.FONT_SIZE / 13)), Color.BLACK);
+        fullscreenLabel.coordinates = new Coordinates(1,52);
+        addDisplayComponent(fullscreenLabel, mainFrame.panel);
+
+        NormalSlider globalVolume = new NormalSlider(new Dimension(20,1));
+        globalVolume.coordinates = new Coordinates(20,5);
         globalVolume.setValue(Settings.globalVolume/100);
         addDisplayComponent(globalVolume, mainFrame.panel);
 
-        NormalSlider soundVolume = new NormalSlider(new Dimension(20,10));
-        soundVolume.coordinates = new Coordinates(10,50);
+        NormalSlider soundVolume = new NormalSlider(new Dimension(20,1));
+        soundVolume.coordinates = new Coordinates(20,20);
         soundVolume.setValue(Settings.soundVolume/100);
         addDisplayComponent(soundVolume, mainFrame.panel);
 
-        NormalSlider musicVolume = new NormalSlider(new Dimension(20,10));
-        musicVolume.coordinates = new Coordinates(10,70);
+        NormalSlider musicVolume = new NormalSlider(new Dimension(20,1));
+        musicVolume.coordinates = new Coordinates(20,35);
         musicVolume.setValue(Settings.musicVolume/100);
         addDisplayComponent(musicVolume, mainFrame.panel);
 
@@ -49,7 +68,8 @@ public class SettingsScreen extends Screen{
                 Settings.soundVolume = soundVolume.getValue()*100;
                 Settings.musicVolume = musicVolume.getValue()*100;
                 Settings.save();
-                Controller.back(); }
+                //Controller.back();
+            }
         };
         saveButton.coordinates = new Coordinates(65,80);
         addDisplayComponent(saveButton, mainFrame.panel);
@@ -61,7 +81,7 @@ public class SettingsScreen extends Screen{
                 this.label.text=getWindowMode();
             }
         };
-        windowMode.coordinates = new Coordinates(50,50);
+        windowMode.coordinates = new Coordinates(20,50);
         addDisplayComponent(windowMode, mainFrame.panel);
 
         NormalButton playEpic = new NormalButton("Dze se kupas", new Dimension(10,10)) {
