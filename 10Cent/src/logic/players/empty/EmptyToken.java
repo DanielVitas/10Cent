@@ -5,6 +5,9 @@ import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
 import display.images.Animation;
 import display.images.Images;
+import display.screens.Controller;
+import logic.boards.Move;
+import logic.game.GameController;
 import logic.players.Player;
 import logic.players.Token;
 
@@ -13,8 +16,8 @@ import java.nio.file.Paths;
 
 public class EmptyToken extends Token {
 
-    public EmptyToken(Player player, Dimension dimension) {
-        super(player, dimension, Paths.get(Images.RESOURCES_PATH,"images", "tokens", "empty").toString());
+    public EmptyToken(Player player, Move move, GameController gameController, Dimension dimension) {
+        super(player, move, gameController, dimension, Paths.get(Images.RESOURCES_PATH,"images", "tokens", "empty").toString());
     }
 
     @Override
@@ -54,7 +57,8 @@ public class EmptyToken extends Token {
 
     @Override
     public void click(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
-        animateDefault();
+        move.setPlayer(gameController.getCurrentPlayer());
+        gameController.currentMove = move;
     }
 
 }

@@ -1,20 +1,22 @@
 package logic.players.empty;
 
 import display.frame.misc.Dimension;
+import display.screens.Controller;
+import logic.boards.Move;
+import logic.game.GameController;
 import logic.players.Player;
 import logic.players.Token;
-
-import java.nio.file.Paths;
 
 public class Empty extends Player {
 
     public Empty() {
-        super();
+        super(null);
+        sign = ' ';
     }
 
     @Override
-    public Token newToken(Dimension dimension) {
-        return new EmptyToken(this, dimension);
+    public Token newToken(Move move, GameController gameController, Dimension dimension) {
+        return new EmptyToken(this, move, gameController, dimension);
     }
 
 }

@@ -4,13 +4,14 @@ import audio.AudioPlayer;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.sun.org.glassfish.gmbal.Description;
 import display.frame.MainFrame;
+import display.images.Images;
 
 import java.io.*;
 import java.nio.file.Paths;
 
 public final class Settings {
 
-    public static final String SETTINGS_FILE = Paths.get("10Cent", "src", "resources", "settings", "settings").toString();
+    public static final String SETTINGS_FILE = Paths.get(Images.RESOURCES_PATH, "settings", "settings").toString();
 
     public static double globalVolume;
     public static double soundVolume;
@@ -107,9 +108,6 @@ public final class Settings {
             System.out.println("Settings file does not exist or is corrupted. Writing default settings.");
             DefaultSettings.setDefaultSettings();
         }
-
-
-
     }
 
     private static void apply() {

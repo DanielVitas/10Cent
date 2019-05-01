@@ -2,7 +2,9 @@ package logic.boards;
 
 import display.frame.DisplayObject;
 import display.frame.misc.Dimension;
+import display.screens.Controller;
 import logic.boards.exceptions.InvalidMoveException;
+import logic.game.GameController;
 import logic.players.Token;
 import logic.players.empty.Empty;
 import logic.players.Player;
@@ -14,34 +16,39 @@ public abstract class Board extends DisplayObject {
      */
 
     public static Player empty = new Empty();
-    public Player outcome = empty;
+    public CompactBoard compactBoard;
+    protected GameController gameController;
 
     public Board() {
 
     }
 
-    // returns true iff move is legal
+    public CompactBoard getCompactBoard() {
+        return compactBoard;
+    }
+
+    // returns true iff move is legal - change to void?
     public boolean play(Move move) throws InvalidMoveException {
         if (!validMove(move))
             throw new InvalidMoveException(this, move);
 
-        if (!(outcome instanceof Empty))
+        if (outcome() != empty)
             return false;
 
         Board subBoard = selectSubBoard(move);
+
+        if (compactBoard != null)
+            compactBoard.play(move);
+
         if (subBoard != null)  // subBoard is null only if the current board is final
             return subBoard.play(move.getNextMove());
-
-        decideOutcome();  // has no meaning in FinalBoard
 
         return true;  // this value is only used in FinalBoard's play
     }
 
-    protected void setOutcome(Player player) {
-        outcome = player;
+    public Player outcome() {
+        return compactBoard.outcome();
     }
-
-    protected abstract void decideOutcome();
 
     protected abstract Board selectSubBoard(Move move);
 

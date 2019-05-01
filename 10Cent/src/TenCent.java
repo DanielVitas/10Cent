@@ -18,8 +18,9 @@ public class TenCent {
         Controller.install(mainFrame);
         mainFrame.pack();
         mainFrame.setVisible(true);
+        AudioPlayer.setup();
         Settings.setup();
-        AudioPlayer.play(MusicPlayer.TEST);
+        //AudioPlayer.play(MusicPlayer.TEST);
 
     }
 

@@ -6,7 +6,7 @@ public class Human extends Intelligence {
 
     @Override
     public void play() {
-
+        gameController.awaitingPlayer = true;
     }
 
 }
