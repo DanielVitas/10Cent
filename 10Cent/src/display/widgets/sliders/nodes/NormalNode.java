@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 public class NormalNode extends Node {
 
-    private String directoryPath = Paths.get(Images.resourcesPath, "images", "sliders", "nodes", "normal").toString();
+    private String directoryPath = Paths.get(Images.RESOURCES_PATH, "images", "sliders", "nodes", "normal").toString();
 
     public NormalNode(Slider slider, Dimension dimension) {
         super(slider);

@@ -63,7 +63,7 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
         if (Mouse.hovered != null) {
             Coordinates mouseCoordinates = Mouse.getCoordinates(mouseEvent);
             Coordinates coordinates = Mouse.hovered.getCoordinates().flip().add(mouseCoordinates);
-            if (Mouse.hovered.contains(coordinates, Scale.noScale))
+            if (Mouse.hovered.contains(coordinates, Scale.noScale, mouseEvent))
                 Mouse.hovered.click(coordinates, Scale.noScale, mouseEvent);
             else
                 Mouse.hovered.release(coordinates, Scale.noScale, mouseEvent);
@@ -97,7 +97,7 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
         Coordinates mouseCoordinates = Mouse.getCoordinates(mouseEvent);
         for (DisplayComponent displayComponent : displayComponents) {
             Coordinates coordinates = displayComponent.getCoordinates().flip().add(mouseCoordinates);
-            if (displayComponent.contains(coordinates, Scale.noScale)) {
+            if (displayComponent.contains(coordinates, Scale.noScale, mouseEvent)) {
                 if (Mouse.hovered != displayComponent) {
                     if (Mouse.hovered != null)
                         Mouse.hovered.unhover(mouseCoordinates, Scale.noScale, mouseEvent);

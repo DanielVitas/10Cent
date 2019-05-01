@@ -20,29 +20,6 @@ public class GameScreen extends Screen {
         };
         board.coordinates = new Coordinates(30, 30);
         addDisplayComponent(board, mainFrame.panel);
-
-        NormalSlider slider = new NormalSlider(new Dimension(30, 1));
-        slider.coordinates = new Coordinates(30, 10);
-        addDisplayComponent(slider, mainFrame.panel);
-
-        NormalButton button = new NormalButton("Hey", new Dimension(10, 10)) {
-            @Override
-            public void clicked() {
-                this.label.text = Integer.toString((int) (slider.getValue() * 100));
-            }
-        };
-        button.coordinates = new Coordinates(10, 10);
-        addDisplayComponent(button, mainFrame.panel);
-
-        NormalButton settings = new NormalButton("Settings", new Dimension(10,10)) {
-            @Override
-            public void clicked() {
-                Controller.switchScreen(new SettingsScreen());
-            }
-        };
-        settings.coordinates = new Coordinates(20,20);
-        addDisplayComponent(settings, mainFrame.panel);
-
     }
 
 }

@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 
 public class NormalSlider extends HorizontalSlider{
 
-    private String directoryPath = Paths.get(Images.resourcesPath, "images", "sliders", "normal").toString();
+    private String directoryPath = Paths.get(Images.RESOURCES_PATH, "images", "sliders", "normal").toString();
 
     public NormalSlider(Dimension dimension) {
         super(dimension);

@@ -9,7 +9,7 @@ public final class Controller {
 
     public static void install(MainFrame mainFrame) {
         Controller.mainFrame = mainFrame;
-        switchScreen(new GameScreen());
+        switchScreen(new MainMenuScreen());
     }
 
     public static void switchScreen(Screen screen) {

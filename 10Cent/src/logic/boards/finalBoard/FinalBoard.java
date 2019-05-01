@@ -1,5 +1,6 @@
 package logic.boards.finalBoard;
 
+import display.frame.Mouse;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
@@ -20,11 +21,12 @@ public class FinalBoard extends Board {
     public Token token;
     public Dimension slotDimension = new Dimension(10, 10);
 
-
     public FinalBoard() {
         super();
+
         token = Board.empty.newToken(slotDimension);  // creates new EmptyToken
         token.animateDefault();
+
         hitBoxes.add(new Rectangle(10, 10));
     }
 
@@ -40,7 +42,6 @@ public class FinalBoard extends Board {
         return true;
     }
 
-    //
     @Override
     protected void decideOutcome() {
         if (token.player != Board.empty)  // only to avoid setOutcome being called twice
@@ -66,4 +67,30 @@ public class FinalBoard extends Board {
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         token.paint(coordinates, scale, g);
     }
+
+    @Override
+    public void hover(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
+        token.hover(coordinates, scale, mouseEvent);
+    }
+
+    @Override
+    public void unhover(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
+        token.unhover(coordinates, scale, mouseEvent);
+    }
+
+    @Override
+    public void press(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
+        token.press(coordinates, scale, mouseEvent);
+    }
+
+    @Override
+    public void release(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
+        token.release(coordinates, scale, mouseEvent);
+    }
+
+    @Override
+    public void click(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
+        token.click(coordinates, scale, mouseEvent);
+    }
+
 }

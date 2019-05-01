@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 public abstract class Token extends DisplayObject {
 
     public Player player;
-    private String directoryPath;  // contains animation directories
+    protected String directoryPath;  // contains animation directories
     protected Dimension dimension;
 
     public Token(Player player, Dimension dimension, String directoryPath) {

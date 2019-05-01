@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 public class CrossToken extends Token {
 
     public CrossToken(Player player, Dimension dimension) {
-        super(player, dimension, Paths.get(Images.resourcesPath,"images", "tokens", "cross").toString());
+        super(player, dimension, Paths.get(Images.RESOURCES_PATH,"images", "tokens", "cross").toString());
     }
 
 }

@@ -1,5 +1,6 @@
 package audio;
 
+import display.images.Images;
 import javafx.embed.swing.JFXPanel;
 import settings.Settings;
 
@@ -11,8 +12,8 @@ public class AudioPlayer {
     // MediaPlayer from javafx library needs Toolkit to be initialized, JFXPanel does it for us.
     private static final JFXPanel panel = new JFXPanel();
 
-    public static final String FILEPATH_MUSIC = Paths.get("10Cent","src","resources","audio","songs","").toString();
-    public static final String FILEPATH_SOUND = Paths.get("10Cent","src","resources","audio","sounds","").toString();
+    public static final String FILEPATH_MUSIC = Paths.get(Images.RESOURCES_PATH,"audio", "songs", "").toString();
+    public static final String FILEPATH_SOUND = Paths.get(Images.RESOURCES_PATH,"audio", "sounds", "").toString();
 
     private static MusicPlayer[] musicPlayers = MusicPlayer.values();
     private static SoundPlayer[] soundPlayers = SoundPlayer.values();
@@ -50,12 +51,12 @@ public class AudioPlayer {
     }
 
     // Other methods
-    public static void updateSound(){
-        for(MusicPlayer player : musicPlayers){
-            player.mediaPlayer.setVolume(Settings.globalVolume*player.localVolume*Settings.musicVolume/1000000);
+    public static void updateSound() {
+        for (MusicPlayer player : musicPlayers) {
+            player.mediaPlayer.setVolume(Settings.globalVolume*player.localVolume*Settings.musicVolume/1000);
         }
-        for(SoundPlayer player : soundPlayers){
-            player.mediaPlayer.setVolume(Settings.globalVolume*player.localVolume*Settings.soundVolume/1000000);
+        for (SoundPlayer player : soundPlayers) {
+            player.mediaPlayer.setVolume(Settings.globalVolume*player.localVolume*Settings.soundVolume/1000);
         }
     }
 
