@@ -1,5 +1,7 @@
 package settings;
 
+import oracle.jrockit.jfr.openmbean.EventSettingType;
+
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Set;
@@ -15,25 +17,16 @@ final class DefaultSettings {
     private final static int DEFAULT_WINDOW_LOCATION_X = 20;
     private final static int DEFAULT_WINDOW_LOCATION_Y = 20;
 
-    static void writeDefault() {
-        try{
-            PrintWriter out = new PrintWriter(new FileWriter(Settings.SETTINGS_FILE));
-            writeDefaultHead(out);
-            out.println("#Audio");
-            out.println("globalVolume = " + DEFAULT_GLOBAL_VOLUME);
-            out.println("soundVolume = " + DEFAULT_SOUND_VOLUME);
-            out.println("musicVolume = " + DEFAULT_MUSIC_VOLUME);
-            out.println();
-            out.println("# Screen");
-            out.println("windowedMode = " + DEFAULT_WINDOWED_MODE);
-            out.println("windowSizeX = " + DEFAULT_WINDOW_SIZE_X);
-            out.println("windowSizeY = " + DEFAULT_WINDOW_SIZE_Y);
-            out.println("windowLocationX = " + DEFAULT_WINDOW_LOCATION_X);
-            out.println("windowLocationY = " + DEFAULT_WINDOW_LOCATION_Y);
-            out.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+    static void setDefaultSettings() {
+        Settings.globalVolume = DEFAULT_GLOBAL_VOLUME;
+        Settings.soundVolume = DEFAULT_SOUND_VOLUME;
+        Settings.musicVolume = DEFAULT_MUSIC_VOLUME;
+        Settings.windowedMode = DEFAULT_WINDOWED_MODE;
+        Settings.windowSizeX = DEFAULT_WINDOW_SIZE_X;
+        Settings.windowSizeY = DEFAULT_WINDOW_SIZE_Y;
+        Settings.windowLocationX = DEFAULT_WINDOW_LOCATION_X;
+        Settings.windowLocationY = DEFAULT_WINDOW_LOCATION_Y;
+        Settings.write();
         Settings.setup();
     }
 

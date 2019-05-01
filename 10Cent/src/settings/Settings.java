@@ -50,7 +50,7 @@ public final class Settings {
 
                 if (splitLine.length != 2) {
                     System.out.println("Corrupted file, writing default settings.");
-                    DefaultSettings.writeDefault();
+                    DefaultSettings.setDefaultSettings();
                     break;
                 }
 
@@ -101,11 +101,11 @@ public final class Settings {
             in.close();
             if(counter!=settingCount){
                 System.out.println("Settings file was corrupted, writing new settings.");
-                DefaultSettings.writeDefault();
+                DefaultSettings.setDefaultSettings();
             }
         } catch (Exception e) {
             System.out.println("Settings file does not exist or is corrupted. Writing default settings.");
-            DefaultSettings.writeDefault();
+            DefaultSettings.setDefaultSettings();
         }
 
 
@@ -117,7 +117,7 @@ public final class Settings {
         AudioPlayer.updateSound();
     }
 
-    private static void write() {
+    protected static void write() {
         try{
             PrintWriter out = new PrintWriter(new FileWriter(SETTINGS_FILE));
             DefaultSettings.writeDefaultHead(out);
@@ -134,8 +134,7 @@ public final class Settings {
             out.println("windowLocationY = " + windowLocationY);
             out.close();
         } catch (Exception e) {
-            System.out.println(e);
-            DefaultSettings.writeDefault();
+            e.printStackTrace();
         }
 
     }

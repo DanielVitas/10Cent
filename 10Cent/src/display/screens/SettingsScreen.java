@@ -16,38 +16,63 @@ import java.util.Set;
 
 public class SettingsScreen extends Screen{
 
-    public final static boolean windowed = Settings.windowedMode;
+    private static double globalVolumeV = Settings.globalVolume;
+    private static double musicVolumeV = Settings.musicVolume;
+    private static double soundVolumeV = Settings.soundVolume;
+
+    private static Font font = new Font("Courier", Font.PLAIN,  (int) (25 * Label.FONT_SIZE / 13));
 
     @Override
     public void load(MainFrame mainFrame){
 
-        Label globalVolumeLabel = new Label("Master Volume", new Font("Courier", Font.PLAIN,  (int) (25 * Label.FONT_SIZE / 13)), Color.BLACK);
+        Label globalVolumeLabel = new Label("Master Volume", font, Color.BLACK);
         globalVolumeLabel.coordinates = new Coordinates(1,7);
         addDisplayComponent(globalVolumeLabel, mainFrame.panel);
 
-        Label musicVolumeLabel = new Label("Music Volume", new Font("Courier", Font.PLAIN,  (int) (25 * Label.FONT_SIZE / 13)), Color.BLACK);
+        Label musicVolumeLabel = new Label("Music Volume", font, Color.BLACK);
         musicVolumeLabel.coordinates = new Coordinates(1,22);
         addDisplayComponent(musicVolumeLabel, mainFrame.panel);
 
-        Label soundVolumeLabel = new Label("Sound Volume", new Font("Courier", Font.PLAIN,  (int) (25 * Label.FONT_SIZE / 13)), Color.BLACK);
+        Label soundVolumeLabel = new Label("Sound Volume", font, Color.BLACK);
         soundVolumeLabel.coordinates = new Coordinates(1,37);
         addDisplayComponent(soundVolumeLabel, mainFrame.panel);
 
-        Label fullscreenLabel = new Label("Screen Mode", new Font("Courier", Font.PLAIN,  (int) (25 * Label.FONT_SIZE / 13)), Color.BLACK);
+        Label fullscreenLabel = new Label("Screen Mode", font, Color.BLACK);
         fullscreenLabel.coordinates = new Coordinates(1,52);
         addDisplayComponent(fullscreenLabel, mainFrame.panel);
 
-        NormalSlider globalVolume = new NormalSlider(new Dimension(20,1));
+        NormalSlider globalVolume = new NormalSlider(new Dimension(20,1)) {
+            @Override
+            public Coordinates slide(Coordinates deltaCoordinates){
+                Settings.globalVolume = getValue()*100;
+                AudioPlayer.updateSound();
+                return super.slide(deltaCoordinates);
+            }
+        };
         globalVolume.coordinates = new Coordinates(20,5);
         globalVolume.setValue(Settings.globalVolume/100);
         addDisplayComponent(globalVolume, mainFrame.panel);
 
-        NormalSlider soundVolume = new NormalSlider(new Dimension(20,1));
+        NormalSlider soundVolume = new NormalSlider(new Dimension(20,1)) {
+            @Override
+            public Coordinates slide(Coordinates deltaCoordinates) {
+                Settings.soundVolume = getValue() * 100;
+                AudioPlayer.updateSound();
+                return super.slide(deltaCoordinates);
+            }
+        };
         soundVolume.coordinates = new Coordinates(20,20);
         soundVolume.setValue(Settings.soundVolume/100);
         addDisplayComponent(soundVolume, mainFrame.panel);
 
-        NormalSlider musicVolume = new NormalSlider(new Dimension(20,1));
+        NormalSlider musicVolume = new NormalSlider(new Dimension(20,1)) {
+            @Override
+            public Coordinates slide(Coordinates deltaCoordinates) {
+                Settings.musicVolume = getValue() * 100;
+                AudioPlayer.updateSound();
+                return super.slide(deltaCoordinates);
+            }
+        };
         musicVolume.coordinates = new Coordinates(20,35);
         musicVolume.setValue(Settings.musicVolume/100);
         addDisplayComponent(musicVolume, mainFrame.panel);
@@ -55,6 +80,10 @@ public class SettingsScreen extends Screen{
         NormalButton backButton = new NormalButton("Back", new Dimension(20, 10)) {
             @Override
             public void clicked() {
+                Settings.globalVolume = globalVolumeV;
+                Settings.soundVolume = soundVolumeV;
+                Settings.musicVolume = musicVolumeV;
+                AudioPlayer.updateSound();
                 Controller.back();
             }
         };
@@ -67,6 +96,9 @@ public class SettingsScreen extends Screen{
                 Settings.globalVolume = globalVolume.getValue()*100;
                 Settings.soundVolume = soundVolume.getValue()*100;
                 Settings.musicVolume = musicVolume.getValue()*100;
+                musicVolumeV = Settings.musicVolume;
+                soundVolumeV = Settings.soundVolume;
+                globalVolumeV = Settings.globalVolume;
                 Settings.save();
                 //Controller.back();
             }
