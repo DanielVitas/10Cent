@@ -53,10 +53,10 @@ public class AudioPlayer {
     // Other methods
     public static void updateSound() {
         for (MusicPlayer player : musicPlayers) {
-            player.mediaPlayer.setVolume(Settings.globalVolume*player.localVolume*Settings.musicVolume/1000);
+            player.mediaPlayer.setVolume(Settings.globalVolume*player.localVolume*Settings.musicVolume/100000);
         }
         for (SoundPlayer player : soundPlayers) {
-            player.mediaPlayer.setVolume(Settings.globalVolume*player.localVolume*Settings.soundVolume/1000);
+            player.mediaPlayer.setVolume(Settings.globalVolume*player.localVolume*Settings.soundVolume/100000);
         }
     }
 
