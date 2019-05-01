@@ -29,13 +29,13 @@ public class SettingsScreen extends Screen{
         globalVolumeLabel.coordinates = new Coordinates(1,7);
         addDisplayComponent(globalVolumeLabel, mainFrame.panel);
 
-        Label musicVolumeLabel = new Label("Music Volume", font, Color.BLACK);
-        musicVolumeLabel.coordinates = new Coordinates(1,22);
-        addDisplayComponent(musicVolumeLabel, mainFrame.panel);
-
         Label soundVolumeLabel = new Label("Sound Volume", font, Color.BLACK);
-        soundVolumeLabel.coordinates = new Coordinates(1,37);
+        soundVolumeLabel.coordinates = new Coordinates(1,22);
         addDisplayComponent(soundVolumeLabel, mainFrame.panel);
+
+        Label musicVolumeLabel = new Label("Music Volume", font, Color.BLACK);
+        musicVolumeLabel.coordinates = new Coordinates(1,37);
+        addDisplayComponent(musicVolumeLabel, mainFrame.panel);
 
         Label fullscreenLabel = new Label("Screen Mode", font, Color.BLACK);
         fullscreenLabel.coordinates = new Coordinates(1,52);
