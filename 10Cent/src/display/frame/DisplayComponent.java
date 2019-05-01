@@ -20,7 +20,7 @@ public interface DisplayComponent {
     Coordinates getCoordinates();
 
     // returns true if coordinates are contained in object
-    boolean contains(Coordinates coordinates, Scale scale);
+    boolean contains(Coordinates coordinates, Scale scale, MouseEvent mouseEvent);
 
     // called when (unpressed) mouse first hovers the object
     void hover(Coordinates coordinates, Scale scale, MouseEvent mouseEvent);

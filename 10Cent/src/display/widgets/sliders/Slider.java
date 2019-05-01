@@ -29,8 +29,8 @@ public abstract class Slider extends DisplayObject {
     public abstract Coordinates slide(Coordinates deltaCoordinates);
 
     @Override
-    public boolean contains(Coordinates coordinates, Scale scale) {
-        return node.contains(coordinates.add(node.coordinates.scale(scale).flip()), scale);
+    public boolean contains(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
+        return node.contains(coordinates.add(node.coordinates.scale(scale).flip()), scale, mouseEvent);
     }
 
     @Override

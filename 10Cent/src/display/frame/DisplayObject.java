@@ -66,9 +66,10 @@ public class DisplayObject implements DisplayComponent {
 
     // non-interactive objects should have empty hit-boxes
     @Override
-    public boolean contains(Coordinates coordinates, Scale scale) {
+    public boolean contains(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
+        Coordinates descaledCoordinates = coordinates.scale(scale.inverse());
         for (Shape shape : hitBoxes)
-            if (shape.contains(coordinates))
+            if (shape.contains(descaledCoordinates))
                 return true;
         return false;
     }

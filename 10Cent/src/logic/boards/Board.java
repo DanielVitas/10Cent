@@ -3,6 +3,7 @@ package logic.boards;
 import display.frame.DisplayObject;
 import display.frame.misc.Dimension;
 import logic.boards.exceptions.InvalidMoveException;
+import logic.players.Token;
 import logic.players.empty.Empty;
 import logic.players.Player;
 

@@ -18,7 +18,7 @@ public final class Images {
     accessed afterwards by their paths.
      */
 
-    public static String resourcesPath = Paths.get("10Cent", "src", "resources").toString();
+    public static String RESOURCES_PATH = Paths.get("10Cent", "src", "resources").toString();
     private static Map<String, Image> images = new HashMap<>();
 
     public static Image get(String name) {
