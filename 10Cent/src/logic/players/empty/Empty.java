@@ -11,7 +11,6 @@ public class Empty extends Player {
 
     public Empty() {
         super(null);
-        sign = ' ';
     }
 
     @Override

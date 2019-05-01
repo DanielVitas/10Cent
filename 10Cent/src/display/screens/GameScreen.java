@@ -13,12 +13,13 @@ import logic.game.StandardGameController;
 import logic.intelligence.Human;
 import logic.players.Player;
 import logic.players.cross.Cross;
+import logic.players.nought.Nought;
 
 public class GameScreen extends Screen {
 
     @Override
     public void load(MainFrame mainFrame) {
-        GameController gameController = new StandardGameController(new Player[]{new Cross(new Human()), new Cross(new Human())});
+        GameController gameController = new StandardGameController(new Player[]{new Cross(new Human()), new Nought(new Human())});
         TwoDimensionalBoard board = new TwoDimensionalBoard(null, gameController, 2) {
             @Override
             protected TwoDimensionalBoard installBoard(Move move) {

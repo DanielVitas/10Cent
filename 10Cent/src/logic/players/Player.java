@@ -9,7 +9,6 @@ import logic.intelligence.Intelligence;
 public abstract class Player {
 
     public Intelligence intelligence;
-    public char sign;
 
     public Player(Intelligence intelligence) {
         this.intelligence = intelligence;
