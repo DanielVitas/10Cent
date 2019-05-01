@@ -4,9 +4,11 @@ import display.frame.Mouse;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
+import display.screens.Controller;
 import logic.boards.Board;
 import logic.boards.Move;
 import logic.boards.exceptions.InvalidMoveException;
+import logic.game.GameController;
 import logic.players.Token;
 
 import java.awt.*;
@@ -21,11 +23,22 @@ public class FinalBoard extends Board {
     public Token token;
     public Dimension slotDimension = new Dimension(10, 10);
 
-    public FinalBoard() {
+    public FinalBoard(Move move, GameController gameController) {
         super();
 
-        token = Board.empty.newToken(slotDimension);  // creates new EmptyToken
+        this.gameController = gameController;
+
+        Move currentMove;
+        if (move == null) {
+            currentMove = new FinalMove(empty);
+        } else {
+            currentMove = move.clone();
+            currentMove.setNextMove(new FinalMove(empty));
+        }
+        token = Board.empty.newToken(currentMove, gameController, slotDimension);  // creates new EmptyToken
         token.animateDefault();
+
+        compactBoard = new FinalCompactBoard();
 
         hitBoxes.add(new Rectangle(10, 10));
     }
@@ -35,17 +48,10 @@ public class FinalBoard extends Board {
         if (!super.play(move))
             return false;
 
-        token = ((FinalMove) move).player.newToken(slotDimension);
+        token = ((FinalMove) move).player.newToken(move, gameController, slotDimension);
         token.animatePlace();
-        decideOutcome();
 
         return true;
-    }
-
-    @Override
-    protected void decideOutcome() {
-        if (token.player != Board.empty)  // only to avoid setOutcome being called twice
-            setOutcome(token.player);
     }
 
     @Override

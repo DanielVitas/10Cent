@@ -59,8 +59,6 @@ public class MainFrame extends JFrame {
         } else {
             mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         }
-
-
     }
 
     public static void saveSizeAndLoc(){

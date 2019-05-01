@@ -1,53 +1,50 @@
-package logic;
+package logic.game;
 
-import logic.boards.Board;
 import logic.boards.Move;
 import logic.boards.exceptions.InvalidMoveException;
 import logic.players.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.Set;
 
 import static display.frame.MainFrame.targetedFramerate;
 import static logic.boards.Board.empty;
 
-public class GameController extends Thread {
+public class StandardGameController extends GameController {
 
-    /*
-    GameController should be created for every game separately.
-     */
-
-    private Player[] players;
-    private Board board;
-    private int turnCount = 0;
-
-    private Stack<Move> previousMoves = new Stack<>();
-    public Move currentMove;
-
-    public GameController(Player[] players) {
-        this.players = players;
+    public StandardGameController(Player[] players) {
+        super(players);
     }
 
     @Override
+    public Set<Move> legalMoves() {
+        if (previousMoves.peek() != null)
+            return board.compactBoard.legalMoves(getCurrentPlayer(), previousMoves.peek());
+        return board.compactBoard.allMoves(getCurrentPlayer());
+    }
+
+
+    @Override
     public void run() {
-        players[turnCount].intelligence.play();
+        getCurrentPlayer().intelligence.play();
 
         while (true) {
 
             if (currentMove != null) {
+                awaitingPlayer = false;
+
                 try {
                     board.play(currentMove);
                 } catch (InvalidMoveException e) {
                     e.printStackTrace();
                 }
 
-                if (board.outcome != empty)
+                if (board.outcome() != empty)
                     break;
 
                 previousMoves.push(currentMove);
                 currentMove = null;
-                players[++turnCount].intelligence.play();
+                turnCount++;
+                getCurrentPlayer().intelligence.play();
             }
 
             try {
@@ -56,8 +53,6 @@ public class GameController extends Thread {
                 e.printStackTrace();
             }
         }
-
-        // handle winner
     }
 
 }

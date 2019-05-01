@@ -1,5 +1,8 @@
 package logic.boards;
 
+import logic.boards.finalBoard.FinalMove;
+import logic.players.Player;
+
 public abstract class Move {
 
     /*
@@ -17,7 +20,19 @@ public abstract class Move {
     }
 
     public void setNextMove(Move move) {
-        nextMove = move;
+        if (nextMove == null)
+            nextMove = move;
+        else
+            nextMove.setNextMove(move);
     }
+
+    public void setPlayer(Player player) {
+        if (this instanceof FinalMove)
+            ((FinalMove) this).player = player;
+        else
+            nextMove.setPlayer(player);
+    }
+
+    public abstract Move clone();
 
 }

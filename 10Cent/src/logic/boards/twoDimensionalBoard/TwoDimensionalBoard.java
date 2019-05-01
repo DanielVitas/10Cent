@@ -4,10 +4,13 @@ import display.frame.Mouse;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
+import display.screens.Controller;
 import logic.boards.Board;
+import logic.boards.CompactBoard;
 import logic.boards.exceptions.InvalidMoveException;
 import logic.boards.Move;
 import logic.boards.finalBoard.FinalBoard;
+import logic.game.GameController;
 import logic.players.Token;
 
 import java.awt.*;
@@ -25,15 +28,33 @@ public class TwoDimensionalBoard extends Board {
     private Dimension edgeDimension = new Dimension(0.5, 0.5);
     private Board hoveredSubBoard;
 
-    public TwoDimensionalBoard(int size) {
+    public TwoDimensionalBoard(Move move, GameController gameController, int size) {
         super();
         this.size = size;  // must be greater than one
 
+        this.gameController = gameController;
+
         boards = new Board[size][size];
+
+        // room for improvement
+        compactBoard = new TwoDimensionalCompactBoard(size) {
+            @Override
+            public CompactBoard installCompactBoard() {
+                return installBoard(null).compactBoard;  // move does not matter here
+            }
+        };
+
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++) {
-                boards[i][j] = installBoard();
-                boards[i][j].coordinates = slotCoordinates(i, j)/*.scale(new Scale(i, j))*/;
+                Move currentMove;
+                if (move == null) {
+                    currentMove = new TwoDimensionalMove(i, j);
+                } else {
+                    currentMove = move.clone();
+                    currentMove.setNextMove(new TwoDimensionalMove(i, j));
+                }
+                boards[i][j] = installBoard(currentMove);
+                boards[i][j].coordinates = slotCoordinates(i, j);
             }
     }
 
@@ -43,18 +64,8 @@ public class TwoDimensionalBoard extends Board {
     }
 
     // is meant to be overridden, by default it creates standard board
-    protected Board installBoard() {
-        return new FinalBoard();
-    }
-
-    @Override
-    public boolean play(Move move) throws InvalidMoveException {
-        return super.play(move);
-    }
-
-    @Override
-    protected void decideOutcome() {
-
+    protected Board installBoard(Move move) {
+        return new FinalBoard(move, gameController);
     }
 
     @Override

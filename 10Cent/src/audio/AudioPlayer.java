@@ -7,19 +7,22 @@ import settings.Settings;
 import java.nio.file.Paths;
 
 public class AudioPlayer {
-    // This is a "static" object providing sound and music playing functions
+    /*
+    This is a "static" object providing sound and music playing functions.
+     */
 
-    // MediaPlayer from javafx library needs Toolkit to be initialized, JFXPanel does it for us.
-    private static final JFXPanel panel = new JFXPanel();
+    public static final String FILEPATH_MUSIC = Paths.get(Images.RESOURCES_PATH,"audio", "songs").toString();
+    public static final String FILEPATH_SOUND = Paths.get(Images.RESOURCES_PATH,"audio", "sounds").toString();
 
-    public static final String FILEPATH_MUSIC = Paths.get(Images.RESOURCES_PATH,"audio", "songs", "").toString();
-    public static final String FILEPATH_SOUND = Paths.get(Images.RESOURCES_PATH,"audio", "sounds", "").toString();
-
-    private static MusicPlayer[] musicPlayers = MusicPlayer.values();
-    private static SoundPlayer[] soundPlayers = SoundPlayer.values();
+    private static MusicPlayer[] musicPlayers;
+    private static SoundPlayer[] soundPlayers;
 
     public static void setup(){
+        // MediaPlayer from javafx library needs Toolkit to be initialized, JFXPanel does it for us.
+        new JFXPanel();
 
+        musicPlayers = MusicPlayer.values();
+        soundPlayers = SoundPlayer.values();
     }
 
     // MusicPlayer methods
