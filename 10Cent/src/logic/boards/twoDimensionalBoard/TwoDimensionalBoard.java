@@ -123,12 +123,13 @@ public class TwoDimensionalBoard extends Board {
                 Scale newScale = boards[i][j].getDimension().getScale(slotDimension.scale(scale));
                 Coordinates newCoordinates = boards[i][j].coordinates.scale(scale).flip().add(coordinates);
                 if (boards[i][j].contains(newCoordinates, newScale, mouseEvent)) {
-                    if (hoveredSubBoard != boards[i][j]) {
-                        if (hoveredSubBoard != null)
-                            hoveredSubBoard.unhover(coordinates, scale, mouseEvent);
-                        hoveredSubBoard = boards[i][j];
-                        hoveredSubBoard.hover(newCoordinates, newScale, mouseEvent);
-                    }
+                    if (!Mouse.pressed)
+                        if (hoveredSubBoard != boards[i][j]) {
+                            if (hoveredSubBoard != null)
+                                hoveredSubBoard.unhover(coordinates, scale, mouseEvent);
+                            hoveredSubBoard = boards[i][j];
+                            hoveredSubBoard.hover(newCoordinates, newScale, mouseEvent);
+                        }
                     return true;
                 }
             }

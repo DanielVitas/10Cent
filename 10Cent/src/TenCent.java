@@ -20,7 +20,6 @@ public class TenCent {
         mainFrame.setVisible(true);
         AudioPlayer.setup();
         Settings.setup();
-        //AudioPlayer.play(MusicPlayer.TEST);
 
     }
 
