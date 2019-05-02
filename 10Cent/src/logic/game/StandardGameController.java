@@ -5,6 +5,7 @@ import logic.boards.exceptions.InvalidMoveException;
 import logic.players.Player;
 
 import java.util.Set;
+import java.util.Stack;
 
 import static display.frame.MainFrame.targetedFramerate;
 import static logic.boards.Board.empty;
@@ -17,9 +18,11 @@ public class StandardGameController extends GameController {
 
     @Override
     public Set<Move> legalMoves() {
-        if (previousMoves.peek() != null)
-            return board.compactBoard.legalMoves(getCurrentPlayer(), previousMoves.peek());
-        return board.compactBoard.allMoves(getCurrentPlayer());
+        if (previousMoves.empty())
+            return board.logicBoard.allMoves(empty);
+        Stack<Move> deconstructedPreviousMove = previousMoves.peek().deconstruct();
+        deconstructedPreviousMove.pop(); // pop's final move
+        return board.logicBoard.legalMoves(empty, deconstructedPreviousMove);
     }
 
 
@@ -38,11 +41,14 @@ public class StandardGameController extends GameController {
                     e.printStackTrace();
                 }
 
+                previousMoves.push(currentMove);
+                currentMove = null;
+
+                getCurrentPlayer().intelligence.close();
+
                 if (board.outcome() != empty)
                     break;
 
-                previousMoves.push(currentMove);
-                currentMove = null;
                 turnCount++;
                 getCurrentPlayer().intelligence.play();
             }
@@ -53,6 +59,8 @@ public class StandardGameController extends GameController {
                 e.printStackTrace();
             }
         }
+
+        System.out.println("Winner: " + board.outcome());
     }
 
 }

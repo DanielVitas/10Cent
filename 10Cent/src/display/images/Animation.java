@@ -21,6 +21,8 @@ public class Animation extends DisplayObject implements Runnable {
     private String[] imagePaths;
     private long[] delays;
     private boolean loop;
+    private boolean stop;
+    public boolean isStatic = false;
 
     private Thread thread;
 
@@ -32,8 +34,23 @@ public class Animation extends DisplayObject implements Runnable {
     }
 
     public void start() {
-        thread = new Thread(this);
-        thread.start();
+        if (thread == null) {
+            stop = false;
+            thread = new Thread(this);
+            thread.start();
+        }
+    }
+
+    // when force stopping finished() isn't called
+    public void stop() {
+        stop = true;
+        thread = null;
+    }
+
+    // this will end thread even if it's sleeping
+    @Deprecated
+    public void interrupt() {
+        thread.interrupt();
     }
 
     // images will be displayed in alphabetical order
@@ -65,6 +82,9 @@ public class Animation extends DisplayObject implements Runnable {
     public void run() {
         do {
             for (int i = 0; i < imagePaths.length; i++) {
+                if (stop)
+                    return;
+
                 image = Images.get(imagePaths[i]);
 
                 try {

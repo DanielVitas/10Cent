@@ -53,6 +53,7 @@ public abstract class Token extends DisplayObject {
 
     public void animatePlace() {
         animate("place");
+        animations.get("place").sleep();
     }
 
 }

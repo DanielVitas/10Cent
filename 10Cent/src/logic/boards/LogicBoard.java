@@ -3,14 +3,17 @@ package logic.boards;
 import logic.players.Player;
 
 import java.util.Set;
+import java.util.Stack;
 
-public abstract class CompactBoard {
+import static logic.boards.Board.empty;
+
+public abstract class LogicBoard {
 
     /*
     This board is effectively playing board displayed with ordinary Board.
      */
 
-    public CompactBoard() {
+    public LogicBoard() {
 
     }
 
@@ -18,7 +21,7 @@ public abstract class CompactBoard {
 
     public abstract void play(Move move);
 
-    public abstract Set<Move> legalMoves(Player player, Move previousMove);
+    public abstract Set<Move> legalMoves(Player player, Stack<Move> deconstructedPreviousMove);
 
     public abstract Set<Move> allMoves(Player player);
 

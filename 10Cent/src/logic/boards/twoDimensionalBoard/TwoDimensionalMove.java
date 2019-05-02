@@ -1,6 +1,7 @@
 package logic.boards.twoDimensionalBoard;
 
 import logic.boards.Move;
+import logic.boards.finalBoard.FinalMove;
 
 public class TwoDimensionalMove extends Move {
 
@@ -16,6 +17,14 @@ public class TwoDimensionalMove extends Move {
         TwoDimensionalMove twoDimensionalMove = new TwoDimensionalMove(i, j);
         twoDimensionalMove.setNextMove(getNextMove());
         return twoDimensionalMove;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof TwoDimensionalMove))
+            return false;
+        return i == ((TwoDimensionalMove) o).i && j == ((TwoDimensionalMove) o).j &&
+                getNextMove().equals(((TwoDimensionalMove) o).getNextMove());
     }
 
 }

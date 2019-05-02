@@ -20,7 +20,7 @@ public class DisplayObject implements DisplayComponent {
 
     // the following is used for objects with a single main animation
     private Animation currentAnimation;
-    private Map<String, Animation> animations = new HashMap<>();
+    public Map<String, Animation> animations = new HashMap<>();
 
     protected void addSubComponent(DisplayComponent subComponent) {
         subComponents.add(subComponent);
@@ -36,15 +36,18 @@ public class DisplayObject implements DisplayComponent {
     }
 
     public void animate(String name) {
-        if (currentAnimation != null)
+        if (currentAnimation != null) {
+            if (!currentAnimation.isStatic)
+            currentAnimation.stop();
             removeSubComponent(currentAnimation);
+        }
         Animation animation = animations.get(name);
         if (animation != null) {
             currentAnimation = animation;
             addSubComponent(animation);
             animation.start();
         } else {
-            System.out.println("Animation missing: " + name + " in object " + this);
+            System.out.println("Animation missing: " + name + ", in object: " + this);
         }
     }
 

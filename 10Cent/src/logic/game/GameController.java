@@ -39,4 +39,11 @@ public abstract class GameController extends Thread {
 
     public abstract Set<Move> legalMoves();
 
+    public boolean isLegal(Move move) {
+        for (Move legalMove : legalMoves())
+            if (legalMove.equals(move))
+                return true;
+        return false;
+    }
+
 }

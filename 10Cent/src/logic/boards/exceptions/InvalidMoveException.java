@@ -7,6 +7,7 @@ public class InvalidMoveException extends Exception {
 
     /*
     When playing Move onto Board, move type must match boards otherwise this exception is thrown.
+    Will be removed when testing is done.
      */
 
     public InvalidMoveException(Board board, Move move) {

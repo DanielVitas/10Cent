@@ -14,4 +14,6 @@ public abstract class Intelligence {
     // sets Controller's current move
     public abstract void play();
 
+    public abstract void close();
+
 }

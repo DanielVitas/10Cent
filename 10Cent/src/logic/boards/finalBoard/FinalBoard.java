@@ -1,10 +1,8 @@
 package logic.boards.finalBoard;
 
-import display.frame.Mouse;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
-import display.screens.Controller;
 import logic.boards.Board;
 import logic.boards.Move;
 import logic.boards.exceptions.InvalidMoveException;
@@ -38,7 +36,7 @@ public class FinalBoard extends Board {
         token = Board.empty.newToken(currentMove, gameController, slotDimension);  // creates new EmptyToken
         token.animateDefault();
 
-        compactBoard = new FinalCompactBoard();
+        logicBoard = new FinalLogicBoard();
 
         hitBoxes.add(new Rectangle(10, 10));
     }
@@ -48,7 +46,7 @@ public class FinalBoard extends Board {
         if (!super.play(move))
             return false;
 
-        token = ((FinalMove) move).player.newToken(move, gameController, slotDimension);
+        token = move.getPlayer().newToken(move, gameController, slotDimension);
         token.animatePlace();
 
         return true;

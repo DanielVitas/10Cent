@@ -22,4 +22,11 @@ public class FinalMove extends Move {
         return finalMove;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof FinalMove))
+            return false;
+        return player == ((FinalMove) o).player;
+    }
+
 }
