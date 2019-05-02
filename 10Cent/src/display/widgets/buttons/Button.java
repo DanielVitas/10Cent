@@ -1,5 +1,7 @@
 package display.widgets.buttons;
 
+import audio.AudioPlayer;
+import audio.SoundPlayer;
 import display.frame.DisplayComponent;
 import display.frame.Mouse;
 import display.frame.misc.Coordinates;
@@ -16,7 +18,7 @@ import java.nio.file.Paths;
 public abstract class Button extends DisplayObject {
 
     private String directoryPath;  // contains animation directories
-    private Dimension dimension;
+    protected Dimension dimension;
 
     public Button(Dimension dimension, String directoryPath) {
         this.dimension = dimension;

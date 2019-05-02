@@ -37,11 +37,11 @@ public class Coordinates extends Point2D {
     }
 
     public int getIntegerX() {
-        return (int) x;
+        return (int) (x + 0.5);
     }
 
     public int getIntegerY() {
-        return (int) y;
+        return (int) (y + 0.5);
     }
 
     @Override

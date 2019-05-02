@@ -36,6 +36,11 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
         displayComponents.remove(displayComponent);
     }
 
+    public static void drawLine(Coordinates startCoordinates, Coordinates endCoordinates, Graphics g) {
+        g.drawLine(startCoordinates.getIntegerX(), startCoordinates.getIntegerY(),
+                endCoordinates.getIntegerX(), endCoordinates.getIntegerY());
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

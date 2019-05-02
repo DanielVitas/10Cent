@@ -16,16 +16,16 @@ public class Dimension {
     }
 
     public int getIntegerWidth() {
-        return (int) width;
+        return (int) (width + 0.5);
     }
 
     public int getIntegerHeight() {
-        return (int) height;
+        return (int) (height + 0.5);
     }
 
     @Deprecated
     public java.awt.Dimension getAwtDimension() {
-        return new java.awt.Dimension((int) width, (int) height);
+        return new java.awt.Dimension(getIntegerWidth(), getIntegerHeight());
     }
 
     public Dimension scale(Scale scale) {

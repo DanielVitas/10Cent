@@ -1,13 +1,13 @@
 # Corrupting settings will restore them to their defaults
 
 # Audio
-globalVolume = 18.91892170540264
-soundVolume = 100.0
-musicVolume = 20.1259882954543
+globalVolume = 31.405893318224475
+soundVolume = 43.87754907854732
+musicVolume = 25.736958881714113
 
 # Screen
 windowedMode = true
-windowSizeX = 898
-windowSizeY = 725
-windowLocationX = 219
-windowLocationY = 93
+windowSizeX = 737
+windowSizeY = 536
+windowLocationX = 205
+windowLocationY = 130

@@ -38,7 +38,7 @@ public class DisplayObject implements DisplayComponent {
     public void animate(String name) {
         if (currentAnimation != null) {
             if (!currentAnimation.isStatic)
-            currentAnimation.stop();
+                currentAnimation.stop();
             removeSubComponent(currentAnimation);
         }
         Animation animation = animations.get(name);

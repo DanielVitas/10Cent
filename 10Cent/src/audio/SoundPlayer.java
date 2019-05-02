@@ -7,7 +7,8 @@ import java.io.File;
 import java.nio.file.Paths;
 
 public enum SoundPlayer {
-    TEST("test.wav", 100);
+    TEST("test.wav", 100),
+    BUTTON("button.wav", 100);
 
     final double localVolume;
     protected MediaPlayer mediaPlayer;

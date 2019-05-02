@@ -24,4 +24,8 @@ public class Scale {
         return new Scale(1 / horizontal, 1 / vertical);
     }
 
+    public double average() {
+        return Math.sqrt(horizontal * horizontal + vertical * vertical);
+    }
+
 }
