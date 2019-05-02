@@ -1,19 +1,20 @@
 package logic.boards.finalBoard;
 
-import logic.boards.CompactBoard;
+import logic.boards.LogicBoard;
 import logic.boards.Move;
 import logic.players.Player;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Stack;
 
 import static logic.boards.Board.empty;
 
-public class FinalCompactBoard extends CompactBoard {
+public class FinalLogicBoard extends LogicBoard {
 
     private Player player;
 
-    public FinalCompactBoard() {
+    public FinalLogicBoard() {
         player = empty;
     }
 
@@ -28,15 +29,17 @@ public class FinalCompactBoard extends CompactBoard {
     }
 
     @Override
-    public Set<Move> legalMoves(Player player, Move previousMove) {
-        Set<Move> moves = new HashSet<>();
-        moves.add(new FinalMove(player));
-        return moves;
+    public Set<Move> legalMoves(Player player, Stack<Move> deconstructedPreviousMove) {
+        if (outcome() == empty)
+            return allMoves(player);
+        return new HashSet<>();  // shouldn't be reachable, but just in case
     }
 
     @Override
     public Set<Move> allMoves(Player player) {
-        return null;
+        Set<Move> moves = new HashSet<>();
+        moves.add(new FinalMove(player));
+        return moves;
     }
 
 }

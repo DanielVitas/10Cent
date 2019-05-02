@@ -4,12 +4,12 @@ import display.frame.Mouse;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
-import display.screens.Controller;
 import logic.boards.Board;
-import logic.boards.CompactBoard;
-import logic.boards.exceptions.InvalidMoveException;
+import logic.boards.LogicBoard;
 import logic.boards.Move;
+import logic.boards.exceptions.InvalidMoveException;
 import logic.boards.finalBoard.FinalBoard;
+import logic.boards.finalBoard.FinalMove;
 import logic.game.GameController;
 import logic.players.Token;
 
@@ -24,6 +24,7 @@ public class TwoDimensionalBoard extends Board {
 
     private Board[][] boards;
     private int size;
+    public Token token;
     private Dimension slotDimension = new Dimension(10, 10);
     private Dimension edgeDimension = new Dimension(0.5, 0.5);
     private Board hoveredSubBoard;
@@ -37,10 +38,10 @@ public class TwoDimensionalBoard extends Board {
         boards = new Board[size][size];
 
         // room for improvement
-        compactBoard = new TwoDimensionalCompactBoard(size) {
+        logicBoard = new TwoDimensionalLogicBoard(size) {
             @Override
-            public CompactBoard installCompactBoard() {
-                return installBoard(null).compactBoard;  // move does not matter here
+            public LogicBoard installLogicBoard() {
+                return installBoard(null).logicBoard;  // move does not matter here
             }
         };
 
@@ -69,6 +70,19 @@ public class TwoDimensionalBoard extends Board {
     }
 
     @Override
+    public boolean play(Move move) throws InvalidMoveException {
+        if (!super.play(move))
+            return false;
+
+        if (outcome() != empty) {
+            token = outcome().newToken(move, gameController, getDimension());
+            token.animatePlace();
+        }
+
+        return true;
+    }
+
+    @Override
     protected Board selectSubBoard(Move move) {
         return boards[((TwoDimensionalMove) move).i][((TwoDimensionalMove) move).j];
     }
@@ -90,26 +104,30 @@ public class TwoDimensionalBoard extends Board {
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         super.paint(coordinates, scale, g);
 
-        Graphics2D g2 = (Graphics2D) g;
-        g.setColor(Color.black);
-        g2.setStroke(new BasicStroke(2f));
+        if (token != null) {
+            token.paint(coordinates, scale, g);
+        } else {
+            Graphics2D g2 = (Graphics2D) g;
+            g.setColor(Color.black);
+            g2.setStroke(new BasicStroke(2f));
 
-        // paints lines
-        for (int i = 1; i < size; i++) {
+            // paints lines
+            for (int i = 1; i < size; i++) {
                 Coordinates c1 = coordinates.add(slotCoordinates(i, 0).scale(scale));
                 Coordinates c2 = coordinates.add(slotCoordinates(i, size).scale(scale));
                 g.drawLine(c1.getIntegerX(), c1.getIntegerY(), c2.getIntegerX(), c2.getIntegerY());
             }
-        for (int j = 1; j < size; j++) {
-            Coordinates c1 = coordinates.add(slotCoordinates(0, j).scale(scale));
-            Coordinates c2 = coordinates.add(slotCoordinates(size, j).scale(scale));
-            g.drawLine(c1.getIntegerX(), c1.getIntegerY(), c2.getIntegerX(), c2.getIntegerY());
-        }
+            for (int j = 1; j < size; j++) {
+                Coordinates c1 = coordinates.add(slotCoordinates(0, j).scale(scale));
+                Coordinates c2 = coordinates.add(slotCoordinates(size, j).scale(scale));
+                g.drawLine(c1.getIntegerX(), c1.getIntegerY(), c2.getIntegerX(), c2.getIntegerY());
+            }
 
-        for (int i = 0; i < size; i++)
-            for (int j = 0; j < size; j++)
-                boards[i][j].paint(coordinates.add(boards[i][j].coordinates.scale(scale)),
-                        boards[i][j].getDimension().getScale(slotDimension.scale(scale)), g);
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++)
+                    boards[i][j].paint(coordinates.add(boards[i][j].coordinates.scale(scale)),
+                            boards[i][j].getDimension().getScale(slotDimension.scale(scale)), g);
+        }
     }
 
     /*
@@ -135,6 +153,7 @@ public class TwoDimensionalBoard extends Board {
             }
         if (hoveredSubBoard != null)
             hoveredSubBoard.unhover(coordinates, scale, mouseEvent);
+        hoveredSubBoard = null;
         return false;
     }
 

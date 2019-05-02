@@ -2,8 +2,8 @@ package logic.boards;
 
 import display.frame.DisplayObject;
 import display.frame.misc.Dimension;
-import display.screens.Controller;
 import logic.boards.exceptions.InvalidMoveException;
+import logic.boards.finalBoard.FinalBoard;
 import logic.game.GameController;
 import logic.players.Token;
 import logic.players.empty.Empty;
@@ -16,15 +16,11 @@ public abstract class Board extends DisplayObject {
      */
 
     public static Player empty = new Empty();
-    public CompactBoard compactBoard;
+    public LogicBoard logicBoard;
     protected GameController gameController;
 
     public Board() {
 
-    }
-
-    public CompactBoard getCompactBoard() {
-        return compactBoard;
     }
 
     // returns true iff move is legal - change to void?
@@ -37,8 +33,8 @@ public abstract class Board extends DisplayObject {
 
         Board subBoard = selectSubBoard(move);
 
-        if (compactBoard != null)
-            compactBoard.play(move);
+        if (logicBoard != null)
+            logicBoard.play(move);
 
         if (subBoard != null)  // subBoard is null only if the current board is final
             return subBoard.play(move.getNextMove());
@@ -47,10 +43,16 @@ public abstract class Board extends DisplayObject {
     }
 
     public Player outcome() {
-        return compactBoard.outcome();
+        return logicBoard.outcome();
     }
 
     protected abstract Board selectSubBoard(Move move);
+
+    public Token getToken(Move move) {
+        if (this instanceof FinalBoard)
+            return ((FinalBoard) this).token;
+        return selectSubBoard(move).getToken(move.getNextMove());  // assumes move is legal
+    }
 
     protected abstract boolean validMove(Move move);
 
