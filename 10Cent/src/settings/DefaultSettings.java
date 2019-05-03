@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Set;
 
-final class DefaultSettings {
+public final class DefaultSettings {
 
     private final static double DEFAULT_GLOBAL_VOLUME = 100;
     private final static double DEFAULT_SOUND_VOLUME = 100;
@@ -17,7 +17,7 @@ final class DefaultSettings {
     private final static int DEFAULT_WINDOW_LOCATION_X = 20;
     private final static int DEFAULT_WINDOW_LOCATION_Y = 20;
 
-    static void setDefaultSettings() {
+    public static void setDefaultSettings() {
         Settings.globalVolume = DEFAULT_GLOBAL_VOLUME;
         Settings.soundVolume = DEFAULT_SOUND_VOLUME;
         Settings.musicVolume = DEFAULT_MUSIC_VOLUME;
@@ -26,6 +26,10 @@ final class DefaultSettings {
         Settings.windowSizeY = DEFAULT_WINDOW_SIZE_Y;
         Settings.windowLocationX = DEFAULT_WINDOW_LOCATION_X;
         Settings.windowLocationY = DEFAULT_WINDOW_LOCATION_Y;
+    }
+
+    static void writeDefaultSettings() {
+        setDefaultSettings();
         Settings.write();
         Settings.setup();
     }

@@ -5,6 +5,7 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.sun.org.glassfish.gmbal.Description;
 import display.frame.MainFrame;
 import display.images.Images;
+import display.screens.Controller;
 
 import java.io.*;
 import java.nio.file.Paths;
@@ -26,6 +27,25 @@ public final class Settings {
     private static final int settingCount = 8;
 
 
+    // initializes settings, this is only called once at the start
+    public static void initialize() {
+        Images.loadImages(Paths.get(Images.RESOURCES_PATH,"images").toString());
+
+        Settings.read();
+
+        MainFrame mainFrame = new MainFrame();
+
+        Controller.install(mainFrame);
+        mainFrame.pack();
+        mainFrame.setSize(windowSizeX, windowSizeY);
+        mainFrame.setLocation(windowLocationX, windowLocationY);
+        mainFrame.setVisible(true);
+
+        AudioPlayer.setup();
+        AudioPlayer.updateSound();
+    }
+
+    // reads and applies settings
     public static void setup() {
         read();
         apply();
