@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 
 public final class Settings {
 
-    public static final String SETTINGS_FILE = Paths.get(Images.RESOURCES_PATH, "settings", "settings").toString();
+    public static final String SETTINGS_FILE = Paths.get(Images.RESOURCES_PATH, "settings", "settings.txt").toString();
 
     public static double globalVolume;
     public static double soundVolume;
@@ -139,7 +139,7 @@ public final class Settings {
             out.println("windowLocationX = " + windowLocationX);
             out.println("windowLocationY = " + windowLocationY);
             out.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
