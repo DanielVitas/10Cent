@@ -8,3 +8,4 @@ Projektna naloga pri predmetu Programiranje 2.
 - [x] audio
 - [ ] settings menu
 - [x] settings file
+- [ ] minimax AI
