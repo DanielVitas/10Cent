@@ -41,6 +41,25 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
                 endCoordinates.getIntegerX(), endCoordinates.getIntegerY());
     }
 
+    public static void drawRectangle(Coordinates coordinates, Dimension dimension, Color color, double strokeSize, Scale scale, Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g.setColor(color);
+        g2.setStroke(new BasicStroke((float) (strokeSize * scale.average())));
+
+        Coordinates startCoordinates = coordinates;
+        Coordinates endCoordinates = coordinates.add(new Coordinates(dimension.width, 0).scale(scale));
+        drawLine(startCoordinates, endCoordinates, g);
+
+        endCoordinates = coordinates.add(new Coordinates(0, dimension.height).scale(scale));
+        drawLine(startCoordinates, endCoordinates, g);
+
+        startCoordinates = coordinates.add(new Coordinates(dimension.width, dimension.height).scale(scale));
+        drawLine(startCoordinates, endCoordinates, g);
+
+        endCoordinates = coordinates.add(new Coordinates(dimension.width, 0).scale(scale));
+        drawLine(startCoordinates, endCoordinates, g);
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

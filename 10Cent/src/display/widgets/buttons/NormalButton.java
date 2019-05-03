@@ -14,15 +14,16 @@ import java.awt.event.MouseEvent;
 import java.nio.file.Paths;
 
 import static display.frame.MainPanel.drawLine;
+import static display.frame.MainPanel.drawRectangle;
 
 public abstract class NormalButton extends Button {
 
     public Label label;
 
-    public NormalButton(String text, Dimension dimension) {
+    public NormalButton(String text, int fontSize, Dimension dimension) {
         super(dimension, Paths.get(Images.RESOURCES_PATH,"images", "buttons", "normal").toString());
-        Font font = new Font("Courier", Font.PLAIN,  (int) (dimension.width * Label.FONT_SIZE / text.length()));
-        label = new Label(text, font, Color.BLACK);
+        Font font = new Font(Label.DEFAUZLT_FONT_STYLE, Font.PLAIN, fontSize);
+        label = new Label(text, font, Color.BLACK, dimension);
         label.displayPriority = 1;
         addSubComponent(label);
     }
@@ -36,25 +37,7 @@ public abstract class NormalButton extends Button {
     @Override
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         super.paint(coordinates, scale, g);
-
-        // border
-        Graphics2D g2 = (Graphics2D) g;
-        g.setColor(Color.black);
-        g2.setStroke(new BasicStroke((float) (0.2 * scale.average())));
-
-        Coordinates startCoordinates = coordinates;
-        Coordinates endCoordinates = coordinates.add(new Coordinates(dimension.width, 0).scale(scale));
-        drawLine(startCoordinates, endCoordinates, g);
-
-        endCoordinates = coordinates.add(new Coordinates(0, dimension.height).scale(scale));
-        drawLine(startCoordinates, endCoordinates, g);
-
-        startCoordinates = coordinates.add(new Coordinates(dimension.width, dimension.height).scale(scale));
-        drawLine(startCoordinates, endCoordinates, g);
-
-        endCoordinates = coordinates.add(new Coordinates(dimension.width, 0).scale(scale));
-        drawLine(startCoordinates, endCoordinates, g);
-
+        drawRectangle(coordinates, dimension, Color.black, 0.3, scale, g);
     }
 
 }

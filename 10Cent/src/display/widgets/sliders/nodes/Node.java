@@ -11,6 +11,8 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.nio.file.Paths;
 
+import static display.frame.MainPanel.drawRectangle;
+
 public abstract class Node extends DisplayObject {
 
     private Slider slider;
