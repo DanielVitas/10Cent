@@ -10,19 +10,20 @@ import java.awt.*;
 
 public class Label extends DisplayObject {
 
-    // public final static double FONT_SIZE = 8;
-    public final static String DEFAUZLT_FONT_STYLE = Font.MONOSPACED;
+    public final static String DEFAULT_FONT_STYLE = Font.MONOSPACED;
 
     public String text;
     public Font font;
     public Color color;
     private Dimension dimension;
+    private Align align;
 
-    public Label(String text, Font font, Color color, Dimension dimension) {
+    public Label(String text, Font font, Color color, Dimension dimension, Align align) {
         this.text = text;
         this.font = font;
         this.color = color;
         this.dimension = dimension;
+        this.align = align;
     }
 
     public static double getHeight(Font font, Graphics g) {
@@ -44,9 +45,21 @@ public class Label extends DisplayObject {
 
         double width = dimension.width * scale.horizontal;
         double height = dimension.height * scale.vertical;
-        double x = coordinates.getX() + width / 2 - getWidth(text, newFont, g) / 2;
-        double y = coordinates.getY() + height / 2 + getHeight(newFont, g) * 0.3;
-        g.drawString(text, (int) x, (int) y);
+        double x = coordinates.getX();
+        switch (align) {
+            case LEFT:
+                x = coordinates.getX();
+                break;
+            case CENTER:
+                x = coordinates.getX() + width / 2 - getWidth(text, newFont, g) / 2;
+                break;
+            case RIGHT:
+                x = coordinates.getX() + width - getWidth(text, newFont, g);
+                break;
+        }
+        double y = coordinates.getY() + height / 2 + getHeight(newFont, g) * 0.2;
+        Coordinates newCoordinates = new Coordinates(x, y);
+        g.drawString(text, newCoordinates.getIntegerX(), newCoordinates.getIntegerY());
     }
 
 }

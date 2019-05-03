@@ -46,18 +46,8 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
         g.setColor(color);
         g2.setStroke(new BasicStroke((float) (strokeSize * scale.average())));
 
-        Coordinates startCoordinates = coordinates;
-        Coordinates endCoordinates = coordinates.add(new Coordinates(dimension.width, 0).scale(scale));
-        drawLine(startCoordinates, endCoordinates, g);
-
-        endCoordinates = coordinates.add(new Coordinates(0, dimension.height).scale(scale));
-        drawLine(startCoordinates, endCoordinates, g);
-
-        startCoordinates = coordinates.add(new Coordinates(dimension.width, dimension.height).scale(scale));
-        drawLine(startCoordinates, endCoordinates, g);
-
-        endCoordinates = coordinates.add(new Coordinates(dimension.width, 0).scale(scale));
-        drawLine(startCoordinates, endCoordinates, g);
+        g.drawRect(coordinates.getIntegerX(), coordinates.getIntegerY(),
+                dimension.scale(scale).getIntegerWidth(), dimension.scale(scale).getIntegerHeight());
     }
 
     @Override

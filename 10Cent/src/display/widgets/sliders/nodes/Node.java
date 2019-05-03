@@ -16,6 +16,7 @@ import static display.frame.MainPanel.drawRectangle;
 public abstract class Node extends DisplayObject {
 
     private Slider slider;
+    public Dimension dimension;
 
     // coordinates originally grabbed by mouse
     private Coordinates grabbedCoordinates;

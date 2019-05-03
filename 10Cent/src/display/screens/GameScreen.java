@@ -16,6 +16,7 @@ import logic.intelligence.RandomAI;
 import logic.players.Player;
 import logic.players.cross.Cross;
 import logic.players.nought.Nought;
+import settings.Settings;
 
 public class GameScreen extends Screen {
 
@@ -37,13 +38,13 @@ public class GameScreen extends Screen {
         board.coordinates = new Coordinates(30, 30);
         addDisplayComponent(board, mainFrame.panel);
 
-        NormalButton backButton = new NormalButton("Back", 5,  new Dimension(10, 5)) {
+        NormalButton backButton = new NormalButton("Back", 3, new Dimension(20, 8)) {
             @Override
             public void clicked() {
                 Controller.back();
             }
         };
-        backButton.coordinates = new Coordinates(5, 5);
+        backButton.coordinates = new Coordinates(2, 2);
         addDisplayComponent(backButton, mainFrame.panel);
     }
 

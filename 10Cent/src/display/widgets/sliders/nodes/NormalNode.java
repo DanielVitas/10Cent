@@ -15,7 +15,6 @@ import static display.frame.MainPanel.drawRectangle;
 public class NormalNode extends Node {
 
     private String directoryPath = Paths.get(Images.RESOURCES_PATH, "images", "sliders", "nodes", "normal").toString();
-    private Dimension dimension;
 
     public NormalNode(Slider slider, Dimension dimension) {
         super(slider);

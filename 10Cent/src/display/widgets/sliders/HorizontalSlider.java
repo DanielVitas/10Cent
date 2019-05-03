@@ -26,10 +26,14 @@ public abstract class HorizontalSlider extends Slider {
         return value;
     }
 
+    public void setValue(double value) {
+        this.value = value;
+        node.coordinates = new Coordinates(this.value * (dimension.width - node.dimension.width),0);
+    }
 
     @Override
     public Coordinates slide(Coordinates deltaCoordinates) {
-        double deltaX = deltaCoordinates.getX() / dimension.width;
+        double deltaX = deltaCoordinates.getX() / (dimension.width - node.dimension.width);
         if (deltaX == 0)
             return new Coordinates(0, 0);
         double change;
@@ -41,11 +45,6 @@ public abstract class HorizontalSlider extends Slider {
             change = -value;
         changeValue(change);
         return deltaCoordinates.scale(new Scale(change / deltaX, 0));
-    }
-
-    public void setValue(double value) {
-        this.value = value;
-        node.coordinates = new Coordinates(this.value * dimension.width,0);
     }
 
 }

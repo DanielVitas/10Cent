@@ -16,7 +16,7 @@ public class NormalSlider extends HorizontalSlider{
     public NormalSlider(Dimension dimension) {
         super(dimension);
 
-        NormalNode node = new NormalNode(this, dimension.scale(new Scale(0.1, 1)));
+        NormalNode node = new NormalNode(this, dimension.scale(new Scale(0.2, 1)));
         node.displayPriority = 1;
         setNode(node);
 
@@ -24,8 +24,8 @@ public class NormalSlider extends HorizontalSlider{
 
         String path = Paths.get(directoryPath, "default").toString();
         Animation animation = new Animation(path, new long[]{500}, true);
-        animation.dimension = dimension.scale(new Scale(1, 0.1));
-        animation.coordinates = new Coordinates(0, dimension.height * 0.45);
+        animation.dimension = dimension.scale(new Scale(1, 0.2));
+        animation.coordinates = new Coordinates(0, dimension.height * 0.4);
         addAnimation("default", animation);
         animate("default");
     }
