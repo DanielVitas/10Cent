@@ -19,10 +19,9 @@ public class FinalBoard extends Board {
      */
 
     public Token token;
-    public Dimension slotDimension = new Dimension(10, 10);
 
-    public FinalBoard(Move move, GameController gameController) {
-        super();
+    public FinalBoard(Dimension dimension, Move move, GameController gameController) {
+        super(dimension);
 
         this.gameController = gameController;
 
@@ -33,12 +32,12 @@ public class FinalBoard extends Board {
             currentMove = move.clone();
             currentMove.setNextMove(new FinalMove(empty));
         }
-        token = Board.empty.newToken(currentMove, gameController, slotDimension);  // creates new EmptyToken
+        token = Board.empty.newToken(currentMove, gameController, dimension);  // creates new EmptyToken
         token.animateDefault();
 
         logicBoard = new FinalLogicBoard();
 
-        hitBoxes.add(new Rectangle(10, 10));
+        hitBoxes.add(new Rectangle(dimension.getAwtDimension()));
     }
 
     @Override
@@ -46,7 +45,7 @@ public class FinalBoard extends Board {
         if (!super.play(move))
             return false;
 
-        token = move.getPlayer().newToken(move, gameController, slotDimension);
+        token = move.getPlayer().newToken(move, gameController, dimension);
         token.animatePlace();
 
         return true;
@@ -60,11 +59,6 @@ public class FinalBoard extends Board {
     @Override
     protected boolean validMove(Move move) {
         return move instanceof FinalMove;
-    }
-
-    @Override
-    public Dimension getDimension() {
-        return slotDimension;
     }
 
     @Override

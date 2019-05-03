@@ -18,9 +18,10 @@ public abstract class Board extends DisplayObject {
     public static Player empty = new Empty();
     public LogicBoard logicBoard;
     protected GameController gameController;
+    public Dimension dimension;
 
-    public Board() {
-
+    public Board(Dimension dimension) {
+        this.dimension = dimension;
     }
 
     // returns true iff move is legal - change to void?
@@ -55,7 +56,5 @@ public abstract class Board extends DisplayObject {
     }
 
     protected abstract boolean validMove(Move move);
-
-    public abstract Dimension getDimension();
 
 }

@@ -23,13 +23,15 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
     public MainPanel(Dimension preferredSize) {
         setPreferredSize(preferredSize.getAwtDimension());
 
+        setBackground(Color.decode("#EEEEEE"));
+
         addMouseListener(this);
         addMouseMotionListener(this);
     }
 
     public void addDisplayComponent(DisplayComponent displayComponent) {
         displayComponents.add(displayComponent);
-        Collections.sort(displayComponents, DisplayComponent.COMPARATOR);
+        displayComponents.sort(DisplayComponent.COMPARATOR);
     }
 
     public void removeDisplayComponent(DisplayComponent displayComponent) {
@@ -41,13 +43,9 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
                 endCoordinates.getIntegerX(), endCoordinates.getIntegerY());
     }
 
-    public static void drawRectangle(Coordinates coordinates, Dimension dimension, Color color, double strokeSize, Scale scale, Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        g.setColor(color);
-        g2.setStroke(new BasicStroke((float) (strokeSize * scale.average())));
-
+    public static void drawRectangle(Coordinates coordinates, Dimension dimension, Graphics g) {
         g.drawRect(coordinates.getIntegerX(), coordinates.getIntegerY(),
-                dimension.scale(scale).getIntegerWidth(), dimension.scale(scale).getIntegerHeight());
+                dimension.getIntegerWidth(), dimension.getIntegerHeight());
     }
 
     @Override

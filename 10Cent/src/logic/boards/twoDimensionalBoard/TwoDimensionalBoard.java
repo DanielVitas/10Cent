@@ -16,6 +16,8 @@ import logic.players.Token;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
+import static display.frame.MainPanel.drawLine;
+
 public class TwoDimensionalBoard extends Board {
 
     /*
@@ -25,15 +27,19 @@ public class TwoDimensionalBoard extends Board {
     private Board[][] boards;
     private int size;
     public Token token;
-    private Dimension slotDimension = new Dimension(10, 10);
-    private Dimension edgeDimension = new Dimension(0.5, 0.5);
+    private Dimension slotRelativeDimension = new Dimension(10, 10);
+    private Dimension edgeRelativeDimension = new Dimension(1, 1);
+    private Dimension slotDimension;
+    private Dimension edgeDimension;
     private Board hoveredSubBoard;
 
-    public TwoDimensionalBoard(Move move, GameController gameController, int size) {
-        super();
-        this.size = size;  // must be greater than one
+    public TwoDimensionalBoard(Dimension dimension, Move move, GameController gameController, int size) {
+        super(dimension);
 
         this.gameController = gameController;
+        this.size = size;  // must be greater than one
+        slotDimension = slotDimension();
+        edgeDimension = edgeDimension();
 
         boards = new Board[size][size];
 
@@ -41,7 +47,7 @@ public class TwoDimensionalBoard extends Board {
         logicBoard = new TwoDimensionalLogicBoard(size) {
             @Override
             public LogicBoard installLogicBoard() {
-                return installBoard(null).logicBoard;  // move does not matter here
+                return installBoard(slotDimension,null).logicBoard;  // move does not matter here
             }
         };
 
@@ -54,19 +60,32 @@ public class TwoDimensionalBoard extends Board {
                     currentMove = move.clone();
                     currentMove.setNextMove(new TwoDimensionalMove(i, j));
                 }
-                boards[i][j] = installBoard(currentMove);
+                boards[i][j] = installBoard(slotDimension, currentMove);
                 boards[i][j].coordinates = slotCoordinates(i, j);
             }
     }
 
     private Coordinates slotCoordinates(int i, int j) {
-        return new Coordinates((slotDimension.width + edgeDimension.width) * i + edgeDimension.width,
-                (slotDimension.height + edgeDimension.height) * j + edgeDimension.height);
+        double x = (slotDimension.width + edgeDimension.width) * i + edgeDimension.width;
+        double y = (slotDimension.height + edgeDimension.height) * j + edgeDimension.height;
+        return new Coordinates(x, y);
+    }
+
+    private Dimension slotDimension() {
+        double widthRatio = slotRelativeDimension.width / ((slotRelativeDimension.width + edgeRelativeDimension.width) * size + edgeRelativeDimension.width);
+        double heightRatio = slotRelativeDimension.height / ((slotRelativeDimension.height + edgeRelativeDimension.height) * size + edgeRelativeDimension.height);
+        return new Dimension(widthRatio * dimension.width, heightRatio * dimension.height);
+    }
+
+    private Dimension edgeDimension() {
+        double widthRatio = edgeRelativeDimension.width / ((slotRelativeDimension.width + edgeRelativeDimension.width) * size + edgeRelativeDimension.width);
+        double heightRatio = edgeRelativeDimension.height / ((slotRelativeDimension.height + edgeRelativeDimension.height) * size + edgeRelativeDimension.height);
+        return new Dimension(widthRatio * dimension.width, heightRatio * dimension.height);
     }
 
     // is meant to be overridden, by default it creates standard board
-    protected Board installBoard(Move move) {
-        return new FinalBoard(move, gameController);
+    protected Board installBoard(Dimension dimension, Move move) {
+        return new FinalBoard(dimension, move, gameController);
     }
 
     @Override
@@ -75,7 +94,7 @@ public class TwoDimensionalBoard extends Board {
             return false;
 
         if (outcome() != empty) {
-            token = outcome().newToken(move, gameController, getDimension());
+            token = outcome().newToken(move, gameController, dimension);
             token.animatePlace();
         }
 
@@ -95,12 +114,6 @@ public class TwoDimensionalBoard extends Board {
     }
 
     @Override
-    public Dimension getDimension() {
-        Coordinates coordinates = slotCoordinates(size, size);
-        return new Dimension(coordinates.getX(), coordinates.getY());
-    }
-
-    @Override
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         super.paint(coordinates, scale, g);
 
@@ -108,25 +121,25 @@ public class TwoDimensionalBoard extends Board {
             token.paint(coordinates, scale, g);
         } else {
             Graphics2D g2 = (Graphics2D) g;
-            g.setColor(Color.black);
-            g2.setStroke(new BasicStroke(2f));
+            g.setColor(Color.BLACK);
+            g2.setStroke(new BasicStroke((float) (0.2 * scale.average())));
 
             // paints lines
             for (int i = 1; i < size; i++) {
-                Coordinates c1 = coordinates.add(slotCoordinates(i, 0).scale(scale));
-                Coordinates c2 = coordinates.add(slotCoordinates(i, size).scale(scale));
-                g.drawLine(c1.getIntegerX(), c1.getIntegerY(), c2.getIntegerX(), c2.getIntegerY());
+                Coordinates c1 = coordinates.add(slotCoordinates(i, 0).add(-edgeDimension.width / 2, 0).scale(scale));
+                Coordinates c2 = coordinates.add(slotCoordinates(i, size).add(-edgeDimension.width / 2, 0).scale(scale));
+                drawLine(c1, c2, g);
             }
             for (int j = 1; j < size; j++) {
-                Coordinates c1 = coordinates.add(slotCoordinates(0, j).scale(scale));
-                Coordinates c2 = coordinates.add(slotCoordinates(size, j).scale(scale));
-                g.drawLine(c1.getIntegerX(), c1.getIntegerY(), c2.getIntegerX(), c2.getIntegerY());
+                Coordinates c1 = coordinates.add(slotCoordinates(0, j).add(0, -edgeDimension.height / 2).scale(scale));
+                Coordinates c2 = coordinates.add(slotCoordinates(size, j).add(0, -edgeDimension.height / 2).scale(scale));
+                drawLine(c1, c2, g);
             }
 
             for (int i = 0; i < size; i++)
                 for (int j = 0; j < size; j++)
                     boards[i][j].paint(coordinates.add(boards[i][j].coordinates.scale(scale)),
-                            boards[i][j].getDimension().getScale(slotDimension.scale(scale)), g);
+                            boards[i][j].dimension.getScale(slotDimension.scale(scale)), g);
         }
     }
 
@@ -138,15 +151,14 @@ public class TwoDimensionalBoard extends Board {
     public boolean contains(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++) {
-                Scale newScale = boards[i][j].getDimension().getScale(slotDimension.scale(scale));
                 Coordinates newCoordinates = boards[i][j].coordinates.scale(scale).flip().add(coordinates);
-                if (boards[i][j].contains(newCoordinates, newScale, mouseEvent)) {
+                if (boards[i][j].contains(newCoordinates, scale, mouseEvent)) {
                     if (!Mouse.pressed)
                         if (hoveredSubBoard != boards[i][j]) {
                             if (hoveredSubBoard != null)
                                 hoveredSubBoard.unhover(coordinates, scale, mouseEvent);
                             hoveredSubBoard = boards[i][j];
-                            hoveredSubBoard.hover(newCoordinates, newScale, mouseEvent);
+                            hoveredSubBoard.hover(newCoordinates, scale, mouseEvent);
                         }
                     return true;
                 }
@@ -173,30 +185,27 @@ public class TwoDimensionalBoard extends Board {
     public void press(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
         if (hoveredSubBoard == null)
             return;
-        Scale newScale = hoveredSubBoard.getDimension().getScale(slotDimension.scale(scale));
         Coordinates newCoordinates = hoveredSubBoard.coordinates.scale(scale).flip().add(coordinates);
-        hoveredSubBoard.press(newCoordinates, newScale, mouseEvent);
+        hoveredSubBoard.press(newCoordinates, scale, mouseEvent);
     }
 
     @Override
     public void release(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
         if (hoveredSubBoard == null)
             return;
-        Scale newScale = hoveredSubBoard.getDimension().getScale(slotDimension.scale(scale));
         Coordinates newCoordinates = hoveredSubBoard.getCoordinates().scale(scale).flip().add(coordinates);
-        hoveredSubBoard.release(newCoordinates, newScale, mouseEvent);
+        hoveredSubBoard.release(newCoordinates, scale, mouseEvent);
     }
 
     @Override
     public void click(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
         if (hoveredSubBoard == null)
             return;
-        Scale newScale = hoveredSubBoard.getDimension().getScale(slotDimension.scale(scale));
         Coordinates newCoordinates = hoveredSubBoard.getCoordinates().scale(scale).flip().add(coordinates);
-        if (hoveredSubBoard.contains(newCoordinates, newScale, mouseEvent))
-            hoveredSubBoard.click(newCoordinates, newScale, mouseEvent);
+        if (hoveredSubBoard.contains(newCoordinates, scale, mouseEvent))
+            hoveredSubBoard.click(newCoordinates, scale, mouseEvent);
         else
-            hoveredSubBoard.release(newCoordinates, newScale, mouseEvent);
+            hoveredSubBoard.release(newCoordinates, scale, mouseEvent);
     }
 
 }

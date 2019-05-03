@@ -27,15 +27,15 @@ public class GameScreen extends Screen {
     @Override
     public void load(MainFrame mainFrame) {
         GameController gameController = new StandardGameController(new Player[]{new Cross(new Human()), new Nought(new RandomAI())});
-        TwoDimensionalBoard board = new TwoDimensionalBoard(null, gameController, 3) {
+        TwoDimensionalBoard board = new TwoDimensionalBoard(new Dimension(60, 60), null, gameController, 2) {
             @Override
-            protected TwoDimensionalBoard installBoard(Move move) {
-                return new TwoDimensionalBoard(move, gameController, 3);
+            protected TwoDimensionalBoard installBoard(Dimension dimension, Move move) {
+                return new TwoDimensionalBoard(dimension, move, gameController, 2);
             }
         };
         gameController.board = board;
         gameController.start();
-        board.coordinates = new Coordinates(30, 30);
+        board.coordinates = new Coordinates(20, 20);
         addDisplayComponent(board, mainFrame.panel);
 
         NormalButton backButton = new NormalButton("Back", 3, new Dimension(20, 8)) {

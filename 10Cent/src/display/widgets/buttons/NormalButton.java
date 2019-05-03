@@ -36,7 +36,12 @@ public abstract class NormalButton extends Button {
     @Override
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         super.paint(coordinates, scale, g);
-        drawRectangle(coordinates, dimension, Color.black, 0.3, scale, g);
+
+        Graphics2D g2 = (Graphics2D) g;
+        g.setColor(Color.BLACK);
+        g2.setStroke(new BasicStroke((float) (0.3 * scale.average())));
+
+        drawRectangle(coordinates, dimension.scale(scale), g);
     }
 
 }
