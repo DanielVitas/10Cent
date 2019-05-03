@@ -35,6 +35,8 @@ public class MainFrame extends JFrame {
         add(panel);
         repaintThread = new RepaintThread(panel);
         repaintThread.start();
+        mainFrame.setSize(Settings.windowSizeX, Settings.windowSizeY);
+        mainFrame.setLocation(Settings.windowLocationX, Settings.windowLocationY);
     }
 
     private void onClose() {

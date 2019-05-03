@@ -29,19 +29,7 @@ public final class Settings {
 
     // initializes settings, this is only called once at the start
     public static void initialize() {
-        Images.loadImages(Paths.get(Images.RESOURCES_PATH,"images").toString());
-
         Settings.read();
-
-        MainFrame mainFrame = new MainFrame();
-
-        Controller.install(mainFrame);
-        mainFrame.pack();
-        mainFrame.setSize(windowSizeX, windowSizeY);
-        mainFrame.setLocation(windowLocationX, windowLocationY);
-        mainFrame.setVisible(true);
-
-        AudioPlayer.setup();
         AudioPlayer.updateSound();
     }
 
