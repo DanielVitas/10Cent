@@ -26,10 +26,10 @@ public class GameScreen extends Screen {
     @Override
     public void load(MainFrame mainFrame) {
         GameController gameController = new StandardGameController(new Player[]{new Cross(new Human()), new Nought(new RandomAI())});
-        TwoDimensionalBoard board = new TwoDimensionalBoard(null, gameController, 2) {
+        TwoDimensionalBoard board = new TwoDimensionalBoard(null, gameController, 3) {
             @Override
             protected TwoDimensionalBoard installBoard(Move move) {
-                return new TwoDimensionalBoard(move, gameController, 2);
+                return new TwoDimensionalBoard(move, gameController, 3);
             }
         };
         gameController.board = board;
