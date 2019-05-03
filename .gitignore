@@ -25,3 +25,6 @@ hs_err_pid*
 # Jaybird files
 .idea/
 *.iml
+
+# Settings file
+10Cent/resources/settings/
