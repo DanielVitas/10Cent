@@ -37,7 +37,7 @@ public class GameScreen extends Screen {
         board.coordinates = new Coordinates(30, 30);
         addDisplayComponent(board, mainFrame.panel);
 
-        NormalButton backButton = new NormalButton("Back", 10,  new Dimension(10, 5)) {
+        NormalButton backButton = new NormalButton("Back", 5,  new Dimension(10, 5)) {
             @Override
             public void clicked() {
                 Controller.back();
