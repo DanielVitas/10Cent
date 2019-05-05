@@ -19,7 +19,14 @@ public class MiniMax extends Intelligence{
     // the AI is currently recursive but we would want it to be iterative
     @Override
     public void play() {
-        Move nextMove = getMove(depth, gameController.board.logicBoard.clone(), gameController.previousMoves.peek());
+        Move nextMove;
+        if(gameController.previousMoves.empty()){
+            nextMove = getMove(depth, gameController.board.logicBoard.clone(), null);
+        } else {
+            nextMove = getMove(depth, gameController.board.logicBoard.clone(), gameController.previousMoves.peek());
+        }
+
+
         nextMove.setPlayer(gameController.getCurrentPlayer());
         gameController.currentMove = nextMove;
     }
