@@ -10,6 +10,8 @@ import java.util.List;
 
 public class MiniMax extends Intelligence{
 
+    public final static String NAME = "Minimax";
+
     private int depth;
 
     public MiniMax(int depth) {
@@ -36,7 +38,7 @@ public class MiniMax extends Intelligence{
 
     }
     private Move getMove(int depth, LogicBoard logicBoard, Move previousMove) {
-        List<Integer> moveValues = new ArrayList<>();
+        List<Double> moveValues = new ArrayList<>();
         List<Move> moves = new ArrayList<>(StandardGameController.legalMoves(logicBoard, previousMove));
         for(Move move: moves) {
             moveValues.add(evaluateMove(depth - 1, logicBoard.clone(), move));
@@ -44,13 +46,13 @@ public class MiniMax extends Intelligence{
         return moves.get(moveValues.indexOf(Collections.max(moveValues)));
     }
 
-    private int evaluateMove(int depth, LogicBoard logicBoard, Move move) {
+    private double evaluateMove(int depth, LogicBoard logicBoard, Move move) {
         logicBoard.play(move);
         List<Move> moves = new ArrayList<>(StandardGameController.legalMoves(logicBoard, move));
         if(depth==0 || moves.isEmpty()) {
-            return StandardGameController.evaluate(logicBoard);
+            return StandardGameController.evaluate(logicBoard, gameController.getCurrentPlayer());
         } else {
-        List<Integer> values = new ArrayList<>();
+        List<Double> values = new ArrayList<>();
         for (Move nextMove: moves) {
             values.add(evaluateMove(depth - 1, logicBoard.clone(), nextMove));
         }

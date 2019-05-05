@@ -64,7 +64,11 @@ public abstract class StandardGameController extends GameController {
         onWin(board.outcome());
     }
 
-    public static int evaluate(LogicBoard logicBoard) {
+    public static double evaluate(LogicBoard logicBoard, Player player) {
+        if (logicBoard.outcome() == player)
+            return Double.POSITIVE_INFINITY;
+        if (logicBoard.outcome() != empty)
+            return Double.NEGATIVE_INFINITY;
         return 0;
     }
 }

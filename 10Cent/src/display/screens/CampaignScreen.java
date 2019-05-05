@@ -82,6 +82,8 @@ public class CampaignScreen extends Screen {
         secondWaypoint.coordinates = new Coordinates(40, 75);
         addDisplayComponent(secondWaypoint, mainFrame.panel);
 
+        stageDetails(Progress.newestStage, mainFrame);
+
         addDefaultBackButton(mainFrame);
     }
 

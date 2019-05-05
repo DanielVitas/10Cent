@@ -13,6 +13,7 @@ import logic.game.GameController;
 import logic.game.StandardGameController;
 import logic.intelligence.Human;
 import logic.intelligence.Intelligence;
+import logic.intelligence.MiniMax;
 import logic.intelligence.RandomAI;
 import logic.players.Player;
 import progress.Progress;
@@ -42,7 +43,9 @@ public class PracticeScreen extends Screen {
         gameModeMenu.coordinates = new Coordinates(30, 16);
         gameModeMenu.displayPriority = 5;
 
-        intelligence1Menu = new NormalDropdownMenu(new String[]{Human.NAME, RandomAI.NAME}, 3, new Dimension(30,8)) {
+        String[] allIntelligence = new String[]{Human.NAME, RandomAI.NAME, MiniMax.NAME};
+
+        intelligence1Menu = new NormalDropdownMenu(allIntelligence, 3, new Dimension(30,8)) {
             @Override
             public void dropdown() {
                 super.dropdown();
@@ -52,7 +55,7 @@ public class PracticeScreen extends Screen {
         intelligence1Menu.coordinates = new Coordinates(30, 36);
         intelligence1Menu.displayPriority = 3;
 
-        intelligence2Menu = new NormalDropdownMenu(new String[]{Human.NAME, RandomAI.NAME}, 3, new Dimension(30,8)) {
+        intelligence2Menu = new NormalDropdownMenu(allIntelligence, 3, new Dimension(30,8)) {
             @Override
             public void dropdown() {
                 super.dropdown();
