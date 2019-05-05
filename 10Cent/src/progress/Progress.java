@@ -12,6 +12,7 @@ public final class Progress {
     public static boolean campaignDialog;  // campaign dialog will display
     public static String selectedPlayer;
     public static int selectedStage;
+    public static boolean easy;
 
     public static int newestStage;
     private static List<String> players = new ArrayList<>();
@@ -24,9 +25,9 @@ public final class Progress {
     public static void load() {
         campaignDialog = true;
         addPlayer(Cross.NAME);
-        //oldPlayers.add(Cross.NAME);
         newestStage = Stage.STAGE1;
         selectedPlayer = players.get(0);
+        easy = true;
     }
 
     public static Player[] getPlayers() {

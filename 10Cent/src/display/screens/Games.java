@@ -21,6 +21,9 @@ public final class Games {
     Used to save space in other classes where it is more crucial.
      */
 
+    public final static String TIC_TAC_TOE = "Tic-tac-toe";
+    public final static String ULTIMATE_TIC_TAC_TOE = "Ultimate Tic-tac-toe";
+
 
     public static void ticTacToe(int size, Coordinates coordinates, Dimension dimension, GameController gameController, GameScreen screen, MainFrame mainFrame) {
         if (screen.board == null) {

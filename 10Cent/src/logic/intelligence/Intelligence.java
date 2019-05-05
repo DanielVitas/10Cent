@@ -26,7 +26,7 @@ public abstract class Intelligence {
                 intelligence = new RandomAI();
                 break;
             case MiniMax.NAME:
-                intelligence = new MiniMax(10);
+                intelligence = new MiniMax(3);
                 break;
         }
         return intelligence;

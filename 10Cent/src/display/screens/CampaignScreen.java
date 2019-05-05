@@ -37,6 +37,7 @@ public class CampaignScreen extends Screen {
     public static Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 3);
 
     private List<DisplayComponent> stageDetailsObjects = new ArrayList<>();
+    private int currentStageDetails = 0;
 
     @Override
     public void load(MainFrame mainFrame) {
@@ -89,7 +90,10 @@ public class CampaignScreen extends Screen {
     }
 
     private void stageDetails(int stage, MainFrame mainFrame) {
+        if (currentStageDetails == stage)
+            return;
         removeStageDetails(mainFrame);
+        currentStageDetails = stage;
         stageDescription(stage, mainFrame);
 
         ToggleButton button1 = new ToggleButton("Easy", 5, new Dimension(20, 8));
@@ -103,6 +107,10 @@ public class CampaignScreen extends Screen {
             @Override
             public void select(DisplayObject displayObject) {
                 ((ToggleButton) displayObject).animateClicked();
+                if (displayObject == button1)
+                    Progress.easy = true;
+                else
+                    Progress.easy = false;
                 super.select(displayObject);
             }
 
@@ -112,7 +120,7 @@ public class CampaignScreen extends Screen {
                 super.deselect(coordinates);
             }
         };
-        toggleSwitch.select(button1);
+        toggleSwitch.select(Progress.easy ? button1 : button2);
         toggleSwitch.coordinates = new Coordinates(58, 78);
         stageDetailsObjects.add(toggleSwitch);
         addDisplayComponent(toggleSwitch, mainFrame.panel);
@@ -131,7 +139,7 @@ public class CampaignScreen extends Screen {
                         GameController gameController = new StandardGameController(players) {
                             @Override
                             public void onWin(Player player) {
-                                if (player == protagonist) {
+                                if (player == protagonist && Progress.newestStage == Stage.STAGE1) {
                                     Progress.addPlayer(Nought.NAME);
                                     Progress.newestStage = 2;
                                     Controller.switchScreenWithoutBacking(storyScreen());
