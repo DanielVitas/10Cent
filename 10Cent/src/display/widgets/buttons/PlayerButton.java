@@ -7,8 +7,12 @@ import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
 import display.images.Images;
 import display.widgets.dropdownMenu.DropdownMenu;
+import display.widgets.label.Align;
+import display.widgets.label.Label;
+import fonts.CustomFonts;
 import logic.players.Player;
 import logic.players.Token;
+import progress.Progress;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -18,17 +22,32 @@ import static display.frame.MainPanel.drawRectangle;
 
 public abstract class PlayerButton extends Button {
 
-    private DropdownMenu dropdownMenu;
-    private Player player;
-    private Token token;
+    private static Font font = CustomFonts.getFont(CustomFonts.PAINTER, 3);
 
-    public PlayerButton(DropdownMenu dropdownMenu, Player player, Dimension dimension) {
+    private DropdownMenu dropdownMenu;
+    public Player player;
+    private Token token;
+    public Label newLabel;
+    private boolean changeable;
+
+    public PlayerButton(DropdownMenu dropdownMenu, boolean isNew, boolean changeable, Player player, Dimension dimension) {
         super(dimension, Paths.get(Images.RESOURCES_PATH,"images", "buttons", "player").toString());
 
         this.dropdownMenu = dropdownMenu;
+        this.changeable = changeable;
         setPlayer(player);
 
+        if (isNew) {
+            Label label = new Label("New<", font, Color.RED, new Dimension(dimension.width * 0.5, dimension.height * 0.2), Align.RIGHT);
+            label.coordinates = new Coordinates(dimension.width * 0.5, dimension.height * 0.8);
+            newLabel = label;
+        }
+
         hitBoxes.add(new Rectangle(dimension.getAwtDimension()));
+    }
+
+    public void seen() {
+        newLabel = null;
     }
 
     public void setPlayer(Player player) {
@@ -51,6 +70,15 @@ public abstract class PlayerButton extends Button {
     }
 
     @Override
+    public void hover(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
+        super.hover(coordinates, scale, mouseEvent);
+        if (changeable) {
+            seen();
+            Progress.addOldPlayer(player.toString());
+        }
+    }
+
+    @Override
     public void click(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
         AudioPlayer.play(SoundPlayer.BUTTON);
         super.click(coordinates, scale, mouseEvent);
@@ -65,6 +93,9 @@ public abstract class PlayerButton extends Button {
         g2.setStroke(new BasicStroke((float) (0.1 * scale.average())));
 
         drawRectangle(coordinates, dimension.scale(scale), g);
+
+        if (newLabel != null)
+            newLabel.paint(coordinates.add(newLabel.coordinates.scale(scale)), scale, g);
     }
 
 }

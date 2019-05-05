@@ -19,6 +19,9 @@ import logic.players.Player;
 import progress.Progress;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class PracticeScreen extends Screen {
 
@@ -66,8 +69,11 @@ public class PracticeScreen extends Screen {
         intelligence2Menu.displayPriority = 1;
 
         Player[] players = Progress.getAllPlayers();
+        List<String> oldPlayers = new ArrayList<>();
+        for (Player player : players)
+            oldPlayers.add(player.toString());
 
-        player1Menu = new PlayerDropdownMenu(players, Align.LEFT, 3, new display.frame.misc.Dimension(8,8)) {
+        player1Menu = new PlayerDropdownMenu(players, oldPlayers, Align.LEFT, 3, new display.frame.misc.Dimension(8,8)) {
             @Override
             public void dropdown() {
                 super.dropdown();
@@ -77,7 +83,7 @@ public class PracticeScreen extends Screen {
         player1Menu.coordinates = new Coordinates(62,36);
         player1Menu.displayPriority = 4;
 
-        player2Menu = new PlayerDropdownMenu(players, Align.LEFT, 3, new display.frame.misc.Dimension(8,8)) {
+        player2Menu = new PlayerDropdownMenu(players, oldPlayers, Align.LEFT, 3, new display.frame.misc.Dimension(8,8)) {
             @Override
             public void dropdown() {
                 super.dropdown();

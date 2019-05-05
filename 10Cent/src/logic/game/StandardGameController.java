@@ -20,7 +20,7 @@ public abstract class StandardGameController extends GameController {
 
 
     public static Set<Move> legalMoves(LogicBoard logicBoard, Move previousMove) {
-        if (previousMove==null)
+        if (previousMove == null)
             return logicBoard.allMoves(empty);
         Stack<Move> deconstructedPreviousMove = previousMove.deconstruct();
         deconstructedPreviousMove.pop(); // pop's final move

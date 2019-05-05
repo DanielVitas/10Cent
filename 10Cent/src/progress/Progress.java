@@ -15,6 +15,7 @@ public final class Progress {
 
     public static int newestStage;
     private static List<String> players = new ArrayList<>();
+    private static List<String> oldPlayers = new ArrayList<>();
     private final static String[] allPlayers = new String[]{
         Cross.NAME,
         Nought.NAME
@@ -23,6 +24,7 @@ public final class Progress {
     public static void load() {
         campaignDialog = true;
         addPlayer(Cross.NAME);
+        oldPlayers.add(Cross.NAME);
         newestStage = Stage.STAGE1;
         selectedPlayer = players.get(0);
     }
@@ -31,6 +33,10 @@ public final class Progress {
         Player[] players = new Player[Progress.players.size()];
         for (int i = 0; i < players.length; i++)
             players[i] = Player.parseString((String) Progress.players.toArray()[i], null);
+        return players;
+    }
+
+    public static List<String> getOldPlayers() {
         return players;
     }
 
@@ -43,6 +49,10 @@ public final class Progress {
 
     public static void addPlayer(String playerName) {
         players.add(playerName);
+    }
+
+    public static void addOldPlayer(String playerName) {
+        oldPlayers.add(playerName);
     }
 
 

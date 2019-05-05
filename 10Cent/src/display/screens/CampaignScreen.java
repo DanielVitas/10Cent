@@ -41,8 +41,9 @@ public class CampaignScreen extends Screen {
     @Override
     public void load(MainFrame mainFrame) {
         Player[] players = Progress.getPlayers();
+        List<String> oldPlayers = Progress.getOldPlayers();
 
-        PlayerDropdownMenu playerMenu = new PlayerDropdownMenu(players, Align.RIGHT, 3, new display.frame.misc.Dimension(8,8)) {
+        PlayerDropdownMenu playerMenu = new PlayerDropdownMenu(players, oldPlayers, Align.RIGHT, 3, new display.frame.misc.Dimension(8,8)) {
             @Override
             public void refresh() {
                 super.refresh();
