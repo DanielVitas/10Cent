@@ -1,8 +1,10 @@
 package logic.game;
 
+import logic.boards.LogicBoard;
 import logic.boards.Move;
 import logic.boards.exceptions.InvalidMoveException;
 import logic.players.Player;
+import sun.rmi.runtime.Log;
 
 import java.util.Set;
 import java.util.Stack;
@@ -16,15 +18,14 @@ public class StandardGameController extends GameController {
         super(players);
     }
 
-    @Override
-    public Set<Move> legalMoves() {
-        if (previousMoves.empty())
-            return board.logicBoard.allMoves(empty);
-        Stack<Move> deconstructedPreviousMove = previousMoves.peek().deconstruct();
-        deconstructedPreviousMove.pop(); // pop's final move
-        return board.logicBoard.legalMoves(empty, deconstructedPreviousMove);
-    }
 
+    public static Set<Move> legalMoves(LogicBoard logicBoard, Move previousMove) {
+        if (previousMove==null)
+            return logicBoard.allMoves(empty);
+        Stack<Move> deconstructedPreviousMove = previousMove.deconstruct();
+        deconstructedPreviousMove.pop(); // pop's final move
+        return logicBoard.legalMoves(empty, deconstructedPreviousMove);
+    }
 
     @Override
     public void run() {
@@ -63,4 +64,7 @@ public class StandardGameController extends GameController {
         System.out.println("Winner: " + board.outcome());
     }
 
+    public static int evaluate(LogicBoard logicBoard) {
+        return 0;
+    }
 }

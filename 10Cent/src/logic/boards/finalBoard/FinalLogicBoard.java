@@ -42,4 +42,10 @@ public class FinalLogicBoard extends LogicBoard {
         return moves;
     }
 
+    public LogicBoard clone() {
+        FinalLogicBoard clonedFinalLogicBoard = new FinalLogicBoard();
+        clonedFinalLogicBoard.player = player;
+        return clonedFinalLogicBoard;
+    }
+
 }

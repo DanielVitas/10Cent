@@ -1,22 +1,18 @@
 package display.screens;
 
-import audio.AudioPlayer;
 import display.frame.misc.Coordinates;
 import display.frame.MainFrame;
 import display.frame.misc.Dimension;
-import display.widgets.buttons.Button;
 import display.widgets.buttons.NormalButton;
-import display.widgets.sliders.NormalSlider;
 import logic.boards.Move;
 import logic.boards.twoDimensionalBoard.TwoDimensionalBoard;
 import logic.game.GameController;
 import logic.game.StandardGameController;
 import logic.intelligence.Human;
-import logic.intelligence.RandomAI;
+import logic.intelligence.MiniMax;
 import logic.players.Player;
 import logic.players.cross.Cross;
 import logic.players.nought.Nought;
-import settings.Settings;
 
 public class GameScreen extends Screen {
 
@@ -26,11 +22,11 @@ public class GameScreen extends Screen {
 
     @Override
     public void load(MainFrame mainFrame) {
-        GameController gameController = new StandardGameController(new Player[]{new Cross(new Human()), new Nought(new RandomAI())});
-        TwoDimensionalBoard board = new TwoDimensionalBoard(new Dimension(60, 60), null, gameController, 2) {
+        GameController gameController = new StandardGameController(new Player[]{new Cross(new Human()), new Nought(new MiniMax(6))});
+        TwoDimensionalBoard board = new TwoDimensionalBoard(new Dimension(60, 60), null, gameController, 3) {
             @Override
             protected TwoDimensionalBoard installBoard(Dimension dimension, Move move) {
-                return new TwoDimensionalBoard(dimension, move, gameController, 2);
+                return new TwoDimensionalBoard(dimension, move, gameController, 3);
             }
         };
         gameController.board = board;

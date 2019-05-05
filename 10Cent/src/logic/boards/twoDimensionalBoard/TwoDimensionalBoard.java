@@ -46,7 +46,7 @@ public class TwoDimensionalBoard extends Board {
         // room for improvement
         logicBoard = new TwoDimensionalLogicBoard(size) {
             @Override
-            public LogicBoard installLogicBoard() {
+            public LogicBoard installLogicBoard(int i, int j) {
                 return installBoard(slotDimension,null).logicBoard;  // move does not matter here
             }
         };

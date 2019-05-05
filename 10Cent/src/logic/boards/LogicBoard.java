@@ -1,6 +1,7 @@
 package logic.boards;
 
 import logic.players.Player;
+import sun.rmi.runtime.Log;
 
 import java.util.Set;
 import java.util.Stack;
@@ -25,4 +26,5 @@ public abstract class LogicBoard {
 
     public abstract Set<Move> allMoves(Player player);
 
+    public abstract LogicBoard clone();
 }

@@ -4,6 +4,7 @@ import logic.boards.LogicBoard;
 import logic.boards.Move;
 import logic.boards.finalBoard.FinalLogicBoard;
 import logic.players.Player;
+import sun.rmi.runtime.Log;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,10 +21,10 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
         logicBoards = new LogicBoard[size][size];
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++)
-                logicBoards[i][j] = installLogicBoard();
+                logicBoards[i][j] = installLogicBoard(i, j);
     }
 
-    public LogicBoard installLogicBoard() {
+    public LogicBoard installLogicBoard(int i, int j) {
         return new FinalLogicBoard();
     }
 
@@ -126,4 +127,15 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
         return moves;
     }
 
+    @Override
+    public LogicBoard clone() {
+       TwoDimensionalLogicBoard clonedTwoDimensionalLogicBoard = new TwoDimensionalLogicBoard(logicBoards.length) {
+           @Override
+           public LogicBoard installLogicBoard(int i, int j) {
+               return logicBoards[i][j].clone();
+           }
+       };
+       clonedTwoDimensionalLogicBoard.outcome = outcome;
+       return clonedTwoDimensionalLogicBoard;
+    }
 }
