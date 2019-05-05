@@ -3,6 +3,7 @@ package logic.intelligence;
 import logic.boards.LogicBoard;
 import logic.boards.Move;
 import logic.game.StandardGameController;
+import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,9 +24,9 @@ public class MiniMax extends Intelligence{
     public void play() {
         Move nextMove;
         if(gameController.previousMoves.empty()){
-            nextMove = getMove(depth, gameController.board.logicBoard.clone(), null);
+            nextMove = getMove(gameController.board.logicBoard.clone(), null);
         } else {
-            nextMove = getMove(depth, gameController.board.logicBoard.clone(), gameController.previousMoves.peek());
+            nextMove = getMove(gameController.board.logicBoard.clone(), gameController.previousMoves.peek());
         }
 
 
@@ -37,30 +38,44 @@ public class MiniMax extends Intelligence{
     public void close() {
 
     }
-    private Move getMove(int depth, LogicBoard logicBoard, Move previousMove) {
-        List<Double> moveValues = new ArrayList<>();
+    private Move getMove(LogicBoard logicBoard, Move previousMove) {
         List<Move> moves = new ArrayList<>(StandardGameController.legalMoves(logicBoard, previousMove));
+        Double bestDouble = Double.NEGATIVE_INFINITY;
+        Move bestMove = moves.get(0);
+
         for(Move move: moves) {
-            moveValues.add(evaluateMove(depth - 1, logicBoard.clone(), move));
+            LogicBoard newLogicBoard = logicBoard.clone();
+            move.setPlayer(gameController.getPlayerOnTurnCount(0));
+            newLogicBoard.play(move);
+            Double evaluatedMove = evaluateMove(depth - 1, newLogicBoard, move);
+            if(evaluatedMove > bestDouble) {
+                bestDouble = evaluatedMove;
+                bestMove = move;
+            }
         }
-        return moves.get(moveValues.indexOf(Collections.max(moveValues)));
+        return bestMove;
     }
 
-    private double evaluateMove(int depth, LogicBoard logicBoard, Move move) {
-        logicBoard.play(move);
-        List<Move> moves = new ArrayList<>(StandardGameController.legalMoves(logicBoard, move));
+    private double evaluateMove(int depth, LogicBoard logicBoard, Move previousMove) {
+        List<Move> moves = new ArrayList<>(StandardGameController.legalMoves(logicBoard, previousMove));
+
         if(depth==0 || moves.isEmpty()) {
             return StandardGameController.evaluate(logicBoard, gameController.getCurrentPlayer());
         } else {
-        List<Double> values = new ArrayList<>();
-        for (Move nextMove: moves) {
-            values.add(evaluateMove(depth - 1, logicBoard.clone(), nextMove));
-        }
-        if((this.depth - depth)%2==0) {
-            return Collections.max(values);
-        }
-        return Collections.min(values);
-        }
+            List<Double> values = new ArrayList<>();
+
+            for (Move nextMove: moves) {
+                nextMove.setPlayer(gameController.getPlayerOnTurnCount(this.depth - depth));
+                LogicBoard newLogicBoard = logicBoard.clone();
+                newLogicBoard.play(nextMove);
+                values.add(evaluateMove(depth - 1, newLogicBoard, nextMove));
+            }
+
+            if((this.depth - depth)%2==0) {
+                return Collections.max(values);
+            }
+            return Collections.min(values);
+            }
 
     }
 

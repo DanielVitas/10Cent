@@ -21,6 +21,7 @@ public final class Games {
     Used to save space in other classes where it is more crucial.
      */
 
+
     public static void ticTacToe(int size, Coordinates coordinates, Dimension dimension, GameController gameController, GameScreen screen, MainFrame mainFrame) {
         if (screen.board == null) {
             screen.board = new TwoDimensionalBoard(dimension, null, gameController, size);

@@ -35,6 +35,10 @@ public abstract class GameController extends Thread {
             player.intelligence.gameController = this;
     }
 
+    public Player getPlayerOnTurnCount(int turnCount) {
+        return players[(turnCount+this.turnCount) % players.length];
+    }
+
     public Player getCurrentPlayer() {
         return players[turnCount % players.length];
     }
