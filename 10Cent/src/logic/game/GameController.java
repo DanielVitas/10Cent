@@ -26,7 +26,7 @@ public abstract class GameController extends Thread {
     protected int turnCount = 0;
     public boolean awaitingPlayer = false;
 
-    protected Stack<Move> previousMoves = new Stack<>();
+    public Stack<Move> previousMoves = new Stack<>();
     public Move currentMove;
 
     public GameController(Player[] players) {
@@ -39,14 +39,14 @@ public abstract class GameController extends Thread {
         return players[turnCount % players.length];
     }
 
-    public abstract Set<Move> legalMoves();
+  //  public abstract Set<Move> legalMoves();
 
-    public boolean isLegal(Move move) {
+ /*   public boolean isLegal(Move move) {
         for (Move legalMove : legalMoves())
             if (legalMove.equals(move))
                 return true;
         return false;
-    }
+    }*/
 
     public abstract void onWin(Player player);
 

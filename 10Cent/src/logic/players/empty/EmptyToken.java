@@ -8,6 +8,7 @@ import display.images.Images;
 import display.screens.Controller;
 import logic.boards.Move;
 import logic.game.GameController;
+import logic.game.StandardGameController;
 import logic.players.Player;
 import logic.players.Token;
 
@@ -83,7 +84,7 @@ public class EmptyToken extends Token {
     @Override
     public void click(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
         // first two conditions are redundant
-        if (gameController.isLegal(move) && gameController.awaitingPlayer && waiting) {
+        if (gameController.awaitingPlayer && waiting) {
             move.setPlayer(gameController.getCurrentPlayer());
             gameController.getCurrentPlayer().intelligence.close();
             gameController.currentMove = move;

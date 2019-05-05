@@ -1,6 +1,7 @@
 package logic.intelligence;
 
 import logic.boards.Move;
+import logic.game.StandardGameController;
 import logic.players.Token;
 import logic.players.empty.Empty;
 import logic.players.empty.EmptyToken;
@@ -15,7 +16,12 @@ public class Human extends Intelligence {
 
     @Override
     public void play() {
-        Set<Move> moves = gameController.legalMoves();
+        Set<Move> moves;
+        if(gameController.previousMoves.empty()){
+            moves = StandardGameController.legalMoves(gameController.board.logicBoard, null);
+        } else {
+            moves = StandardGameController.legalMoves(gameController.board.logicBoard, gameController.previousMoves.peek());
+        }
         for (Move move : moves)
             tokens.add(gameController.board.getToken(move));
         for (Token token : tokens)
