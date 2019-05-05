@@ -128,9 +128,11 @@ public class CampaignScreen extends Screen {
                         GameController gameController = new StandardGameController(players) {
                             @Override
                             public void onWin(Player player) {
-                                Progress.addPlayer(Nought.NAME);
-                                Progress.newestStage = 2;
-                                Controller.switchScreenWithoutBacking(storyScreen());
+                                if (player == protagonist) {
+                                    Progress.addPlayer(Nought.NAME);
+                                    Progress.newestStage = 2;
+                                    Controller.switchScreenWithoutBacking(storyScreen());
+                                }
                             }
                         };
                         Controller.switchScreen(new GameScreen(gameController) {
