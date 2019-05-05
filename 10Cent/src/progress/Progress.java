@@ -24,7 +24,7 @@ public final class Progress {
     public static void load() {
         campaignDialog = true;
         addPlayer(Cross.NAME);
-        oldPlayers.add(Cross.NAME);
+        //oldPlayers.add(Cross.NAME);
         newestStage = Stage.STAGE1;
         selectedPlayer = players.get(0);
     }
@@ -37,7 +37,7 @@ public final class Progress {
     }
 
     public static List<String> getOldPlayers() {
-        return players;
+        return oldPlayers;
     }
 
     public static Player[] getAllPlayers() {
