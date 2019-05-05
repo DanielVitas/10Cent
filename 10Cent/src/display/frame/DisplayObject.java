@@ -15,7 +15,7 @@ public class DisplayObject implements DisplayComponent {
 
     public Coordinates coordinates = new Coordinates(0, 0);
     public int displayPriority = 0;
-    private List<DisplayComponent> subComponents = new ArrayList<>();  // used by default paint method
+    public List<DisplayComponent> subComponents = new ArrayList<>();  // used by default paint method
     protected List<Shape> hitBoxes = new ArrayList<>();  // hit-boxes should be empty if object is not interactive
 
     // the following is used for objects with a single main animation

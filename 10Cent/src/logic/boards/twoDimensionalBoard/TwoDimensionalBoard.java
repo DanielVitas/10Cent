@@ -102,6 +102,13 @@ public class TwoDimensionalBoard extends Board {
     }
 
     @Override
+    public Token getHoveredToken() {
+        if (hoveredSubBoard == null)
+            return null;
+        return hoveredSubBoard.getHoveredToken();
+    }
+
+    @Override
     protected Board selectSubBoard(Move move) {
         return boards[((TwoDimensionalMove) move).i][((TwoDimensionalMove) move).j];
     }

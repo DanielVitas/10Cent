@@ -13,13 +13,14 @@ import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
-public class MainPanel extends JPanel  implements MouseListener, MouseMotionListener {
+public class MainPanel extends JPanel  implements MouseListener, MouseMotionListener, KeyListener {
 
     /*
     Displayed on MainFrame.
      */
 
     private List<DisplayComponent> displayComponents = new ArrayList<>();
+    private static InputComponent selectedInputComponent;
 
     public MainPanel(Dimension preferredSize) {
         setPreferredSize(preferredSize.getAwtDimension());
@@ -134,6 +135,23 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
             Mouse.hovered.unhover(mouseCoordinates, Scale.noScale, mouseEvent);
         Mouse.hovered = null;
     }
+
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
+        selectedInputComponent.typeKey(keyEvent);
+    }
+
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
+
+    }
+
+
 
     private static<T> List<T> reverse(List<T> list) {
         List<T> reverseList = new ArrayList<>(list);

@@ -50,6 +50,8 @@ public abstract class Board extends DisplayObject {
         return logicBoard.outcome();
     }
 
+    public abstract Token getHoveredToken();
+
     protected abstract Board selectSubBoard(Move move);
 
     public Token getToken(Move move) {
