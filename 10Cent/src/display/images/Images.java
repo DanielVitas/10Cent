@@ -19,6 +19,7 @@ public final class Images {
      */
 
     public static String RESOURCES_PATH = Paths.get("10Cent", "src", "resources").toString();
+    private final static String IMAGE_PATH = Paths.get(RESOURCES_PATH, "images").toString();
     private static Map<String, Image> images = new HashMap<>();
 
     public static Image get(String name) {
@@ -26,8 +27,8 @@ public final class Images {
     }
 
     // called once at the start of the program
-    public static void loadImages(String directoryPath) {
-        List<String> paths = getAllPaths(directoryPath);
+    public static void load() {
+        List<String> paths = getAllPaths(IMAGE_PATH);
         for (String path : paths) {
             String suffix = path.substring(path.lastIndexOf(".") + 1);
             if (suffix.equals("png"))

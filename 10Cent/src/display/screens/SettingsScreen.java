@@ -4,8 +4,8 @@ import audio.AudioPlayer;
 import display.frame.MainFrame;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
-import display.widgets.Align;
-import display.widgets.Label;
+import display.widgets.label.Align;
+import display.widgets.label.Label;
 import display.widgets.buttons.NormalButton;
 import display.widgets.sliders.NormalSlider;
 import settings.DefaultSettings;
@@ -16,28 +16,24 @@ import java.awt.*;
 
 public class SettingsScreen extends Screen{
 
-    private static double globalVolumeV = Settings.globalVolume;
-    private static double musicVolumeV = Settings.musicVolume;
-    private static double soundVolumeV = Settings.soundVolume;
-
     private static Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.PLAIN, 3);
 
     @Override
     public void load(MainFrame mainFrame){
-        Label globalVolumeLabel = new Label("Master Volume", font, Color.BLACK, new Dimension(30,10), Align.LEFT);
-        globalVolumeLabel.coordinates = new Coordinates(5,15);
+        Label globalVolumeLabel = new Label("Master Volume", font, Color.BLACK, new Dimension(25,8), Align.LEFT);
+        globalVolumeLabel.coordinates = new Coordinates(5,16);
         addDisplayComponent(globalVolumeLabel, mainFrame.panel);
 
-        Label soundVolumeLabel = new Label("Sound Volume", font, Color.BLACK, new Dimension(30,10), Align.LEFT);
-        soundVolumeLabel.coordinates = new Coordinates(5,25);
+        Label soundVolumeLabel = new Label("Sound Volume", font, Color.BLACK, new Dimension(25,8), Align.LEFT);
+        soundVolumeLabel.coordinates = new Coordinates(5,26);
         addDisplayComponent(soundVolumeLabel, mainFrame.panel);
 
-        Label musicVolumeLabel = new Label("Music Volume", font, Color.BLACK, new Dimension(30,10), Align.LEFT);
-        musicVolumeLabel.coordinates = new Coordinates(5,35);
+        Label musicVolumeLabel = new Label("Music Volume", font, Color.BLACK, new Dimension(25,8), Align.LEFT);
+        musicVolumeLabel.coordinates = new Coordinates(5,36);
         addDisplayComponent(musicVolumeLabel, mainFrame.panel);
 
-        Label fullscreenLabel = new Label("Screen Mode", font, Color.BLACK, new Dimension(30,10), Align.LEFT);
-        fullscreenLabel.coordinates = new Coordinates(5,45);
+        Label fullscreenLabel = new Label("Screen Mode", font, Color.BLACK, new Dimension(25,8), Align.LEFT);
+        fullscreenLabel.coordinates = new Coordinates(5,46);
         addDisplayComponent(fullscreenLabel, mainFrame.panel);
 
         NormalSlider globalVolume = new NormalSlider(new Dimension(40,1.5)) {
@@ -82,9 +78,6 @@ public class SettingsScreen extends Screen{
                 Settings.globalVolume = globalVolume.getValue() * 100;
                 Settings.soundVolume = soundVolume.getValue() * 100;
                 Settings.musicVolume = musicVolume.getValue() * 100;
-                musicVolumeV = Settings.musicVolume;
-                soundVolumeV = Settings.soundVolume;
-                globalVolumeV = Settings.globalVolume;
                 Settings.save();
                 Controller.back();
             }
@@ -110,21 +103,10 @@ public class SettingsScreen extends Screen{
                 this.label.text=getWindowMode();
             }
         };
-        windowMode.coordinates = new Coordinates(30,45);
+        windowMode.coordinates = new Coordinates(30,46);
         addDisplayComponent(windowMode, mainFrame.panel);
 
-        NormalButton backButton = new NormalButton("Back", 3, new Dimension(20, 8)) {
-            @Override
-            public void clicked() {
-                Settings.globalVolume = globalVolumeV;
-                Settings.soundVolume = soundVolumeV;
-                Settings.musicVolume = musicVolumeV;
-                AudioPlayer.updateSound();
-                Controller.back();
-            }
-        };
-        backButton.coordinates = new Coordinates(2, 2);
-        addDisplayComponent(backButton, mainFrame.panel);
+        addDefaultBackButton(mainFrame);
     }
 
     private static String getWindowMode() {

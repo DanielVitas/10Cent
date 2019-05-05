@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 public class MainPanel extends JPanel  implements MouseListener, MouseMotionListener {
@@ -48,11 +49,21 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
                 dimension.getIntegerWidth(), dimension.getIntegerHeight());
     }
 
+    public static void drawEllipse(Coordinates coordinates, Dimension dimension, Graphics g) {
+        g.drawRoundRect(coordinates.getIntegerX(), coordinates.getIntegerY(),
+                dimension.getIntegerWidth(), dimension.getIntegerHeight(),
+                dimension.getIntegerWidth(), dimension.getIntegerHeight());
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (DisplayComponent displayComponent : displayComponents)
-            displayComponent.paint(displayComponent.getCoordinates().scale(MainFrame.getScale()), MainFrame.getScale(), g);
+        try {
+            for (DisplayComponent displayComponent : displayComponents)
+                displayComponent.paint(displayComponent.getCoordinates().scale(MainFrame.getScale()), MainFrame.getScale(), g);
+        } catch (ConcurrentModificationException e) {
+            e.printStackTrace();  // zgodi se redko in tisti frame, ki zaradi tega ne prikaze je nepomemben
+        }
     }
 
     @Override
@@ -107,7 +118,7 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
         if (Mouse.pressed)
             return;
         Coordinates mouseCoordinates = Mouse.getCoordinates(mouseEvent);
-        for (DisplayComponent displayComponent : displayComponents) {
+        for (DisplayComponent displayComponent : reverse(displayComponents)) {
             Coordinates coordinates = displayComponent.getCoordinates().flip().add(mouseCoordinates);
             if (displayComponent.contains(coordinates, Scale.noScale, mouseEvent)) {
                 if (Mouse.hovered != displayComponent) {
@@ -123,4 +134,11 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
             Mouse.hovered.unhover(mouseCoordinates, Scale.noScale, mouseEvent);
         Mouse.hovered = null;
     }
+
+    private static<T> List<T> reverse(List<T> list) {
+        List<T> reverseList = new ArrayList<>(list);
+        Collections.reverse(reverseList);
+        return reverseList;
+    }
+
 }

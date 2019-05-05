@@ -8,6 +8,7 @@ import logic.game.GameController;
 import logic.players.Token;
 import logic.players.empty.Empty;
 import logic.players.Player;
+import logic.players.undecided.Undecided;
 
 public abstract class Board extends DisplayObject {
 
@@ -15,7 +16,9 @@ public abstract class Board extends DisplayObject {
     Board on which the game is played. Implementation of sub-boards is left to the final classes.
      */
 
-    public static Player empty = new Empty();
+    public final static Player empty = new Empty();
+    public final static Player undecided = new Undecided();
+
     public LogicBoard logicBoard;
     protected GameController gameController;
     public Dimension dimension;

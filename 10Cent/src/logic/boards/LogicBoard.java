@@ -25,4 +25,6 @@ public abstract class LogicBoard {
 
     public abstract Set<Move> allMoves(Player player);
 
+    public abstract LogicBoard clone();
+
 }

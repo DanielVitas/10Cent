@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.Stack;
 
 import static logic.boards.Board.empty;
+import static logic.boards.Board.undecided;
 
 public class TwoDimensionalLogicBoard extends LogicBoard {
 
@@ -20,10 +21,10 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
         logicBoards = new LogicBoard[size][size];
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++)
-                logicBoards[i][j] = installLogicBoard();
+                logicBoards[i][j] = installLogicBoard(i, j);
     }
 
-    public LogicBoard installLogicBoard() {
+    public LogicBoard installLogicBoard(int i, int j) {
         return new FinalLogicBoard();
     }
 
@@ -38,7 +39,7 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
         // checks all columns
         for (int i = 0; i < size; i++) {
             o = logicBoards[i][0].outcome();
-            if (o != empty)
+            if (o != empty && o != undecided)
                 block: {
                         for (int j = 1; j < size; j++)
                             if (o != logicBoards[i][j].outcome())
@@ -51,7 +52,7 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
         // checks all rows
         for (int j = 0; j < size; j++) {
             o = logicBoards[0][j].outcome();
-            if (o != empty)
+            if (o != empty && o != undecided)
                 block:{
                     for (int i = 1; i < size; i++)
                         if (o != logicBoards[i][j].outcome())
@@ -63,7 +64,7 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
 
         // checks both diagonals
         o = logicBoards[0][0].outcome();
-        if (o != empty)
+        if (o != empty && o != undecided)
             block:{
                 for (int i = 1; i < size; i++)
                     if (o != logicBoards[i][i].outcome())
@@ -73,7 +74,7 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
             }
 
         o = logicBoards[0][size - 1].outcome();
-        if (o != empty)
+        if (o != empty && o != undecided)
             block:{
                 for (int i = 1; i < size; i++)
                     if (o != logicBoards[i][size - 1 - i].outcome())
@@ -81,6 +82,11 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
                 outcome = o;
                 return o;
             }
+
+        if (allMoves(empty).isEmpty()) {
+            outcome = undecided;
+            return outcome;
+        }
 
         return empty;
     }
@@ -124,6 +130,18 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
                     }
                 }
         return moves;
+    }
+
+    @Override
+    public LogicBoard clone() {
+        TwoDimensionalLogicBoard clonedTwoDimensionalLogicBoard = new TwoDimensionalLogicBoard(logicBoards.length) {
+            @Override
+            public LogicBoard installLogicBoard(int i, int j) {
+                return logicBoards[i][j].clone();
+            }
+        };
+        clonedTwoDimensionalLogicBoard.outcome = outcome;
+        return clonedTwoDimensionalLogicBoard;
     }
 
 }

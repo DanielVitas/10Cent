@@ -9,6 +9,8 @@ import logic.players.Token;
 
 public class Nought extends Player {
 
+    public final static String NAME = "Nought";
+
     public Nought(Intelligence intelligence) {
         super(intelligence);
     }
@@ -16,6 +18,11 @@ public class Nought extends Player {
     @Override
     public Token newToken(Move move, GameController gameController, Dimension dimension) {
         return new NoughtToken(this, move, gameController, dimension);
+    }
+
+    @Override
+    public String toString() {
+        return NAME;
     }
 
 }

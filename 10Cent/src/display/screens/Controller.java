@@ -13,19 +13,28 @@ public final class Controller {
     }
 
     public static void switchScreen(Screen screen) {
-        screen.previousScreen = Controller.screen;
+        screen.setPreviousScreen(Controller.screen);
         if (Controller.screen != null)
             Controller.screen.unload(mainFrame);
         screen.load(mainFrame);
         Controller.screen = screen;
     }
 
+    public static void switchScreenWithoutBacking(Screen screen) {
+        if (Controller.screen != null) {
+            screen.setPreviousScreen(Controller.screen.getPreviousScreen());
+            Controller.screen.unload(mainFrame);
+        }
+        screen.load(mainFrame);
+        Controller.screen = screen;
+    }
+
     public static void back() {
-        if (screen.previousScreen == null)
+        if (screen.getPreviousScreen() == null)
             return;
         screen.unload(mainFrame);
-        screen.previousScreen.load(mainFrame);
-        screen = screen.previousScreen;
+        screen.getPreviousScreen().load(mainFrame);
+        screen = screen.getPreviousScreen();
     }
 
 

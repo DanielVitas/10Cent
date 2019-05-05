@@ -19,6 +19,8 @@ public abstract class GameController extends Thread {
     GameController should be created for every game separately.
      */
 
+    public boolean hasStarted = false;
+
     protected Player[] players;
     public Board board;
     protected int turnCount = 0;
@@ -44,6 +46,14 @@ public abstract class GameController extends Thread {
             if (legalMove.equals(move))
                 return true;
         return false;
+    }
+
+    public abstract void onWin(Player player);
+
+    @Override
+    public void start() {
+        super.start();
+        hasStarted = true;
     }
 
 }

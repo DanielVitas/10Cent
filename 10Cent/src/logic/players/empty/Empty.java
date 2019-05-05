@@ -18,4 +18,9 @@ public class Empty extends Player {
         return new EmptyToken(this, move, gameController, dimension);
     }
 
+    @Override
+    public String toString() {
+        return "Empty";
+    }
+
 }

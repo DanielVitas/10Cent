@@ -10,7 +10,7 @@ import java.util.Stack;
 import static display.frame.MainFrame.targetedFramerate;
 import static logic.boards.Board.empty;
 
-public class StandardGameController extends GameController {
+public abstract class StandardGameController extends GameController {
 
     public StandardGameController(Player[] players) {
         super(players);
@@ -60,7 +60,7 @@ public class StandardGameController extends GameController {
             }
         }
 
-        System.out.println("Winner: " + board.outcome());
+        onWin(board.outcome());
     }
 
 }

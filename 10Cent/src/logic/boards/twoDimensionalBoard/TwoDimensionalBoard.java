@@ -9,9 +9,9 @@ import logic.boards.LogicBoard;
 import logic.boards.Move;
 import logic.boards.exceptions.InvalidMoveException;
 import logic.boards.finalBoard.FinalBoard;
-import logic.boards.finalBoard.FinalMove;
 import logic.game.GameController;
 import logic.players.Token;
+import logic.players.undecided.UndecidedToken;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -46,7 +46,7 @@ public class TwoDimensionalBoard extends Board {
         // room for improvement
         logicBoard = new TwoDimensionalLogicBoard(size) {
             @Override
-            public LogicBoard installLogicBoard() {
+            public LogicBoard installLogicBoard(int i, int j) {
                 return installBoard(slotDimension,null).logicBoard;  // move does not matter here
             }
         };

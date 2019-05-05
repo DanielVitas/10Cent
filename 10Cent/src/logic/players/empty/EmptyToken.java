@@ -40,8 +40,8 @@ public class EmptyToken extends Token {
             path = Paths.get(directoryPath, "waiting").toString();
             waitingAnimation = new Animation(path, new long[]{500}, true);
             waitingAnimation.isStatic = true;
-            waitingAnimation.dimension = dimension;
         }
+        waitingAnimation.dimension = dimension;
         addAnimation("waiting", waitingAnimation);
 
         path = Paths.get(directoryPath, "hovered").toString();

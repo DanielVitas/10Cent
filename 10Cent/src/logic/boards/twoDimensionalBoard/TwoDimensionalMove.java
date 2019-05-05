@@ -15,7 +15,8 @@ public class TwoDimensionalMove extends Move {
     @Override
     public Move clone() {
         TwoDimensionalMove twoDimensionalMove = new TwoDimensionalMove(i, j);
-        twoDimensionalMove.setNextMove(getNextMove());
+        if (getNextMove() != null)
+            twoDimensionalMove.setNextMove(getNextMove().clone());
         return twoDimensionalMove;
     }
 

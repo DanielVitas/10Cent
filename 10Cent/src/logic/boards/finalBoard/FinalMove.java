@@ -17,9 +17,7 @@ public class FinalMove extends Move {
 
     @Override
     public Move clone() {
-        FinalMove finalMove = new FinalMove(player);
-        finalMove.setNextMove(getNextMove());
-        return finalMove;
+        return new FinalMove(player);
     }
 
     @Override

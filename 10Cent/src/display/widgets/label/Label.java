@@ -1,6 +1,5 @@
-package display.widgets;
+package display.widgets.label;
 
-import display.frame.DisplayComponent;
 import display.frame.DisplayObject;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
@@ -10,7 +9,7 @@ import java.awt.*;
 
 public class Label extends DisplayObject {
 
-    public final static String DEFAULT_FONT_STYLE = Font.MONOSPACED;
+    public final static String DEFAULT_FONT_STYLE = Font.SANS_SERIF;
 
     public String text;
     public Font font;
@@ -34,12 +33,16 @@ public class Label extends DisplayObject {
         return g.getFontMetrics(font).stringWidth(text);
     }
 
+    public static Font scaleFont(Font font, Scale scale) {
+        double newFontSize = font.getSize() * Math.min(scale.horizontal, scale.vertical);
+        return font.deriveFont((float) newFontSize);
+    }
+
     @Override
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         super.paint(coordinates, scale, g);
 
-        double newFontSize = font.getSize() * Math.min(scale.horizontal, scale.vertical);
-        Font newFont = new Font(font.getFontName(), font.getStyle(), (int) newFontSize);
+        Font newFont = scaleFont(font, scale);
         g.setFont(newFont);
         g.setColor(color);
 

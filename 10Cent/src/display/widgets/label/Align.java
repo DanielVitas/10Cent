@@ -1,4 +1,4 @@
-package display.widgets;
+package display.widgets.label;
 
 public enum Align {
     LEFT,

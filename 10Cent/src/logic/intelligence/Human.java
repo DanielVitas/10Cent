@@ -10,7 +10,8 @@ import java.util.Set;
 
 public class Human extends Intelligence {
 
-    Set<Token> tokens = new HashSet<>();
+    public final static String NAME = "Human";
+    private Set<Token> tokens = new HashSet<>();
 
     @Override
     public void play() {

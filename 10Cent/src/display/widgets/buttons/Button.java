@@ -17,14 +17,12 @@ import java.nio.file.Paths;
 
 public abstract class Button extends DisplayObject {
 
-    private String directoryPath;  // contains animation directories
+    protected String directoryPath;  // contains animation directories
     protected Dimension dimension;
 
     public Button(Dimension dimension, String directoryPath) {
         this.dimension = dimension;
         this.directoryPath = directoryPath;
-
-        hitBoxes.add(new Rectangle(dimension.getAwtDimension()));
 
         installAnimations();
         animateDefault();

@@ -8,7 +8,8 @@ import java.util.Random;
 
 public class RandomAI extends Intelligence {
 
-    Random random;
+    public final static String NAME = "Random";
+    private Random random;
 
     public RandomAI() {
         random = new Random();

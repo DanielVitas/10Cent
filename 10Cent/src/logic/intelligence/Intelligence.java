@@ -16,4 +16,17 @@ public abstract class Intelligence {
 
     public abstract void close();
 
+    public static Intelligence parseString(String string) {
+        Intelligence intelligence = null;
+        switch (string) {
+            case Human.NAME:
+                intelligence = new Human();
+                break;
+            case RandomAI.NAME:
+                intelligence = new RandomAI();
+                break;
+        }
+        return intelligence;
+    }
+
 }
