@@ -98,7 +98,7 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
 
     @Override
     public Set<Move> legalMoves(Player player, Stack<Move> deconstructedPreviousMove) {
-        if (outcome() == empty || outcome() == undecided)
+        if (outcome != empty)
             return new HashSet<>();
         if (deconstructedPreviousMove.empty())
             return allMoves(player);
@@ -120,7 +120,7 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
 
     @Override
     public Set<Move> allMoves(Player player) {
-        if (outcome() == empty || outcome() == undecided)
+        if (outcome != empty)
             return new HashSet<>();
         Set<Move> moves = new HashSet<>();
         for (int i = 0; i < logicBoards.length; i++)
