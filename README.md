@@ -9,5 +9,7 @@ Projektna naloga pri predmetu Programiranje 2.
 - [x] settings
 - [ ] minimax AI
 --------------------------
-- [x] osnove campaigna
-- [ ] practice
+- [x] campaign
+- [x] practice
+--------------------------
+- [ ] shranjevanje progressa

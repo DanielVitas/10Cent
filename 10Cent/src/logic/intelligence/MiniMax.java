@@ -8,6 +8,7 @@ import sun.rmi.runtime.Log;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 public class MiniMax extends Intelligence{
     /*
@@ -30,7 +31,7 @@ public class MiniMax extends Intelligence{
         gameController.currentMove = nextMove;
     }
 
-    private Move getMove(LogicBoard logicBoard, Move previousMove) {
+    private Move getMove(LogicBoard logicBoard, Stack<Move> previousMove) {
         List<Move> moves = new ArrayList<>(StandardGameController.legalMoves(logicBoard, previousMove));
         Double bestDouble = Double.NEGATIVE_INFINITY;
         Move bestMove = moves.get(0);
@@ -39,7 +40,7 @@ public class MiniMax extends Intelligence{
         bestMove.setPlayer(gameController.getPlayerOnTurnCount(0));
         testLogicBoard.play(bestMove);
 
-        Double bestDouble = evaluateMove(depth - 1, testLogicBoard, bestMove, false);
+        bestDouble = evaluateMove(depth - 1, testLogicBoard, bestMove, false);
 
 
         for(Move move: moves) {
