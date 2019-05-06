@@ -61,7 +61,7 @@ public class RulebookScreen extends Screen {
                         "a smaller board that determines where in the larger board other player must play. If that " +
                         "board is already won player can play anywhere.\n\n" +
                         "For example, if the first player plays in the most top-right slot, he has played on top-right " +
-                        "smaller board on top-right slot. The next player must also play on top-right smaller board, but " +
+                        "smaller board on its top-right slot. The next player must also play on top-right smaller board, but " +
                         "he can choose the slot on it freely. Let's say he played the bottom-right, then first player " +
                         "must now make a move on bottom-right smaller board. Et cetera.";
                 break;
@@ -73,7 +73,7 @@ public class RulebookScreen extends Screen {
                         "the larger board other player must play. If that smaller board is either won or full (undecided) " +
                         "player can move anywhere.\n\n" +
                         "For example, if the first player plays in the most top-right slot, he has played on top-right " +
-                        "smaller board on top-right slot. The next player must also play on top-right smaller board, but " +
+                        "smaller board on its top-right slot. The next player must also play on top-right smaller board, but " +
                         "he can choose the slot on it freely. Let's say he played the center, then first player " +
                         "must now make a move on center smaller board. Et cetera.";
                 break;

@@ -331,7 +331,7 @@ public class CampaignScreen extends Screen {
             case Stage.STAGE2:
                 title = "Encounter";
 
-                text = "An evil mage sneaks behind you. Perfect - a test subject. He has crafted " +
+                text = "Genius wizard sneaks behind you. Perfect - a test subject. He has crafted " +
                         "his own variation of tic-tac-toe, even deeper, even harder to master. You are " +
                         "unprepared and he well versed in this game. Can you make your way out of this pinch?";
                 break;
@@ -340,7 +340,7 @@ public class CampaignScreen extends Screen {
 
                 text = "Insane aura fills the room. King sits leisurely on his throne almost as he was waiting " +
                         "for you. He smiles. You know that you might not be able to win, but still you step forward. " +
-                        "All the games you have played, tokens you've acquired - was it really for naught?";
+                        "All the games you have played, tokens you've acquired - time for final showdown has come.";
                 break;
             case Stage.STAGE4:
                 title = "Monster";
