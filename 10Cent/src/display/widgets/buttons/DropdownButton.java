@@ -27,7 +27,7 @@ public abstract class DropdownButton extends Button {
         this.dropdownMenu = dropdownMenu;
 
         Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.BOLD, fontSize);
-        label = new Label(text, font, Color.BLACK, dimension, Align.LEFT);
+        label = new Label(text, font, Color.BLACK, new Dimension(dimension.width - 2, dimension.height), Align.LEFT);
         label.coordinates = new Coordinates(1,0);
         label.displayPriority = 1;
         addSubComponent(label);

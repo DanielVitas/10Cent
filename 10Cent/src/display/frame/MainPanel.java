@@ -20,7 +20,7 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
      */
 
     private List<DisplayComponent> displayComponents = new ArrayList<>();
-    private static InputComponent selectedInputComponent;
+    public static InputComponent selectedInputComponent;
 
     public MainPanel(Dimension preferredSize) {
         setPreferredSize(preferredSize.getAwtDimension());
@@ -29,9 +29,13 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
 
         addMouseListener(this);
         addMouseMotionListener(this);
+        addKeyListener(this);
+        setFocusable(true);
     }
 
     public void addDisplayComponent(DisplayComponent displayComponent) {
+        if (displayComponents.contains(displayComponent))
+            return;
         displayComponents.add(displayComponent);
         displayComponents.sort(DisplayComponent.COMPARATOR);
     }
@@ -87,10 +91,15 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
         if (Mouse.hovered != null) {
             Coordinates mouseCoordinates = Mouse.getCoordinates(mouseEvent);
             Coordinates coordinates = Mouse.hovered.getCoordinates().flip().add(mouseCoordinates);
-            if (Mouse.hovered.contains(coordinates, Scale.noScale, mouseEvent))
+            if (Mouse.hovered.contains(coordinates, Scale.noScale, mouseEvent)) {
+                if (selectedInputComponent != null) {
+                    selectedInputComponent.deselect();
+                    selectedInputComponent = null;
+                }
                 Mouse.hovered.click(coordinates, Scale.noScale, mouseEvent);
-            else
+            } else {
                 Mouse.hovered.release(coordinates, Scale.noScale, mouseEvent);
+            }
         }
         Mouse.pressed = false;
     }
@@ -138,7 +147,8 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
 
     @Override
     public void keyTyped(KeyEvent keyEvent) {
-        selectedInputComponent.typeKey(keyEvent);
+        if (selectedInputComponent != null)
+            selectedInputComponent.typeKey(keyEvent);
     }
 
     @Override
@@ -148,7 +158,8 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-
+        if (selectedInputComponent != null)
+            selectedInputComponent.releaseKey(keyEvent);
     }
 
 

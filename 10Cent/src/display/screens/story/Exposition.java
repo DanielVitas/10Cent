@@ -15,10 +15,10 @@ import fonts.CustomFonts;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 
-public class StoryScreen1 extends Screen {
+public class Exposition extends Screen {
 
     public static Font titleFont = CustomFonts.getFont(CustomFonts.CALLIGRAPHY, 20);
-    public static Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 3);
+    public static Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.PLAIN, 3);
 
     @Override
     public void load(MainFrame mainFrame) {
@@ -30,7 +30,8 @@ public class StoryScreen1 extends Screen {
 
         String text = "We live in a society where tic-tac-toe is everything. Wealth, number of tokens one has acquired, " +
                 "prestige, number of tournaments one has won, and power, number of games one has played.\n\n" +
-                "Dark era has begun for such a world, as new king has claimed the throne, and it's up to you to save it.";
+                "Dark era has begun for such a world, as new king has claimed the throne. In times like this a hero is " +
+                "needed more than ever. Will you, a no-name tic-tac-toe player, be able to save the world and free it's people?";
 
         TextLabel textLabel = new TextLabel(text, font, Color.BLACK, new Dimension(80, 8), Align.LEFT);
         textLabel.coordinates = new Coordinates(10, 22);

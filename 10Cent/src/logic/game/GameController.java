@@ -19,7 +19,10 @@ public abstract class GameController extends Thread {
     GameController should be created for every game separately.
      */
 
+    // generally only 1 gameController is active at the time, but it can have "sub-gameControllers"
+    public static GameController gameController;
     public boolean hasStarted = false;
+    public boolean stop = false;
 
     protected Player[] players;
     public Board board;
@@ -54,8 +57,18 @@ public abstract class GameController extends Thread {
 
     public abstract void onWin(Player player);
 
+    public void terminate() {
+        stop = true;
+        if (gameController == this)
+            gameController = null;
+    }
+
     @Override
     public void start() {
+        stop = false;
+        if (gameController != null)
+            gameController.terminate();
+        gameController = this;
         super.start();
         hasStarted = true;
     }

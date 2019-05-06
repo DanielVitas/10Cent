@@ -2,7 +2,6 @@ package logic.players.cross;
 
 import display.frame.misc.Dimension;
 import display.images.Images;
-import display.screens.Controller;
 import logic.boards.Move;
 import logic.game.GameController;
 import logic.players.Player;

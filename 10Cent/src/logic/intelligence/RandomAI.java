@@ -36,4 +36,9 @@ public class RandomAI extends Intelligence {
 
     }
 
+    @Override
+    public void terminate() {
+
+    }
+
 }

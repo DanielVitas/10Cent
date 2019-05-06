@@ -34,10 +34,6 @@ public class MiniMax extends Intelligence{
         gameController.currentMove = nextMove;
     }
 
-    @Override
-    public void close() {
-
-    }
     private Move getMove(LogicBoard logicBoard, Move previousMove) {
         List<Move> moves = new ArrayList<>(StandardGameController.legalMoves(logicBoard, previousMove));
         Double bestDouble = Double.NEGATIVE_INFINITY;
@@ -75,9 +71,18 @@ public class MiniMax extends Intelligence{
                 return Collections.max(values);
             }
             return Collections.min(values);
-            }
+        }
 
     }
 
+    @Override
+    public void close() {
+
+    }
+
+    @Override
+    public void terminate() {
+
+    }
 
 }

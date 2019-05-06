@@ -1,4 +1,4 @@
-package logic.players.cross;
+package logic.players.bird;
 
 import display.frame.misc.Dimension;
 import logic.boards.Move;
@@ -7,17 +7,17 @@ import logic.intelligence.Intelligence;
 import logic.players.Player;
 import logic.players.Token;
 
-public class Cross extends Player {
+public class Bird extends Player {
 
-    public final static String NAME = "Cross";
+    public final static String NAME = "Bird";
 
-    public Cross(Intelligence intelligence) {
+    public Bird(Intelligence intelligence) {
         super(intelligence);
     }
 
     @Override
     public Token newToken(Move move, GameController gameController, Dimension dimension) {
-        return new CrossToken(this, move, gameController, dimension);
+        return new BirdToken(this, move, gameController, dimension);
     }
 
     @Override
