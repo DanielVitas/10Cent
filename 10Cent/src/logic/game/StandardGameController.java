@@ -27,6 +27,13 @@ public abstract class StandardGameController extends GameController {
         return logicBoard.legalMoves(empty, deconstructedPreviousMove);
     }
 
+    public static Set<Move> legalMoves(LogicBoard logicBoard, Stack<Move> previousMoves) {
+        if(previousMoves.empty())
+            return legalMoves(logicBoard, (Move) null);
+        else
+            return legalMoves(logicBoard, previousMoves.peek());
+    }
+
     @Override
     public void run() {
         getCurrentPlayer().intelligence.play();
