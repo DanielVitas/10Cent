@@ -3,8 +3,7 @@ package display.screens;
 import display.frame.MainFrame;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
-import display.screens.story.StoryScreen1;
-import display.screens.story.StoryScreen2;
+import display.screens.story.*;
 import display.widgets.buttons.NormalButton;
 import progress.Progress;
 import progress.Stage;
@@ -32,7 +31,7 @@ public class MainMenuScreen extends Screen {
         NormalButton practice = new NormalButton("Practice", 5, new Dimension(40,8)) {
             @Override
             public void clicked() {
-                Controller.switchScreen(new PracticeScreen());
+                Controller.switchScreen(new PracticeScreen(mainFrame));
             }
         };
         practice.coordinates = new Coordinates(30,35);
@@ -61,10 +60,19 @@ public class MainMenuScreen extends Screen {
         Screen screen = null;
         switch (Progress.newestStage) {
             case Stage.STAGE1:
-                screen = new StoryScreen1();
+                screen = new Exposition();
                 break;
             case Stage.STAGE2:
-                screen = new StoryScreen2();
+                screen = new RisingAction();
+                break;
+            case Stage.STAGE3:
+                screen = new Climax();
+                break;
+            case Stage.STAGE4:
+                screen = new FallingAction();
+                break;
+            case Stage.THEEND:
+                screen = new Denouement();
                 break;
         }
         return screen;

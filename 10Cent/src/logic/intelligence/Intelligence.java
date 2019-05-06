@@ -16,7 +16,9 @@ public abstract class Intelligence {
 
     public abstract void close();
 
-    public static Intelligence parseString(String string) {
+    public abstract void terminate();
+
+    public static Intelligence parseIntelligence(String string, Integer... depths) {
         Intelligence intelligence = null;
         switch (string) {
             case Human.NAME:
@@ -26,7 +28,7 @@ public abstract class Intelligence {
                 intelligence = new RandomAI();
                 break;
             case MiniMax.NAME:
-                intelligence = new MiniMax(3);
+                intelligence = new MiniMax(depths[0]);
                 break;
         }
         return intelligence;

@@ -16,7 +16,7 @@ import java.util.List;
 public class RulebookScreen extends Screen {
 
     public static Font titleFont = CustomFonts.getFont(CustomFonts.CALLIGRAPHY, 15);
-    public static Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 3);
+    public static Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.PLAIN, 3);
 
     private String game;
     private List<DisplayComponent> temporaryComponents = new ArrayList<>();
@@ -51,11 +51,31 @@ public class RulebookScreen extends Screen {
         switch (game) {
             case Games.TIC_TAC_TOE:
                 text = "Standard tic-tac-toe is very simple. Two players exchange turns playing their tokens " +
-                        "on the 3x3 field. Obviously you cannot play token in a slot any token is already at. First player " +
+                        "on the 3x3 board. Obviously you cannot play token in a slot any token is already at. First player " +
                         "to place 3 tokens in a row (either horizontally, vertically or diagonally) wins.";
                 break;
+            case Games.SUPER_TIC_TAC_TOE:
+                text = "In " + Games.SUPER_TIC_TAC_TOE + " players exchange turns placing their tokens on the " +
+                        "4x4 board. This board consists of 4 smaller 2x2 boards. Player can win each of the smaller " +
+                        "boards by placing 2 tokens anywhere on them. When one player makes a move in " +
+                        "a smaller board that determines where in the larger board other player must play. If that " +
+                        "board is already won player can play anywhere.\n\n" +
+                        "For example, if the first player plays in the most top-right slot, he has played on top-right " +
+                        "smaller board on top-right slot. The next player must also play on top-right smaller board, but " +
+                        "he can choose the slot on it freely. Let's say he played the bottom-right, then first player " +
+                        "must now make a move on bottom-right smaller board. Et cetera.";
+                break;
             case Games.ULTIMATE_TIC_TAC_TOE:
-                text = "";
+                text = Games.ULTIMATE_TIC_TAC_TOE + " is the combination between ordinary tic-tac-toe and " + Games.SUPER_TIC_TAC_TOE + ". " +
+                        "Players exchange turns placing their tokens on the 9x9 board. This board consists of 9 smaller 3x3 " +
+                        "boards. Player can win each of the smaller boards by placing 3 tokens in a row (either horizontally, " +
+                        "vertically or diagonally). When one player makes a move in a smaller board that determines where in " +
+                        "the larger board other player must play. If that smaller board is either won or full (undecided) " +
+                        "player can move anywhere.\n\n" +
+                        "For example, if the first player plays in the most top-right slot, he has played on top-right " +
+                        "smaller board on top-right slot. The next player must also play on top-right smaller board, but " +
+                        "he can choose the slot on it freely. Let's say he played the center, then first player " +
+                        "must now make a move on center smaller board. Et cetera.";
                 break;
         }
         TextLabel textLabel = new TextLabel(text, font, Color.BLACK, new Dimension(dimension.width, 0.08 * dimension.height), Align.LEFT);

@@ -32,4 +32,9 @@ public class Human extends Intelligence {
         tokens.clear();
     }
 
+    @Override
+    public void terminate() {
+        close();
+    }
+
 }

@@ -3,6 +3,7 @@ package display.screens;
 import display.frame.MainFrame;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
+import display.widgets.input.NumberFieldInput;
 import display.widgets.label.Align;
 import display.widgets.label.Label;
 import display.widgets.buttons.NormalButton;
@@ -20,23 +21,27 @@ import progress.Progress;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PracticeScreen extends Screen {
 
     private static Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.PLAIN, 3);
-    private static Font largeFont = new Font(Label.DEFAULT_FONT_STYLE, Font.BOLD, 5);
+
     private NormalDropdownMenu gameModeMenu;
     private NormalDropdownMenu intelligence1Menu;
     private NormalDropdownMenu intelligence2Menu;
     private PlayerDropdownMenu player1Menu;
     private PlayerDropdownMenu player2Menu;
 
+    private boolean showDepthInput1 = false;
+    private NumberFieldInput depthInput1;
+    private boolean showDepthInput2 = false;
+    private NumberFieldInput depthInput2;
+
     private DropdownMenu[] dropdownMenus;
 
-    public PracticeScreen() {
-        String[] games = new String[]{Games.TIC_TAC_TOE, Games.ULTIMATE_TIC_TAC_TOE};
+    public PracticeScreen(MainFrame mainFrame) {
+        String[] games = new String[]{Games.TIC_TAC_TOE, Games.SUPER_TIC_TAC_TOE, Games.ULTIMATE_TIC_TAC_TOE};
 
         gameModeMenu = new NormalDropdownMenu(games, 3, new Dimension(40,8)) {
             @Override
@@ -56,6 +61,18 @@ public class PracticeScreen extends Screen {
                 super.dropdown();
                 closeOther(this);
             }
+
+            @Override
+            public void backup() {
+                super.backup();
+                showDepthInput1 = getValue().equals(MiniMax.NAME);
+                if (active) {
+                    if (showDepthInput1)
+                        addDisplayComponent(depthInput1, mainFrame.panel);
+                    else
+                        removeDisplayComponent(depthInput1, mainFrame.panel);
+                }
+            }
         };
         intelligence1Menu.coordinates = new Coordinates(30, 36);
         intelligence1Menu.displayPriority = 3;
@@ -65,6 +82,18 @@ public class PracticeScreen extends Screen {
             public void dropdown() {
                 super.dropdown();
                 closeOther(this);
+            }
+
+            @Override
+            public void backup() {
+                super.backup();
+                showDepthInput2 = getValue().equals(MiniMax.NAME);
+                if (active) {
+                    if (showDepthInput2)
+                        addDisplayComponent(depthInput2, mainFrame.panel);
+                    else
+                        removeDisplayComponent(depthInput2, mainFrame.panel);
+                }
             }
         };
         intelligence2Menu.coordinates = new Coordinates(30, 46);
@@ -99,6 +128,12 @@ public class PracticeScreen extends Screen {
         dropdownMenus = new DropdownMenu[] {
                 gameModeMenu, intelligence1Menu, intelligence2Menu, player1Menu, player2Menu
         };
+
+        depthInput1 = new NumberFieldInput(2, "Depth", Align.LEFT, new Dimension(15, 8));
+        depthInput1.coordinates = new Coordinates(75,36);
+
+        depthInput2 = new NumberFieldInput(2, "Depth", Align.LEFT, new Dimension(15, 8));
+        depthInput2.coordinates = new Coordinates(75,46);
     }
 
     public void closeOther(DropdownMenu menu) {
@@ -109,35 +144,55 @@ public class PracticeScreen extends Screen {
 
     @Override
     public void load(MainFrame mainFrame) {
+        for (DropdownMenu menu : dropdownMenus)
+            addDisplayComponent(menu, mainFrame.panel);
+
+        if (showDepthInput1)
+            addDisplayComponent(depthInput1, mainFrame.panel);
+
+        if (showDepthInput2)
+            addDisplayComponent(depthInput2, mainFrame.panel);
+
         Label gameModeLabel = new Label("Game Mode", font, Color.BLACK, new display.frame.misc.Dimension(25,8), Align.LEFT);
         gameModeLabel.coordinates = new Coordinates(5,16);
         addDisplayComponent(gameModeLabel, mainFrame.panel);
-
-        addDisplayComponent(gameModeMenu, mainFrame.panel);
 
         Label player1Label = new Label("Player 1", font, Color.BLACK, new display.frame.misc.Dimension(25,8), Align.LEFT);
         player1Label.coordinates = new Coordinates(5,36);
         addDisplayComponent(player1Label, mainFrame.panel);
 
-        addDisplayComponent(player1Menu, mainFrame.panel);
-        addDisplayComponent(intelligence1Menu, mainFrame.panel);
-
         Label player2Label = new Label("Player 2", font, Color.BLACK, new display.frame.misc.Dimension(25,8), Align.LEFT);
         player2Label.coordinates = new Coordinates(5,46);
         addDisplayComponent(player2Label, mainFrame.panel);
 
-        addDisplayComponent(player2Menu, mainFrame.panel);
-        addDisplayComponent(intelligence2Menu, mainFrame.panel);
-
         NormalButton startButton = new NormalButton("Start", 5, new Dimension(20, 8)) {
             @Override
             public void clicked() {
-                Intelligence intelligence1 = Intelligence.parseString(intelligence1Menu.getValue());
-                Intelligence intelligence2 = Intelligence.parseString(intelligence2Menu.getValue());
-                Player player1 = Player.parseString(player1Menu.getValue(), intelligence1);
-                Player player2 = Player.parseString(player2Menu.getValue(), intelligence2);
+                Intelligence intelligence1;
+                if (showDepthInput1)
+                    if (depthInput1.isEmpty())
+                        return;
+                    else
+                        intelligence1 = Intelligence.parseIntelligence(intelligence1Menu.getValue(), depthInput1.getNumber());
+                else
+                    intelligence1 = Intelligence.parseIntelligence(intelligence1Menu.getValue());
+
+                Intelligence intelligence2;
+                if (showDepthInput2)
+                    if (depthInput2.isEmpty())
+                        return;
+                    else
+                        intelligence2 = Intelligence.parseIntelligence(intelligence2Menu.getValue(), depthInput2.getNumber());
+                else
+                    intelligence2 = Intelligence.parseIntelligence(intelligence2Menu.getValue());
+
+                Player player1 = Player.parsePlayer(player1Menu.getValue(), intelligence1);
+                Player player2 = Player.parsePlayer(player2Menu.getValue(), intelligence2);
                 Player[] players = new Player[] {player1, player2};
+
                 GameController gameController;
+                Coordinates coordinates = new Coordinates(20, 20);
+                Dimension dimension = new Dimension(60, 60);
                 switch (gameModeMenu.getValue()) {
                     case Games.TIC_TAC_TOE:
                         gameController = new StandardGameController(players) {
@@ -154,9 +209,26 @@ public class PracticeScreen extends Screen {
 
                             @Override
                             public void loadGame(MainFrame mainFrame) {
-                                Games.ticTacToe(3, new Coordinates(20, 20),
-                                        new Dimension(60, 60), gameController,
-                                        this, mainFrame);
+                                Games.ticTacToe(3, coordinates, dimension, gameController, this, mainFrame);
+                            }
+                        });
+                        break;
+                    case Games.SUPER_TIC_TAC_TOE:
+                        gameController = new StandardGameController(players) {
+                            @Override
+                            public void onWin(Player player) {
+
+                            }
+                        };
+                        Controller.switchScreen(new GameScreen(gameController) {
+                            @Override
+                            public void loadEnvironment(MainFrame mainFrame) {
+
+                            }
+
+                            @Override
+                            public void loadGame(MainFrame mainFrame) {
+                                Games.ultimateTicTacToe(2, coordinates, dimension, gameController, this, mainFrame);
                             }
                         });
                         break;
@@ -175,9 +247,7 @@ public class PracticeScreen extends Screen {
 
                             @Override
                             public void loadGame(MainFrame mainFrame) {
-                                Games.ultimateTicTacToe(3, new Coordinates(20, 20),
-                                        new Dimension(60, 60), gameController,
-                                        this, mainFrame);
+                                Games.ultimateTicTacToe(3, coordinates, dimension, gameController, this, mainFrame);
                             }
                         });
                         break;

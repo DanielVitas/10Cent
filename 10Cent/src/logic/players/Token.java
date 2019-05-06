@@ -37,7 +37,7 @@ public abstract class Token extends DisplayObject {
         addAnimation("default", animation);
 
         path = Paths.get(directoryPath, "place").toString();
-        animation = new Animation(path, new long[]{500}, false) {
+        animation = new Animation(path, new long[]{200}, false) {
             @Override
             protected void finished() {
                 animateDefault();

@@ -23,7 +23,8 @@ public abstract class NormalButton extends Button {
         super(dimension, Paths.get(Images.RESOURCES_PATH,"images", "buttons", "normal").toString());
 
         Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.BOLD, fontSize);
-        label = new Label(text, font, Color.BLACK, dimension, Align.CENTER);
+        label = new Label(text, font, Color.BLACK, new Dimension(dimension.width - 2, dimension.height), Align.CENTER);
+        label.coordinates = new Coordinates(1,0);
         label.displayPriority = 1;
         addSubComponent(label);
 

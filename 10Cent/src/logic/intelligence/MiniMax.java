@@ -3,11 +3,11 @@ package logic.intelligence;
 import logic.boards.LogicBoard;
 import logic.boards.Move;
 import logic.game.StandardGameController;
+import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Stack;
 
 public class MiniMax extends Intelligence{
     /*
@@ -30,12 +30,9 @@ public class MiniMax extends Intelligence{
         gameController.currentMove = nextMove;
     }
 
-    @Override
-    public void close() {
-
-    }
-    private Move getMove(LogicBoard logicBoard, Stack<Move> previousMoves) {
-        List<Move> moves = new ArrayList<>(StandardGameController.legalMoves(logicBoard, previousMoves));
+    private Move getMove(LogicBoard logicBoard, Move previousMove) {
+        List<Move> moves = new ArrayList<>(StandardGameController.legalMoves(logicBoard, previousMove));
+        Double bestDouble = Double.NEGATIVE_INFINITY;
         Move bestMove = moves.get(0);
 
         LogicBoard testLogicBoard = logicBoard.clone();
@@ -86,5 +83,14 @@ public class MiniMax extends Intelligence{
         return Collections.min(moveValues);
     }
 
+    @Override
+    public void close() {
+
+    }
+
+    @Override
+    public void terminate() {
+
+    }
 
 }

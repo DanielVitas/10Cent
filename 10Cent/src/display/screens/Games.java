@@ -3,17 +3,9 @@ package display.screens;
 import display.frame.MainFrame;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
-import display.screens.Screen;
-import logic.boards.Board;
 import logic.boards.Move;
 import logic.boards.twoDimensionalBoard.TwoDimensionalBoard;
 import logic.game.GameController;
-import logic.game.StandardGameController;
-import logic.intelligence.Human;
-import logic.intelligence.RandomAI;
-import logic.players.Player;
-import logic.players.cross.Cross;
-import logic.players.nought.Nought;
 
 public final class Games {
 
@@ -22,6 +14,7 @@ public final class Games {
      */
 
     public final static String TIC_TAC_TOE = "Tic-tac-toe";
+    public final static String SUPER_TIC_TAC_TOE = "Super Tic-tac-toe";
     public final static String ULTIMATE_TIC_TAC_TOE = "Ultimate Tic-tac-toe";
 
 

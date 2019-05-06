@@ -3,6 +3,7 @@ package logic.game;
 import logic.boards.LogicBoard;
 import logic.boards.Move;
 import logic.boards.exceptions.InvalidMoveException;
+import logic.intelligence.Human;
 import logic.players.Player;
 import sun.rmi.runtime.Log;
 
@@ -38,7 +39,7 @@ public abstract class StandardGameController extends GameController {
     public void run() {
         getCurrentPlayer().intelligence.play();
 
-        while (true) {
+        while (!stop) {
 
             if (currentMove != null) {
                 awaitingPlayer = false;
@@ -68,7 +69,30 @@ public abstract class StandardGameController extends GameController {
             }
         }
 
-        onWin(board.outcome());
+        if (stop)
+            return;
+
+        boolean hasHuman = false;
+        for (Player player : players)
+            if (player.intelligence instanceof Human)
+                hasHuman = true;
+
+        if (hasHuman)
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        if (!stop)
+            onWin(board.outcome());
+    }
+
+    @Override
+    public void terminate() {
+        for (Player player : players)
+            player.intelligence.terminate();
+        super.terminate();
     }
 
     public static double evaluate(LogicBoard logicBoard, Player player) {

@@ -21,8 +21,8 @@ import static display.screens.RulebookScreen.rules;
 
 public class StoryRulesScreen extends Screen {
 
-    public static Font titleFont = CustomFonts.getFont(CustomFonts.CALLIGRAPHY, 15);
-    public static Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 3);
+    private static Font titleFont = CustomFonts.getFont(CustomFonts.CALLIGRAPHY, 15);
+    private static Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.PLAIN, 3);
 
     private String game;
     private Screen nextScreen;

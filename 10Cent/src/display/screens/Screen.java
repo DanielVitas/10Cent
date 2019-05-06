@@ -13,6 +13,7 @@ import java.util.List;
 
 public abstract class Screen {
 
+    protected boolean active = false;
     protected List<DisplayComponent> displayComponents = new ArrayList<>();
     private Screen previousScreen;
 
@@ -25,12 +26,17 @@ public abstract class Screen {
     }
 
     public void addDisplayComponent(DisplayComponent displayComponent, MainPanel panel) {
-        displayComponents.add(displayComponent);
+        if (!displayComponents.contains(displayComponent))
+            displayComponents.add(displayComponent);
         panel.addDisplayComponent(displayComponent);
     }
 
     public void removeDisplayComponent(DisplayComponent displayComponent, MainPanel panel) {
         displayComponents.remove(displayComponent);
+        removeDisplayComponentSilent(displayComponent, panel);
+    }
+
+    public void removeDisplayComponentSilent(DisplayComponent displayComponent, MainPanel panel) {
         panel.removeDisplayComponent(displayComponent);
     }
 
