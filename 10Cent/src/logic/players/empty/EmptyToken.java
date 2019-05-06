@@ -27,7 +27,10 @@ public class EmptyToken extends Token {
 
     public void setWaiting(boolean waiting) {
         this.waiting = waiting;
-        animateDefault();
+        if (gameController.board.getHoveredToken() == this)
+            animate("hovered");
+        else
+            animateDefault();
     }
 
     @Override

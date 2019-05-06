@@ -52,6 +52,11 @@ public class FinalBoard extends Board {
     }
 
     @Override
+    public Token getHoveredToken() {
+        return token;
+    }
+
+    @Override
     protected Board selectSubBoard(Move move) {
         return null;
     }

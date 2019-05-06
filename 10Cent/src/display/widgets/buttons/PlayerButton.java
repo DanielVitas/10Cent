@@ -29,6 +29,7 @@ public abstract class PlayerButton extends Button {
     private Token token;
     public Label newLabel;
     private boolean changeable;
+    public boolean suppressLabel = false;
 
     public PlayerButton(DropdownMenu dropdownMenu, boolean isNew, boolean changeable, Player player, Dimension dimension) {
         super(dimension, Paths.get(Images.RESOURCES_PATH,"images", "buttons", "player").toString());
@@ -94,7 +95,7 @@ public abstract class PlayerButton extends Button {
 
         drawRectangle(coordinates, dimension.scale(scale), g);
 
-        if (newLabel != null)
+        if (newLabel != null && !suppressLabel)
             newLabel.paint(coordinates.add(newLabel.coordinates.scale(scale)), scale, g);
     }
 

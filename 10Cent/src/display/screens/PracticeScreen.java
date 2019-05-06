@@ -36,7 +36,9 @@ public class PracticeScreen extends Screen {
     private DropdownMenu[] dropdownMenus;
 
     public PracticeScreen() {
-        gameModeMenu = new NormalDropdownMenu(new String[]{"Tic-tac-toe", "Ultimate tic-tac-toe"}, 3, new Dimension(40,8)) {
+        String[] games = new String[]{Games.TIC_TAC_TOE, Games.ULTIMATE_TIC_TAC_TOE};
+
+        gameModeMenu = new NormalDropdownMenu(games, 3, new Dimension(40,8)) {
             @Override
             public void dropdown() {
                 super.dropdown();
@@ -137,7 +139,7 @@ public class PracticeScreen extends Screen {
                 Player[] players = new Player[] {player1, player2};
                 GameController gameController;
                 switch (gameModeMenu.getValue()) {
-                    case "Tic-tac-toe":
+                    case Games.TIC_TAC_TOE:
                         gameController = new StandardGameController(players) {
                             @Override
                             public void onWin(Player player) {
@@ -158,7 +160,7 @@ public class PracticeScreen extends Screen {
                             }
                         });
                         break;
-                    case "Ultimate tic-tac-toe":
+                    case Games.ULTIMATE_TIC_TAC_TOE:
                         gameController = new StandardGameController(players) {
                             @Override
                             public void onWin(Player player) {
@@ -184,6 +186,15 @@ public class PracticeScreen extends Screen {
         };
         startButton.coordinates = new Coordinates(78,90);
         addDisplayComponent(startButton, mainFrame.panel);
+
+        NormalButton rulebookButton = new NormalButton("Rulebook", 5, new Dimension(30, 8)) {
+            @Override
+            public void clicked() {
+                Controller.switchScreen(new RulebookScreen(gameModeMenu.getValue()));
+            }
+        };
+        rulebookButton.coordinates = new Coordinates(2,90);
+        addDisplayComponent(rulebookButton, mainFrame.panel);
 
         addDefaultBackButton(mainFrame);
     }

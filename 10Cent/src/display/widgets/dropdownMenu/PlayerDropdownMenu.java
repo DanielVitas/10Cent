@@ -8,7 +8,6 @@ import display.frame.misc.Scale;
 import display.widgets.label.Align;
 import display.widgets.buttons.PlayerButton;
 import logic.players.Player;
-import progress.Progress;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -84,6 +83,7 @@ public class PlayerDropdownMenu extends DropdownMenu {
     @Override
     public void dropdown() {
         dropeddown = true;
+        ((PlayerButton) displayedObject).suppressLabel = true;
         for (DisplayComponent otherObject : otherObjects)
             addSubComponent(otherObject);
     }
@@ -91,6 +91,7 @@ public class PlayerDropdownMenu extends DropdownMenu {
     @Override
     public void backup() {
         dropeddown = false;
+        ((PlayerButton) displayedObject).suppressLabel = false;
         for (DisplayComponent otherObject : otherObjects)
             removeSubComponent(otherObject);
     }

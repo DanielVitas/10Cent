@@ -7,6 +7,7 @@ import display.frame.MainPanel;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
+import display.screens.story.StoryRulesScreen;
 import display.widgets.buttons.*;
 import display.widgets.label.Align;
 import display.widgets.dropdownMenu.PlayerDropdownMenu;
@@ -103,6 +104,10 @@ public class CampaignScreen extends Screen {
             @Override
             public void select(DisplayObject displayObject) {
                 ((ToggleButton) displayObject).animateClicked();
+                if (displayObject == button1)
+                    Progress.easy = true;
+                else
+                    Progress.easy = false;
                 super.select(displayObject);
             }
 
@@ -112,7 +117,7 @@ public class CampaignScreen extends Screen {
                 super.deselect(coordinates);
             }
         };
-        toggleSwitch.select(button1);
+        toggleSwitch.select(Progress.easy ? button1 : button2);
         toggleSwitch.coordinates = new Coordinates(58, 78);
         stageDetailsObjects.add(toggleSwitch);
         addDisplayComponent(toggleSwitch, mainFrame.panel);
@@ -120,9 +125,12 @@ public class CampaignScreen extends Screen {
         NormalButton startButton = new NormalButton("Start", 5, new Dimension(20, 8)) {
             @Override
             public void clicked() {
+                String game = null;
+                Screen nextScreen = null;
                 Player protagonist = Player.parseString(Progress.selectedPlayer, new Human());
                 switch (stage) {
                     case Stage.STAGE1:
+                        game = Games.TIC_TAC_TOE;
                         Intelligence intelligence = new RandomAI();
                         Player enemy = new Nought(intelligence);
                         Player[] players = new Player[] {protagonist, enemy};
@@ -131,14 +139,14 @@ public class CampaignScreen extends Screen {
                         GameController gameController = new StandardGameController(players) {
                             @Override
                             public void onWin(Player player) {
-                                if (player == protagonist) {
+                                if (player == protagonist && Progress.newestStage == Stage.STAGE1) {
                                     Progress.addPlayer(Nought.NAME);
                                     Progress.newestStage = 2;
                                     Controller.switchScreenWithoutBacking(storyScreen());
                                 }
                             }
                         };
-                        Controller.switchScreen(new GameScreen(gameController) {
+                        nextScreen = new GameScreen(gameController) {
                             @Override
                             public void loadEnvironment(MainFrame mainFrame) {
 
@@ -150,11 +158,15 @@ public class CampaignScreen extends Screen {
                                         new Dimension(60, 60), gameController,
                                         this, mainFrame);
                             }
-                        });
+                        };
                         break;
                     case Stage.STAGE2:
                         break;
                 }
+                if (!Progress.isPlayed(game))
+                    Controller.switchScreen(new StoryRulesScreen(game, nextScreen));
+                else
+                    Controller.switchScreen(nextScreen);
             }
         };
         startButton.coordinates = new Coordinates(78,90);
