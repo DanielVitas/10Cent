@@ -30,12 +30,14 @@ public abstract class PlayerButton extends Button {
     public Label newLabel;
     private boolean changeable;
     public boolean suppressLabel = false;
+    private boolean seeable;
 
-    public PlayerButton(DropdownMenu dropdownMenu, boolean isNew, boolean changeable, Player player, Dimension dimension) {
+    public PlayerButton(DropdownMenu dropdownMenu, boolean seeable, boolean isNew, boolean changeable, Player player, Dimension dimension) {
         super(dimension, Paths.get(Images.RESOURCES_PATH,"images", "buttons", "player").toString());
 
         this.dropdownMenu = dropdownMenu;
         this.changeable = changeable;
+        this.seeable = seeable;
         setPlayer(player);
 
         if (isNew) {
@@ -75,7 +77,8 @@ public abstract class PlayerButton extends Button {
         super.hover(coordinates, scale, mouseEvent);
         if (changeable) {
             seen();
-            Progress.addOldPlayer(player.toString());
+            if (seeable)
+            	Progress.addOldPlayer(player.toString());
         }
     }
 

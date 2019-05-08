@@ -9,5 +9,5 @@ musicVolume = 100.0
 windowedMode = true
 windowSizeX = 1142
 windowSizeY = 785
-windowLocationX = 20
-windowLocationY = 20
+windowLocationX = 67
+windowLocationY = 84

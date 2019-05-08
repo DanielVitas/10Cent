@@ -21,7 +21,7 @@ public class PlayerDropdownMenu extends DropdownMenu {
     private Player[] players;
     private Align align;
 
-    public PlayerDropdownMenu(Player[] players, List<String> oldPlayers, Align align, int row, Dimension dimension) {
+    public PlayerDropdownMenu(Player[] players, boolean seeable, List<String> oldPlayers, Align align, int row, Dimension dimension) {
         super(getNames(players));
         this.players = players;
         this.align = align;
@@ -35,7 +35,7 @@ public class PlayerDropdownMenu extends DropdownMenu {
             boolean isNew = !oldPlayers.contains(players[i].toString());
             if (isNew)
                 hasAnyNew = true;
-            PlayerButton button = new PlayerButton(this, isNew, true, players[i], dimension) {
+            PlayerButton button = new PlayerButton(this, seeable, isNew, true, players[i], dimension) {
                 @Override
                 public void clicked() {
                     index = finalI;
@@ -55,7 +55,7 @@ public class PlayerDropdownMenu extends DropdownMenu {
             otherObjects[i] = button;
         }
 
-        displayedObject = new PlayerButton(this, hasAnyNew, false, players[index], dimension) {
+        displayedObject = new PlayerButton(this, seeable, hasAnyNew, false, players[index], dimension) {
             @Override
             public void clicked() {
                 if (dropeddown) {

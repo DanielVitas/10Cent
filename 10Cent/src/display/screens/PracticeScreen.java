@@ -104,7 +104,7 @@ public class PracticeScreen extends Screen {
         for (Player player : players)
             oldPlayers.add(player.toString());
 
-        player1Menu = new PlayerDropdownMenu(players, oldPlayers, Align.LEFT, 3, new display.frame.misc.Dimension(8,8)) {
+        player1Menu = new PlayerDropdownMenu(players, false, oldPlayers, Align.LEFT, 3, new display.frame.misc.Dimension(8,8)) {
             @Override
             public void dropdown() {
                 super.dropdown();
@@ -114,7 +114,7 @@ public class PracticeScreen extends Screen {
         player1Menu.coordinates = new Coordinates(62,36);
         player1Menu.displayPriority = 4;
 
-        player2Menu = new PlayerDropdownMenu(players, oldPlayers, Align.LEFT, 3, new display.frame.misc.Dimension(8,8)) {
+        player2Menu = new PlayerDropdownMenu(players, false, oldPlayers, Align.LEFT, 3, new display.frame.misc.Dimension(8,8)) {
             @Override
             public void dropdown() {
                 super.dropdown();
