@@ -7,7 +7,7 @@ musicVolume = 100.0
 
 # Screen
 windowedMode = true
-windowSizeX = 1142
-windowSizeY = 785
-windowLocationX = 67
-windowLocationY = 84
+windowSizeX = 785
+windowSizeY = 631
+windowLocationX = 84
+windowLocationY = 55

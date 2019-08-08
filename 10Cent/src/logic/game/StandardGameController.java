@@ -5,7 +5,7 @@ import logic.boards.Move;
 import logic.boards.exceptions.InvalidMoveException;
 import logic.intelligence.Human;
 import logic.players.Player;
-import sun.rmi.runtime.Log;
+//import sun.rmi.runtime.Log;
 
 import java.util.Set;
 import java.util.Stack;

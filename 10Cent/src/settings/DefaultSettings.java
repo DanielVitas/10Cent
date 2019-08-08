@@ -1,6 +1,6 @@
 package settings;
 
-import oracle.jrockit.jfr.openmbean.EventSettingType;
+// import oracle.jrockit.jfr.openmbean.EventSettingType;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
