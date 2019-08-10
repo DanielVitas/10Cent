@@ -17,6 +17,10 @@ import static display.frame.MainPanel.drawEllipse;
 
 public abstract class Waypoint extends Button {
 
+    /*
+    Waypoints are used to navigate through campaign screen. In essence they are buttons - only visually different.
+     */
+
     private Active active;
 
     public Waypoint(Active active, Dimension dimension) {
@@ -30,6 +34,7 @@ public abstract class Waypoint extends Button {
 
     @Override
     protected void installAnimations() {
+        // waypoints have a lot more animations than other buttons
         super.installAnimations();
 
         Animation animation;

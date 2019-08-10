@@ -4,6 +4,10 @@ import java.awt.*;
 
 public class Dimension {
 
+    /*
+    Dimension contains width, height and some basic operations.
+     */
+
     public double width, height;
 
     public Dimension(double width, double height) {
@@ -23,7 +27,6 @@ public class Dimension {
         return (int) (height + 0.5);
     }
 
-    @Deprecated
     public java.awt.Dimension getAwtDimension() {
         return new java.awt.Dimension(getIntegerWidth(), getIntegerHeight());
     }

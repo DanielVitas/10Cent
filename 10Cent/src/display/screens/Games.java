@@ -41,7 +41,6 @@ public final class Games {
 
     private static void setBoard(Coordinates coordinates, GameController gameController, GameScreen screen, MainFrame mainFrame) {
         gameController.board = screen.board;
-        // if (!gameController.hasStarted)
         gameController.start();
         screen.board.coordinates = coordinates;
     }

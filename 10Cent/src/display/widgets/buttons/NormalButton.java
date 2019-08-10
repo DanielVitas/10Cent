@@ -17,6 +17,10 @@ import static display.frame.MainPanel.drawRectangle;
 
 public abstract class NormalButton extends Button {
 
+    /*
+    Normal button is the most basic and common button.
+     */
+
     public Label label;
 
     public NormalButton(String text, int fontSize, Dimension dimension) {
@@ -41,11 +45,7 @@ public abstract class NormalButton extends Button {
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         super.paint(coordinates, scale, g);
 
-        Graphics2D g2 = (Graphics2D) g;
-        g.setColor(Color.BLACK);
-        g2.setStroke(new BasicStroke((float) (0.3 * scale.average())));
-
-        drawRectangle(coordinates, dimension.scale(scale), g);
+        drawBoarder(0.3, coordinates, dimension, scale, g);
     }
 
 }

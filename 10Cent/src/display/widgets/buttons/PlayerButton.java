@@ -22,6 +22,10 @@ import static display.frame.MainPanel.drawRectangle;
 
 public abstract class PlayerButton extends Button {
 
+    /*
+    PlayerButton is clickable image of token. It can also display "new" tag.
+     */
+
     private static Font font = CustomFonts.getFont(CustomFonts.PAINTER, 3);
 
     private DropdownMenu dropdownMenu;
@@ -92,11 +96,7 @@ public abstract class PlayerButton extends Button {
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         super.paint(coordinates, scale, g);
 
-        Graphics2D g2 = (Graphics2D) g;
-        g.setColor(Color.BLACK);
-        g2.setStroke(new BasicStroke((float) (0.1 * scale.average())));
-
-        drawRectangle(coordinates, dimension.scale(scale), g);
+        drawBoarder(0.1, coordinates, dimension, scale, g);
 
         if (newLabel != null && !suppressLabel)
             newLabel.paint(coordinates.add(newLabel.coordinates.scale(scale)), scale, g);

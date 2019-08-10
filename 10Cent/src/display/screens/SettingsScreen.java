@@ -16,6 +16,10 @@ import java.awt.*;
 
 public class SettingsScreen extends Screen{
 
+    /*
+    Screen for changing settings.
+     */
+
     private static Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.PLAIN, 3);
 
     @Override

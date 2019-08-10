@@ -2,7 +2,6 @@ package logic.boards;
 
 import display.frame.DisplayObject;
 import display.frame.misc.Dimension;
-import logic.boards.exceptions.InvalidMoveException;
 import logic.boards.finalBoard.FinalBoard;
 import logic.game.GameController;
 import logic.players.Token;
@@ -28,9 +27,8 @@ public abstract class Board extends DisplayObject {
     }
 
     // returns true iff move is legal - change to void?
-    public boolean play(Move move) throws InvalidMoveException {
-        if (!validMove(move))
-            throw new InvalidMoveException(this, move);
+    public boolean play(Move move) {
+        assert validMove(move);
 
         if (outcome() != empty)
             return false;

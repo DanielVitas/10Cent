@@ -2,26 +2,27 @@ package display.frame;
 
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
-import display.screens.SettingsScreen;
-import javafx.embed.swing.JFXPanel;
 import settings.Settings;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Set;
 
 public class MainFrame extends JFrame {
 
-    public static int targetedFramerate = 60;
+    /*
+    JFrame with more suitable constructor and a few additional fields and methods.
+     */
+
+    public static int targetedFrameRate = 60;
 
     public MainPanel panel;
     private RepaintThread repaintThread;
-    private static MainFrame mainFrame;  // only here until better solution is found
+    private static MainFrame mainFrame;
 
-
+    // constructor sets up various things - from panel, size to repaintThread
     public MainFrame() {
-        super();
+        super("Ultimate Tic-tac-toe");
         mainFrame = this;
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -31,10 +32,13 @@ public class MainFrame extends JFrame {
                 super.windowClosing(windowEvent);
             }
         });
+
         panel = new MainPanel(new Dimension(600, 600));
         add(panel);
+
         repaintThread = new RepaintThread(panel);
         repaintThread.start();
+
         mainFrame.setUndecorated(!Settings.windowedMode);
         if(Settings.windowedMode){
             mainFrame.setExtendedState(JFrame.NORMAL);
@@ -50,12 +54,12 @@ public class MainFrame extends JFrame {
         Settings.save();
     }
 
-    @Deprecated
-    public static Scale getScale() {  // find better place for this function
+    // gets the original window scale - it's used when calling paint from MainPanel
+    public static Scale getScale() {
         return new Scale(mainFrame.panel.getWidth() / 100f, mainFrame.panel.getHeight() / 100f);
     }
 
-    //Takes windowedMode setting from Settings and switches to Fullscreen if false and to Windowed if true
+    // takes windowedMode setting from Settings and switches to Fullscreen if false and to Windowed if true
     public synchronized static void switchToWindowed(){
         mainFrame.dispose();
         mainFrame.setUndecorated(!Settings.windowedMode);

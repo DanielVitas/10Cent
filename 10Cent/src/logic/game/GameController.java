@@ -2,21 +2,14 @@ package logic.game;
 
 import logic.boards.Board;
 import logic.boards.Move;
-import logic.boards.exceptions.InvalidMoveException;
 import logic.players.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import java.util.Stack;
-
-import static display.frame.MainFrame.targetedFramerate;
-import static logic.boards.Board.empty;
 
 public abstract class GameController extends Thread {
 
     /*
-    GameController should be created for every game separately.
+    GameController should be created for every game separately. It controls the game's flow.
      */
 
     // generally only 1 gameController is active at the time, but it can have "sub-gameControllers"
@@ -45,15 +38,6 @@ public abstract class GameController extends Thread {
     public Player getCurrentPlayer() {
         return players[turnCount % players.length];
     }
-
-  //  public abstract Set<Move> legalMoves();
-
- /*   public boolean isLegal(Move move) {
-        for (Move legalMove : legalMoves())
-            if (legalMove.equals(move))
-                return true;
-        return false;
-    }*/
 
     public abstract void onWin(Player player);
 

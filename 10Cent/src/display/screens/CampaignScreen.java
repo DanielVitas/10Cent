@@ -20,11 +20,9 @@ import logic.intelligence.Intelligence;
 import logic.intelligence.RandomAI;
 import logic.players.Player;
 import logic.players.bird.Bird;
-import logic.players.crossBloody.CrossBloody;
 import logic.players.crown.Crown;
 import logic.players.heart.Heart;
 import logic.players.nought.Nought;
-import logic.players.noughtBloody.NoughtBloody;
 import logic.players.scratch.Scratch;
 import progress.Progress;
 import progress.Stage;
@@ -37,6 +35,10 @@ import static display.screens.MainMenuScreen.storyScreen;
 
 public class CampaignScreen extends Screen {
 
+    /*
+    Levels are selected from campaign screen. It also provides short descriptions of situation.
+     */
+
     public static Font titleFont = CustomFonts.getFont(CustomFonts.CALLIGRAPHY, 15);
     public static Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.PLAIN, 3);
 
@@ -44,9 +46,9 @@ public class CampaignScreen extends Screen {
 
     @Override
     public void load(MainFrame mainFrame) {
+        // from here player will select their token
         Player[] players = Progress.getPlayers();
         List<String> oldPlayers = Progress.getOldPlayers();
-
         PlayerDropdownMenu playerMenu = new PlayerDropdownMenu(players, true, oldPlayers, Align.RIGHT, 3, new display.frame.misc.Dimension(8,8)) {
             @Override
             public void refresh() {
@@ -59,6 +61,7 @@ public class CampaignScreen extends Screen {
         playerMenu.setValue(Progress.selectedPlayer);
         addDisplayComponent(playerMenu, mainFrame.panel);
 
+        // adding 4 waypoints
         Waypoint firstWaypoint = new Waypoint(active(Stage.STAGE1), new Dimension(10, 5)) {
             @Override
             protected void clickedUnlocked() {
@@ -124,9 +127,10 @@ public class CampaignScreen extends Screen {
         removeStageDetails(mainFrame);
         stageDescription(stage, mainFrame);
 
-        if (stage >= Stage.THEEND)
+        if (stage >= Stage.THE_END)
             return;
 
+        // crates toggleSwitch with 2 buttons for difficulty (weather you play first or second)
         ToggleButton button1 = new ToggleButton("Easy", 5, new Dimension(20, 8));
 
         ToggleButton button2 = new ToggleButton("Hard", 5, new Dimension(20, 8));
@@ -159,6 +163,7 @@ public class CampaignScreen extends Screen {
         NormalButton startButton = new NormalButton("Start", 5, new Dimension(20, 8)) {
             @Override
             public void clicked() {
+                // first we setup a few variables
                 String game = null;
                 Screen nextScreen = null;
                 Player protagonist = Player.parsePlayer(Progress.selectedPlayer, new Human());
@@ -168,6 +173,8 @@ public class CampaignScreen extends Screen {
                 GameController gameController;
                 Coordinates coordinates = new Coordinates(20, 20);
                 Dimension dimension = new Dimension(60, 60);
+
+                // sets up tokens and game depending on stage selected
                 switch (stage) {
                     case Stage.STAGE1:
                         game = Games.TIC_TAC_TOE;
@@ -286,7 +293,7 @@ public class CampaignScreen extends Screen {
                                 if (Progress.newestStage == stage)
                                     if (player == protagonist) {
                                         Progress.addPlayer(Scratch.NAME);
-                                        Progress.newestStage = Stage.THEEND;
+                                        Progress.newestStage = Stage.THE_END;
                                         Controller.switchScreenWithoutBacking(storyScreen());
                                     } else if (player == enemy) {
                                         Controller.switchScreenWithoutBacking(new DefeatScreen(stage));
@@ -350,7 +357,7 @@ public class CampaignScreen extends Screen {
                         "overwhelms you when entering dark cave near the mountain peak. You become certain that what hides " +
                         "here is not human.";
                 break;
-            case Stage.THEEND:
+            case Stage.THE_END:
                 title = "The End";
 
                 text = "";
@@ -372,6 +379,7 @@ public class CampaignScreen extends Screen {
             removeDisplayComponent(displayComponent, mainFrame.panel);
     }
 
+    // returns new array - reverse of the one given in the argument
     private static Player[] reverse(Player[] array) {
         Player[] newArray = new Player[array.length];
         for (int i = 0; i < array.length; i++)
@@ -379,7 +387,7 @@ public class CampaignScreen extends Screen {
         return newArray;
     }
 
-    public static Active active(int stage) {
+    private static Active active(int stage) {
         if (stage < Progress.newestStage)
             return Active.UNLOCKED;
         else if (stage == Progress.newestStage)
@@ -387,6 +395,8 @@ public class CampaignScreen extends Screen {
         return Active.LOCKED;
     }
 
+    // games cannot be previous screens therefore campaign screen is set as it's previous which is redundant - override
+    // fixes that
     @Override
     public void setPreviousScreen(Screen screen) {
         if (screen instanceof CampaignScreen)

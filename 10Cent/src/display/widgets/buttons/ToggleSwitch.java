@@ -4,12 +4,14 @@ import display.frame.DisplayObject;
 import display.frame.Mouse;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Scale;
-import display.screens.Screen;
 
-import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public abstract class ToggleSwitch extends DisplayObject {
+
+    /*
+    Group of DisplayObjects of witch only one can be selected at the time.
+     */
 
     private DisplayObject[] displayObjects;
     private DisplayObject hoveredObject;

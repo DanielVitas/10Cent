@@ -6,9 +6,12 @@ import logic.game.StandardGameController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 public class RandomAI extends Intelligence {
+
+    /*
+    It chooses it's move randomly - each move has equal chance to be chosen.
+     */
 
     public final static String NAME = "Random";
     private Random random;

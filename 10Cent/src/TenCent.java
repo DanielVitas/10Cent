@@ -6,9 +6,11 @@ import fonts.CustomFonts;
 import progress.Progress;
 import settings.Settings;
 
-import java.nio.file.Paths;
-
 public class TenCent {
+
+    /*
+    Main class used to setup / load all the necessary classes. Also creates MainFrame and sets it visible.
+     */
 
     public static void main(String[] args) {
         CustomFonts.load();
@@ -20,7 +22,6 @@ public class TenCent {
         MainFrame mainFrame = new MainFrame();
 
         Controller.install(mainFrame);
-        //mainFrame.pack();
         mainFrame.setVisible(true);
     }
 

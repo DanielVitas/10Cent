@@ -3,7 +3,6 @@ package logic.intelligence;
 import logic.boards.LogicBoard;
 import logic.boards.Move;
 import logic.game.StandardGameController;
-//import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;

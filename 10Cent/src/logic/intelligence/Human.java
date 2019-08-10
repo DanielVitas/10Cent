@@ -3,13 +3,16 @@ package logic.intelligence;
 import logic.boards.Move;
 import logic.game.StandardGameController;
 import logic.players.Token;
-import logic.players.empty.Empty;
 import logic.players.empty.EmptyToken;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class Human extends Intelligence {
+
+    /*
+    Human intelligence only takes care of most basic things - it waits for player's input.
+     */
 
     public final static String NAME = "Human";
     private Set<Token> tokens = new HashSet<>();

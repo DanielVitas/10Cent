@@ -1,9 +1,12 @@
 package logic.intelligence;
 
-import logic.boards.Move;
 import logic.game.GameController;
 
 public abstract class Intelligence {
+
+    /*
+    Intelligence conducts player's move. Any player must have intelligence (even human).
+     */
 
     public GameController  gameController;
 

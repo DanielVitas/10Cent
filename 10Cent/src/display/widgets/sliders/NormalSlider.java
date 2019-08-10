@@ -11,6 +11,10 @@ import java.nio.file.Paths;
 
 public class NormalSlider extends HorizontalSlider{
 
+    /*
+    Only non-abstract implementation of slider.
+     */
+
     private String directoryPath = Paths.get(Images.RESOURCES_PATH, "images", "sliders", "normal").toString();
 
     public NormalSlider(Dimension dimension) {

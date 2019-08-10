@@ -11,6 +11,10 @@ import java.util.Map;
 
 public final class CustomFonts {
 
+    /*
+    This class stores all the custom fonts. They should be accessed through static variables.
+     */
+
     private final static String FONT_PATH = Paths.get(Images.RESOURCES_PATH, "fonts").toString();
     private static GraphicsEnvironment ge;
     private static Map<String, Font> fonts = new HashMap<>();

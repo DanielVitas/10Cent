@@ -1,6 +1,5 @@
 package display.widgets.input;
 
-import display.frame.DisplayComponent;
 import display.frame.DisplayObject;
 import display.frame.InputComponent;
 import display.frame.MainPanel;
@@ -13,7 +12,6 @@ import display.widgets.label.Align;
 import display.widgets.label.Label;
 
 import java.awt.*;
-import java.awt.event.InputMethodListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.nio.file.Paths;
@@ -21,6 +19,10 @@ import java.nio.file.Paths;
 import static display.frame.MainPanel.drawRectangle;
 
 public abstract class InputField extends DisplayObject implements InputComponent {
+
+    /*
+    Box used to input text with keyboard.
+     */
 
     private static String directoryPath = Paths.get(Images.RESOURCES_PATH,"images", "input", "field").toString();
     private static Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.PLAIN, 3);
@@ -67,12 +69,14 @@ public abstract class InputField extends DisplayObject implements InputComponent
         return inputLabel.text;
     }
 
+    // not every char should be legal - sometimes you want only numbers, ...
     public abstract boolean isLegal(char keyChar);
 
     @Override
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         super.paint(coordinates, scale, g);
 
+        // if no text is entered it should display what kind of input it expects
         if (inputLabel.text.length() == 0)
             defaultLabel.paint(coordinates.add(defaultLabel.coordinates.scale(scale)), scale, g);
         else

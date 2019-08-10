@@ -5,18 +5,19 @@ import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
 import display.images.Animation;
 import display.images.Images;
-import display.screens.Controller;
 import logic.boards.Move;
 import logic.game.GameController;
-import logic.game.StandardGameController;
 import logic.players.Player;
 import logic.players.Token;
 
 import java.awt.event.MouseEvent;
 import java.nio.file.Paths;
-import java.util.Set;
 
 public class EmptyToken extends Token {
+
+    /*
+    Animations of empty token are a bit unique.
+     */
 
     private boolean waiting = false;
     private static Animation waitingAnimation;

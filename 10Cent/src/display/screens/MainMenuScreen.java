@@ -5,15 +5,30 @@ import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.screens.story.*;
 import display.widgets.buttons.NormalButton;
+import display.widgets.label.Align;
+import display.widgets.label.Label;
+import fonts.CustomFonts;
 import progress.Progress;
 import progress.Stage;
 
+import java.awt.*;
 import java.awt.event.WindowEvent;
 
 public class MainMenuScreen extends Screen {
 
+    /*
+    The first screen that opens when the game starts.
+     */
+
+    private static Font titleFont = CustomFonts.getFont(CustomFonts.CALLIGRAPHY, 20);
+
     @Override
     public void load(MainFrame mainFrame) {
+        display.widgets.label.Label titleLabel = new Label("Ultimate Tic-tac-toe", titleFont, Color.RED, new display.frame.misc.Dimension(80, 8), Align.CENTER);
+        titleLabel.coordinates = new Coordinates(10, 20);
+        addDisplayComponent(titleLabel, mainFrame.panel);
+
+        // adds a few buttons pointing to different screens
         NormalButton gameButton = new NormalButton("Campaign", 5, new Dimension(40, 8)) {
             @Override
             public void clicked() {
@@ -25,7 +40,7 @@ public class MainMenuScreen extends Screen {
                 }
             }
         };
-        gameButton.coordinates = new Coordinates(30, 25);
+        gameButton.coordinates = new Coordinates(30, 40);
         addDisplayComponent(gameButton, mainFrame.panel);
 
         NormalButton practice = new NormalButton("Practice", 5, new Dimension(40,8)) {
@@ -34,7 +49,7 @@ public class MainMenuScreen extends Screen {
                 Controller.switchScreen(new PracticeScreen(mainFrame));
             }
         };
-        practice.coordinates = new Coordinates(30,35);
+        practice.coordinates = new Coordinates(30,50);
         addDisplayComponent(practice, mainFrame.panel);
 
         NormalButton settings = new NormalButton("Settings", 5, new Dimension(40,8)) {
@@ -43,7 +58,7 @@ public class MainMenuScreen extends Screen {
                 Controller.switchScreen(new SettingsScreen());
             }
         };
-        settings.coordinates = new Coordinates(30,45);
+        settings.coordinates = new Coordinates(30,60);
         addDisplayComponent(settings, mainFrame.panel);
 
         NormalButton quit = new NormalButton("Quit", 5, new Dimension(40,8)) {
@@ -52,10 +67,11 @@ public class MainMenuScreen extends Screen {
                 mainFrame.dispatchEvent(new WindowEvent(mainFrame, WindowEvent.WINDOW_CLOSING));
             }
         };
-        quit.coordinates = new Coordinates(30,55);
+        quit.coordinates = new Coordinates(30,70);
         addDisplayComponent(quit, mainFrame.panel);
     }
 
+    // gets current story screen
     public static Screen storyScreen() {
         Screen screen = null;
         switch (Progress.newestStage) {
@@ -71,7 +87,7 @@ public class MainMenuScreen extends Screen {
             case Stage.STAGE4:
                 screen = new FallingAction();
                 break;
-            case Stage.THEEND:
+            case Stage.THE_END:
                 screen = new Denouement();
                 break;
         }

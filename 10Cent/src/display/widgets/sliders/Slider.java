@@ -10,6 +10,10 @@ import java.awt.event.MouseEvent;
 
 public abstract class Slider extends DisplayObject {
 
+    /*
+    Sliders are abstract objects which have a node and respond to it's dragging.
+     */
+
     protected Dimension dimension;
     protected Node node;
 

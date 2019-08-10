@@ -6,10 +6,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 public final class Images {
 
@@ -49,7 +47,7 @@ public final class Images {
     public static List<String> getAllPaths(String directoryPath){
         List<File> directories = new ArrayList<>();
         List<String> paths = new ArrayList<>();
-        for (File file: new File(directoryPath).listFiles()) {
+        for (File file: Objects.requireNonNull(new File(directoryPath).listFiles())) {
             if (file.isDirectory())
                 directories.add(file);
             else {
@@ -59,7 +57,7 @@ public final class Images {
         List<File> tempDirectories = new ArrayList<>();
         while (!directories.isEmpty()){
             for (File dir: directories){
-                for (File file: dir.listFiles()){
+                for (File file: Objects.requireNonNull(dir.listFiles())){
                     if (file.isDirectory())
                         tempDirectories.add(file);
                     else
@@ -75,7 +73,7 @@ public final class Images {
 
     public static String[] getFileNames(String directoryPath) {
         File[] fileList = new File(directoryPath).listFiles();
-        String[] fileNames = new String[fileList.length];
+        String[] fileNames = new String[Objects.requireNonNull(fileList).length];
         for (int i = 0; i < fileNames.length; i++)
             fileNames[i] = fileList[i].getName();
         return fileNames;

@@ -13,18 +13,20 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-import static display.frame.MainPanel.drawRectangle;
+import static display.widgets.buttons.Button.drawBoarder;
 
 public class PlayerDropdownMenu extends DropdownMenu {
 
+    /*
+    DropdownMenu for selecting token player will play with.
+     */
+
     private Dimension dimension;
     private Player[] players;
-    private Align align;
 
     public PlayerDropdownMenu(Player[] players, boolean seeable, List<String> oldPlayers, Align align, int row, Dimension dimension) {
         super(getNames(players));
         this.players = players;
-        this.align = align;
         this.dimension = dimension;
 
         boolean hasAnyNew = false;
@@ -96,6 +98,7 @@ public class PlayerDropdownMenu extends DropdownMenu {
             removeSubComponent(otherObject);
     }
 
+    // contains method is overridden due to implementation of "new" tag
     @Override
     public boolean contains(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
         boolean contains = super.contains(coordinates, scale, mouseEvent);
@@ -112,11 +115,7 @@ public class PlayerDropdownMenu extends DropdownMenu {
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         super.paint(coordinates, scale, g);
 
-        Graphics2D g2 = (Graphics2D) g;
-        g.setColor(Color.BLACK);
-        g2.setStroke(new BasicStroke((float) (0.3 * scale.average())));
-
-        drawRectangle(coordinates, dimension.scale(scale), g);
+        drawBoarder(0.3, coordinates, dimension, scale, g);
     }
 
 

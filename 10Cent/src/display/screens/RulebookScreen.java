@@ -15,6 +15,10 @@ import java.util.List;
 
 public class RulebookScreen extends Screen {
 
+    /*
+    Screen for displaying rules of games.
+     */
+
     public static Font titleFont = CustomFonts.getFont(CustomFonts.CALLIGRAPHY, 15);
     public static Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.PLAIN, 3);
 
@@ -39,7 +43,7 @@ public class RulebookScreen extends Screen {
         temporaryComponents.add(label);
         addDisplayComponent(label, mainFrame.panel);
 
-        temporaryComponents.addAll(rules(game, new Coordinates(10, 22), new Dimension(80, 8), this, mainFrame));
+        temporaryComponents.addAll(rules(game, new Coordinates(10, 25), new Dimension(80, 8), this, mainFrame));
 
         addDefaultBackButton(mainFrame);
     }

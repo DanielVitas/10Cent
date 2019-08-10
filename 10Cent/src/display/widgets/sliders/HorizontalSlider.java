@@ -3,13 +3,12 @@ package display.widgets.sliders;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
-import display.images.Images;
-import display.widgets.sliders.nodes.Node;
-import display.widgets.sliders.nodes.NormalNode;
-
-import java.nio.file.Paths;
 
 public abstract class HorizontalSlider extends Slider {
+
+    /*
+    Slider's node is moving only horizontally.
+     */
 
     private Double value = 0.5;
 

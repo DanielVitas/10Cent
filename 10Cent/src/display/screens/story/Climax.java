@@ -10,7 +10,6 @@ import display.widgets.buttons.NormalButton;
 import display.widgets.label.Align;
 import display.widgets.label.Label;
 import display.widgets.label.TextLabel;
-import logic.players.scratch.Scratch;
 
 import java.awt.*;
 
@@ -35,7 +34,7 @@ public class Climax extends Screen {
                 "castle doors.";
 
         TextLabel textLabel = new TextLabel(text, font, Color.BLACK, new display.frame.misc.Dimension(80, 8), Align.LEFT);
-        textLabel.coordinates = new Coordinates(10, 22);
+        textLabel.coordinates = new Coordinates(10, 25);
         addDisplayComponent(textLabel, mainFrame.panel);
 
         NormalButton continueButton = new NormalButton("Continue", 5, new Dimension(40,8)) {

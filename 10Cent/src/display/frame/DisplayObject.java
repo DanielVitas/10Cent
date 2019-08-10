@@ -13,12 +13,19 @@ import java.util.Map;
 
 public class DisplayObject implements DisplayComponent {
 
+    /*
+    Display object is the most basic implementation of DisplayComponent. It implements functions in a way that was in
+    mind when crating DisplayComponent. There are certain objects that still implement DisplayComponent (don't extend
+    DisplayObject) due to them extending another object.
+     */
+
     public Coordinates coordinates = new Coordinates(0, 0);
     public int displayPriority = 0;
     public List<DisplayComponent> subComponents = new ArrayList<>();  // used by default paint method
     protected List<Shape> hitBoxes = new ArrayList<>();  // hit-boxes should be empty if object is not interactive
 
-    // the following is used for objects with a single main animation
+    // currentAnimation, animations and adiitional few functions are used for objects with a single main animation -
+    // most objects
     private Animation currentAnimation;
     public Map<String, Animation> animations = new HashMap<>();
 
@@ -51,6 +58,7 @@ public class DisplayObject implements DisplayComponent {
         }
     }
 
+    // paint's recursive structure was designed with TwoDimensionalBoard in mind
     @Override
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         for (DisplayComponent subComponent : subComponents)
@@ -77,6 +85,7 @@ public class DisplayObject implements DisplayComponent {
         return false;
     }
 
+    // hover and unhover often have similar structure, as objects are generally just group of simpler objects
     @Override
     public void hover(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
 

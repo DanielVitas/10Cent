@@ -4,16 +4,18 @@ import logic.players.Player;
 import logic.players.bird.Bird;
 import logic.players.cross.Cross;
 import logic.players.scratch.Scratch;
-import logic.players.crossBloody.CrossBloody;
 import logic.players.crown.Crown;
 import logic.players.heart.Heart;
 import logic.players.nought.Nought;
-import logic.players.noughtBloody.NoughtBloody;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class Progress {
+
+    /*
+    Keeps track of current progress - tokens unlocked, stages beaten,...
+     */
 
     public static boolean campaignDialog;  // campaign dialog will display
     public static String selectedPlayer;

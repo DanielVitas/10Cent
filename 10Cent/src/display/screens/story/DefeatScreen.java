@@ -43,12 +43,12 @@ public class DefeatScreen extends Screen {
             case Stage.STAGE3:
                 text = "The king smirks as he turns away, leaving you laying on the ground. You feel like not even " +
                         "worth taunting - pathetic. You remember the times when you were a child, playing tic-tac-toe " +
-                        "with your grandpa. He wasn't particularly good, but for you he was the best. You feel the grandpa " +
+                        "with your grandpa. He wasn't particularly good, but for you he was the best. You feel grandpa " +
                         "pushing you forwards. You rise up. This match is not over yet.";
                 break;
             case Stage.STAGE4:
                 text = "The monster devours you. But it seems you have very little left to be devoured. You rise " +
-                        "up, not as a monster, but almost as a human.";
+                        "up - simply because rising up is the only thing you know how to do.";
                 break;
         }
         Label titleLabel = new Label(title, titleFont, Color.RED, new display.frame.misc.Dimension(80, 8), Align.CENTER);
@@ -56,7 +56,7 @@ public class DefeatScreen extends Screen {
         addDisplayComponent(titleLabel, mainFrame.panel);
 
         TextLabel textLabel = new TextLabel(text, font, Color.BLACK, new display.frame.misc.Dimension(80, 8), Align.LEFT);
-        textLabel.coordinates = new Coordinates(10, 22);
+        textLabel.coordinates = new Coordinates(10, 25);
         addDisplayComponent(textLabel, mainFrame.panel);
 
         addDefaultContinueButton(this, mainFrame);

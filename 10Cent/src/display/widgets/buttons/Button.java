@@ -1,8 +1,5 @@
 package display.widgets.buttons;
 
-import audio.AudioPlayer;
-import audio.SoundPlayer;
-import display.frame.DisplayComponent;
 import display.frame.Mouse;
 import display.frame.misc.Coordinates;
 import display.frame.DisplayObject;
@@ -10,12 +7,17 @@ import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
 import display.images.Animation;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.nio.file.Paths;
 
+import static display.frame.MainPanel.drawRectangle;
+
 public abstract class Button extends DisplayObject {
+
+    /*
+    Button is the most basic element in menu. It's used to navigate through it.
+     */
 
     protected String directoryPath;  // contains animation directories
     protected Dimension dimension;
@@ -31,6 +33,7 @@ public abstract class Button extends DisplayObject {
     public abstract void clicked();
 
     protected void installAnimations() {
+        // adds usual animations
         Animation animation;
         String path;
 
@@ -67,6 +70,15 @@ public abstract class Button extends DisplayObject {
             animateHovered();
         else
             animateDefault();
+    }
+
+    // is usually used when drawing various buttons
+    public static void drawBoarder(double size, Coordinates coordinates, Dimension dimension, Scale scale, Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g.setColor(Color.BLACK);
+        g2.setStroke(new BasicStroke((float) (size * scale.average())));
+
+        drawRectangle(coordinates, dimension.scale(scale), g);
     }
 
     @Override

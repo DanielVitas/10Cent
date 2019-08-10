@@ -4,16 +4,17 @@ import display.frame.DisplayComponent;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
-import display.images.Images;
 import display.widgets.buttons.DropdownButton;
-import display.widgets.buttons.NormalButton;
 
 import java.awt.*;
-import java.nio.file.Paths;
 
-import static display.frame.MainPanel.drawRectangle;
+import static display.widgets.buttons.Button.drawBoarder;
 
 public class NormalDropdownMenu extends DropdownMenu {
+
+    /*
+    Dropdown menu containing text choices.
+     */
 
     private Dimension dimension;
 
@@ -73,11 +74,7 @@ public class NormalDropdownMenu extends DropdownMenu {
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         super.paint(coordinates, scale, g);
 
-        Graphics2D g2 = (Graphics2D) g;
-        g.setColor(Color.BLACK);
-        g2.setStroke(new BasicStroke((float) (0.3 * scale.average())));
-
-        drawRectangle(coordinates, dimension.scale(scale), g);
+        drawBoarder(0.3, coordinates, dimension, scale, g);
     }
 
 }

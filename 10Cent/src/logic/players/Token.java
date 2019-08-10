@@ -3,13 +3,16 @@ package logic.players;
 import display.frame.DisplayObject;
 import display.frame.misc.Dimension;
 import display.images.Animation;
-import display.screens.Controller;
 import logic.boards.Move;
 import logic.game.GameController;
 
 import java.nio.file.Paths;
 
 public abstract class Token extends DisplayObject {
+
+    /*
+    Tokens are visual marks on the board. One is created every time a player moves and it is bound to that move.
+     */
 
     public Player player;
     protected String directoryPath;  // contains animation directories

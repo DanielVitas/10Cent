@@ -12,7 +12,7 @@ public class Animation extends DisplayObject implements Runnable {
 
     /*
     Stores image paths and delays. Thread continuously changes image with respective delays. Should always be
-    sub-component.
+    sub-component (in respective DisplayObject).
      */
 
     public Dimension dimension;
@@ -48,16 +48,16 @@ public class Animation extends DisplayObject implements Runnable {
     }
 
     // this will end thread even if it's sleeping
-    @Deprecated
     public void interrupt() {
         thread.interrupt();
     }
 
-    // images will be displayed in alphabetical order
+    // images will be displayed in alphabetical order - names are usually of format "image*number*"
     public Animation(String directoryPath, long[] delays, boolean loop) {
         this(Images.getFilePaths(directoryPath), delays, loop);
     }
 
+    // calculates animation length
     public long length() {
         long length = 0;
         for (int i = 0; i < imagePaths.length; i++)

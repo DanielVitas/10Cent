@@ -1,7 +1,6 @@
 package logic.players.empty;
 
 import display.frame.misc.Dimension;
-import display.screens.Controller;
 import logic.boards.Move;
 import logic.game.GameController;
 import logic.players.Player;

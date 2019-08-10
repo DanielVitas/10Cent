@@ -13,7 +13,6 @@ import display.widgets.label.TextLabel;
 import fonts.CustomFonts;
 
 import java.awt.*;
-import java.awt.event.WindowEvent;
 
 public class Exposition extends Screen {
 
@@ -34,7 +33,7 @@ public class Exposition extends Screen {
                 "needed more than ever. Will you, a no-name tic-tac-toe player, be able to save the world and free it's people?";
 
         TextLabel textLabel = new TextLabel(text, font, Color.BLACK, new Dimension(80, 8), Align.LEFT);
-        textLabel.coordinates = new Coordinates(10, 22);
+        textLabel.coordinates = new Coordinates(10, 25);
         addDisplayComponent(textLabel, mainFrame.panel);
 
         addDefaultContinueButton(this, mainFrame);

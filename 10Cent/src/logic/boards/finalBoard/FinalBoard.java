@@ -5,7 +5,6 @@ import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
 import logic.boards.Board;
 import logic.boards.Move;
-import logic.boards.exceptions.InvalidMoveException;
 import logic.game.GameController;
 import logic.players.Token;
 
@@ -41,7 +40,7 @@ public class FinalBoard extends Board {
     }
 
     @Override
-    public boolean play(Move move) throws InvalidMoveException {
+    public boolean play(Move move) {
         if (!super.play(move))
             return false;
 

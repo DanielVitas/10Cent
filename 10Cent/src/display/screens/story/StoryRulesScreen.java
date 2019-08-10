@@ -1,10 +1,8 @@
 package display.screens.story;
 
-import display.frame.DisplayComponent;
 import display.frame.MainFrame;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
-import display.screens.CampaignScreen;
 import display.screens.Controller;
 import display.screens.Screen;
 import display.widgets.buttons.NormalButton;
@@ -14,15 +12,12 @@ import fonts.CustomFonts;
 import progress.Progress;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import static display.screens.RulebookScreen.rules;
 
 public class StoryRulesScreen extends Screen {
 
     private static Font titleFont = CustomFonts.getFont(CustomFonts.CALLIGRAPHY, 15);
-    private static Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.PLAIN, 3);
 
     private String game;
     private Screen nextScreen;
@@ -38,7 +33,7 @@ public class StoryRulesScreen extends Screen {
         label.coordinates = new Coordinates(10, 10);
         addDisplayComponent(label, mainFrame.panel);
 
-        rules(game, new Coordinates(10, 22), new Dimension(80, 8), this, mainFrame);
+        rules(game, new Coordinates(10, 25), new Dimension(80, 8), this, mainFrame);
 
         addDefaultContinueButton(mainFrame);
     }

@@ -1,11 +1,8 @@
 package settings;
 
 import audio.AudioPlayer;
-//import com.sun.org.apache.xpath.internal.operations.Bool;
-//import com.sun.org.glassfish.gmbal.Description;
 import display.frame.MainFrame;
 import display.images.Images;
-import display.screens.Controller;
 
 import java.io.*;
 import java.nio.file.Paths;

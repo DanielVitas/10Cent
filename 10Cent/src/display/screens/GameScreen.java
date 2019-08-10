@@ -6,6 +6,10 @@ import logic.game.GameController;
 
 public abstract class GameScreen extends Screen {
 
+    /*
+    Screen used for playing games.
+     */
+
     protected GameController gameController;
     protected Board board;
 
@@ -27,8 +31,10 @@ public abstract class GameScreen extends Screen {
         super.unload(mainFrame);
     }
 
+    // loads background and other visual candies
     public abstract void loadEnvironment(MainFrame mainFrame);
 
+    // loads the game that will be played on screen
     public abstract void loadGame(MainFrame mainFrame);
 
 

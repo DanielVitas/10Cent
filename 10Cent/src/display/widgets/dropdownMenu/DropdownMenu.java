@@ -5,12 +5,14 @@ import display.frame.Mouse;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Scale;
 
-import java.awt.*;
 import java.awt.event.MouseEvent;
 
-import static display.frame.MainPanel.drawRectangle;
-
 public abstract class DropdownMenu extends DisplayObject {
+
+    /*
+    DropdownMenu is used for multiple choices. It operates with strings, but can visually represented by any kind of
+    DisplayObjects.
+     */
 
     protected int index = 0;
     protected String[] values;
@@ -36,10 +38,6 @@ public abstract class DropdownMenu extends DisplayObject {
             }
     }
 
-    public int getIndex() {
-        return index;
-    }
-
     public String getValue() {
         return values[index];
     }
@@ -54,45 +52,36 @@ public abstract class DropdownMenu extends DisplayObject {
     public boolean contains(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
         if (dropeddown) {
             Coordinates newCoordinates = displayedObject.coordinates.scale(scale).flip().add(coordinates);
-            if (displayedObject.contains(newCoordinates, scale, mouseEvent)) {
-                if (!Mouse.pressed)
-                    if (hoveredObject != displayedObject) {
-                        if (hoveredObject != null)
-                            hoveredObject.unhover(coordinates, scale, mouseEvent);
-                        hoveredObject = displayedObject;
-                        hoveredObject.hover(newCoordinates, scale, mouseEvent);
-                    }
+            if (additionalContains(coordinates, scale, mouseEvent, newCoordinates, displayedObject))
                 return true;
-            }
             for (DisplayObject otherObject : otherObjects) {
                 newCoordinates = otherObject.coordinates.scale(scale).flip().add(coordinates);
-                if (otherObject.contains(newCoordinates, scale, mouseEvent)) {
-                    if (!Mouse.pressed)
-                        if (hoveredObject != otherObject) {
-                            if (hoveredObject != null)
-                                hoveredObject.unhover(coordinates, scale, mouseEvent);
-                            hoveredObject = otherObject;
-                            otherObject.hover(newCoordinates, scale, mouseEvent);
-                        }
+                if (additionalContains(coordinates, scale, mouseEvent, newCoordinates, otherObject))
                     return true;
-                }
             }
         } else {
             Coordinates newCoordinates = displayedObject.coordinates.scale(scale).flip().add(coordinates);
-            if (displayedObject.contains(newCoordinates, scale, mouseEvent)) {
-                if (!Mouse.pressed)
-                    if (hoveredObject != displayedObject) {
-                        if (hoveredObject != null)
-                            hoveredObject.unhover(coordinates, scale, mouseEvent);
-                        hoveredObject = displayedObject;
-                        hoveredObject.hover(newCoordinates, scale, mouseEvent);
-                    }
+            if (additionalContains(coordinates, scale, mouseEvent, newCoordinates, displayedObject))
                 return true;
-            }
         }
         if (hoveredObject != null)
             hoveredObject.unhover(coordinates, scale, mouseEvent);
         hoveredObject = null;
+        return false;
+    }
+
+    // this method's only purpose is to simplify code a bit - it hovers and unhovers appropriate objects
+    private boolean additionalContains(Coordinates coordinates, Scale scale, MouseEvent mouseEvent, Coordinates newCoordinates, DisplayObject otherObject) {
+        if (otherObject.contains(newCoordinates, scale, mouseEvent)) {
+            if (!Mouse.pressed)
+                if (hoveredObject != otherObject) {
+                    if (hoveredObject != null)
+                        hoveredObject.unhover(coordinates, scale, mouseEvent);
+                    hoveredObject = otherObject;
+                    hoveredObject.hover(newCoordinates, scale, mouseEvent);
+                }
+            return true;
+        }
         return false;
     }
 

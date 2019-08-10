@@ -32,7 +32,7 @@ public class FinalLogicBoard extends LogicBoard {
     public Set<Move> legalMoves(Player player, Stack<Move> deconstructedPreviousMove) {
         if (outcome() == empty)
             return allMoves(player);
-        return new HashSet<>();  // shouldn't be reachable, but just in case
+        return new HashSet<>();
     }
 
     @Override

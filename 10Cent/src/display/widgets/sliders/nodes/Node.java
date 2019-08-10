@@ -4,16 +4,15 @@ import display.frame.DisplayObject;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
-import display.images.Animation;
 import display.widgets.sliders.Slider;
 
-import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.nio.file.Paths;
-
-import static display.frame.MainPanel.drawRectangle;
 
 public abstract class Node extends DisplayObject {
+
+    /*
+    Node is part of slider - it can take any shape. Basic behaviour has already been defined.
+     */
 
     private Slider slider;
     public Dimension dimension;

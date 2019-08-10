@@ -1,7 +1,6 @@
 package logic.players.bird;
 
 import display.frame.misc.Dimension;
-import display.images.Animation;
 import display.images.Images;
 import logic.boards.Move;
 import logic.game.GameController;

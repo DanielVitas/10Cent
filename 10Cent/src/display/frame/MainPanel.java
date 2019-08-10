@@ -3,7 +3,6 @@ package display.frame;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
-import display.widgets.buttons.Button;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,15 +15,19 @@ import java.util.List;
 public class MainPanel extends JPanel  implements MouseListener, MouseMotionListener, KeyListener {
 
     /*
-    Displayed on MainFrame.
+    Displayed on MainFrame. It takes care of basic display functionality.
      */
 
+    // stores all currently displayed objects
     private List<DisplayComponent> displayComponents = new ArrayList<>();
+
+    // MainPanel will NOT set selectedInputComponent automatically
     public static InputComponent selectedInputComponent;
 
     public MainPanel(Dimension preferredSize) {
         setPreferredSize(preferredSize.getAwtDimension());
 
+        // this is actually default background color
         setBackground(Color.decode("#EEEEEE"));
 
         addMouseListener(this);
@@ -33,6 +36,7 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
         setFocusable(true);
     }
 
+    // adds DisplayComponent to displayComponents
     public void addDisplayComponent(DisplayComponent displayComponent) {
         if (displayComponents.contains(displayComponent))
             return;
@@ -43,6 +47,11 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
     public void removeDisplayComponent(DisplayComponent displayComponent) {
         displayComponents.remove(displayComponent);
     }
+
+    /*
+    The following 3 functions are by functionality identical to their respective built in functions - their job is to
+    convert objects (coordinates, dimension) used in this program to ones required by builtin functions.
+     */
 
     public static void drawLine(Coordinates startCoordinates, Coordinates endCoordinates, Graphics g) {
         g.drawLine(startCoordinates.getIntegerX(), startCoordinates.getIntegerY(),
@@ -60,6 +69,7 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
                 dimension.getIntegerWidth(), dimension.getIntegerHeight());
     }
 
+    // paints DisplayComponents stored in displayedComponents
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -67,9 +77,14 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
             for (DisplayComponent displayComponent : displayComponents)
                 displayComponent.paint(displayComponent.getCoordinates().scale(MainFrame.getScale()), MainFrame.getScale(), g);
         } catch (ConcurrentModificationException e) {
-            e.printStackTrace();  // zgodi se redko in tisti frame, ki zaradi tega ne prikaze je nepomemben
+            e.printStackTrace();  // occasionally a single frame is lost due to this - it was deemed irrelevant
         }
     }
+
+    /*
+    Following few functions implement MouseListener. Their functionality is evident and will not be specifically
+    explained.
+     */
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
@@ -145,6 +160,10 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
         Mouse.hovered = null;
     }
 
+    /*
+    Following three functions implement KeyListener - functionality evident.
+     */
+
     @Override
     public void keyTyped(KeyEvent keyEvent) {
         if (selectedInputComponent != null)
@@ -162,8 +181,7 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
             selectedInputComponent.releaseKey(keyEvent);
     }
 
-
-
+    // returns new list - reversed list given in argument
     private static<T> List<T> reverse(List<T> list) {
         List<T> reverseList = new ArrayList<>(list);
         Collections.reverse(reverseList);

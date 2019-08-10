@@ -2,18 +2,20 @@ package logic.game;
 
 import logic.boards.LogicBoard;
 import logic.boards.Move;
-import logic.boards.exceptions.InvalidMoveException;
 import logic.intelligence.Human;
 import logic.players.Player;
-//import sun.rmi.runtime.Log;
 
 import java.util.Set;
 import java.util.Stack;
 
-import static display.frame.MainFrame.targetedFramerate;
+import static display.frame.MainFrame.targetedFrameRate;
 import static logic.boards.Board.empty;
 
 public abstract class StandardGameController extends GameController {
+
+    /*
+    Implementation of GameController. It's suited for tic-tac-toe and ultimate tic-tac-toe.
+     */
 
     public StandardGameController(Player[] players) {
         super(players);
@@ -44,11 +46,7 @@ public abstract class StandardGameController extends GameController {
             if (currentMove != null) {
                 awaitingPlayer = false;
 
-                try {
-                    board.play(currentMove);
-                } catch (InvalidMoveException e) {
-                    e.printStackTrace();
-                }
+                board.play(currentMove);
 
                 previousMoves.push(currentMove);
                 currentMove = null;
@@ -63,7 +61,7 @@ public abstract class StandardGameController extends GameController {
             }
 
             try {
-                Thread.sleep(1000 / targetedFramerate);
+                Thread.sleep(1000 / targetedFrameRate);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

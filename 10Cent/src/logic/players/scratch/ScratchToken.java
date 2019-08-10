@@ -1,9 +1,7 @@
 package logic.players.scratch;
 
 import display.frame.misc.Dimension;
-import display.images.Animation;
 import display.images.Images;
-import display.screens.Controller;
 import logic.boards.Move;
 import logic.game.GameController;
 import logic.players.Player;

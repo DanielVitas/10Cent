@@ -9,6 +9,10 @@ import java.awt.*;
 
 public class Label extends DisplayObject {
 
+    /*
+    Labels are the most basic methods of displaying text - used only for single lines.
+     */
+
     public final static String DEFAULT_FONT_STYLE = Font.SANS_SERIF;
 
     public String text;

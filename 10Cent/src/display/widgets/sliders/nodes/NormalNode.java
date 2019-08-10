@@ -14,6 +14,10 @@ import static display.frame.MainPanel.drawRectangle;
 
 public class NormalNode extends Node {
 
+    /*
+    Shaped like
+     */
+
     private String directoryPath = Paths.get(Images.RESOURCES_PATH, "images", "sliders", "nodes", "normal").toString();
 
     public NormalNode(Slider slider, Dimension dimension) {

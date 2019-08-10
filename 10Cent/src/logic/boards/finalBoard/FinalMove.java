@@ -3,8 +3,6 @@ package logic.boards.finalBoard;
 import logic.boards.Move;
 import logic.players.Player;
 
-import static logic.boards.Board.empty;
-
 public class FinalMove extends Move {
 
     public Player player;

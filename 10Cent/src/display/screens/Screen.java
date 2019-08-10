@@ -7,11 +7,16 @@ import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.widgets.buttons.NormalButton;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Screen {
+
+    /*
+    Game is effectively divided into different screens. Only one screen can be active at the time. Screens populate and
+    depopulate MainPanel's displayComponents. Screens have almost identical structure due to laziness. Originally they
+    were intended to have various images and interesting visual effects.
+     */
 
     protected boolean active = false;
     protected List<DisplayComponent> displayComponents = new ArrayList<>();
@@ -40,6 +45,7 @@ public abstract class Screen {
         panel.removeDisplayComponent(displayComponent);
     }
 
+    // back button should almost always be the same
     protected void addDefaultBackButton(MainFrame mainFrame) {
         NormalButton backButton = new NormalButton("Back", 4, new Dimension(20, 8)) {
             @Override

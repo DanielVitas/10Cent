@@ -34,7 +34,7 @@ public class FallingAction extends Screen {
                 "feeling there is more to this story.";
 
         TextLabel textLabel = new TextLabel(text, font, Color.BLACK, new display.frame.misc.Dimension(80, 8), Align.LEFT);
-        textLabel.coordinates = new Coordinates(10, 22);
+        textLabel.coordinates = new Coordinates(10, 25);
         addDisplayComponent(textLabel, mainFrame.panel);
 
         NormalButton continueButton = new NormalButton("Continue", 5, new Dimension(40,8)) {

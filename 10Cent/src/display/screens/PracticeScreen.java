@@ -25,6 +25,10 @@ import java.util.List;
 
 public class PracticeScreen extends Screen {
 
+    /*
+    PracticeScreen is used to begin custom games.
+     */
+
     private static Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.PLAIN, 3);
 
     private NormalDropdownMenu gameModeMenu;
@@ -41,6 +45,7 @@ public class PracticeScreen extends Screen {
     private DropdownMenu[] dropdownMenus;
 
     public PracticeScreen(MainFrame mainFrame) {
+        // creates various dropdown menus - this is necessary due to them having somewhat complicated structure
         String[] games = new String[]{Games.TIC_TAC_TOE, Games.SUPER_TIC_TAC_TOE, Games.ULTIMATE_TIC_TAC_TOE};
 
         gameModeMenu = new NormalDropdownMenu(games, 3, new Dimension(40,8)) {

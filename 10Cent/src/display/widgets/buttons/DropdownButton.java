@@ -18,6 +18,10 @@ import static display.frame.MainPanel.drawRectangle;
 
 public abstract class DropdownButton extends Button {
 
+    /*
+    Used to select one of multiple text options - it belongs to some dropdown menu, from witch it should be created.
+     */
+
     public Label label;
     private DropdownMenu dropdownMenu;
 
@@ -53,11 +57,7 @@ public abstract class DropdownButton extends Button {
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         super.paint(coordinates, scale, g);
 
-        Graphics2D g2 = (Graphics2D) g;
-        g.setColor(Color.BLACK);
-        g2.setStroke(new BasicStroke((float) (0.1 * scale.average())));
-
-        drawRectangle(coordinates, dimension.scale(scale), g);
+        drawBoarder(0.1, coordinates, dimension, scale, g);
     }
 
 }

@@ -7,11 +7,9 @@ import display.frame.misc.Scale;
 import logic.boards.Board;
 import logic.boards.LogicBoard;
 import logic.boards.Move;
-import logic.boards.exceptions.InvalidMoveException;
 import logic.boards.finalBoard.FinalBoard;
 import logic.game.GameController;
 import logic.players.Token;
-import logic.players.undecided.UndecidedToken;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -21,7 +19,7 @@ import static display.frame.MainPanel.drawLine;
 public class TwoDimensionalBoard extends Board {
 
     /*
-    Squared tic-tac-toe board.
+    Squared tic-tac-toe board - it contains smaller boards.
      */
 
     private Board[][] boards;
@@ -43,7 +41,6 @@ public class TwoDimensionalBoard extends Board {
 
         boards = new Board[size][size];
 
-        // room for improvement
         logicBoard = new TwoDimensionalLogicBoard(size) {
             @Override
             public LogicBoard installLogicBoard(int i, int j) {
@@ -89,7 +86,7 @@ public class TwoDimensionalBoard extends Board {
     }
 
     @Override
-    public boolean play(Move move) throws InvalidMoveException {
+    public boolean play(Move move) {
         if (!super.play(move))
             return false;
 

@@ -5,6 +5,10 @@ import display.widgets.label.Align;
 
 public class NumberFieldInput extends InputField {
 
+    /*
+    Used to input numbers.
+     */
+
     public NumberFieldInput(int maxCharacters, String defaultText, Align align, Dimension dimension) {
         super(maxCharacters, defaultText, align, dimension);
     }

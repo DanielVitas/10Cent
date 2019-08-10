@@ -2,6 +2,10 @@ package display.frame.misc;
 
 public class Scale {
 
+    /*
+    Scale contains horizontal scale, vertical scale and some basic operations.
+     */
+
     public double horizontal, vertical;
     public static Scale noScale = new Scale(1,1);
 
