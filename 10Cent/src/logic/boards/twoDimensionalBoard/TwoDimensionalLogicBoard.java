@@ -24,6 +24,10 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
                 logicBoards[i][j] = installLogicBoard(i, j);
     }
 
+    public LogicBoard[][] getLogicBoards() {
+        return logicBoards;
+    }
+
     public LogicBoard installLogicBoard(int i, int j) {
         return new FinalLogicBoard();
     }
