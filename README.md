@@ -12,4 +12,4 @@ Projektna naloga pri predmetu Programiranje 2.
 - [x] campaign
 - [x] practice
 --------------------------
-- [ ] shranjevanje progressa
+- [x] shranjevanje progressa
