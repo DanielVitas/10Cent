@@ -2,7 +2,6 @@ package logic.game;
 
 import logic.boards.LogicBoard;
 import logic.boards.Move;
-import logic.boards.finalBoard.FinalLogicBoard;
 import logic.boards.twoDimensionalBoard.TwoDimensionalLogicBoard;
 import logic.intelligence.Human;
 import logic.players.Player;
@@ -20,11 +19,14 @@ public abstract class StandardGameController extends GameController {
     Implementation of GameController. It's suited for tic-tac-toe and ultimate tic-tac-toe.
      */
 
+    private static double weight = 5.; // value greater than 0, determines ratio - greater the weight, lesser the ratio
+
     public StandardGameController(Player[] players) {
         super(players);
     }
 
 
+    // gets set of legal moves depending on previous move and current logic board
     public static Set<Move> legalMoves(LogicBoard logicBoard, Move previousMove) {
         if (previousMove == null)
             return logicBoard.allMoves(empty);
@@ -33,8 +35,9 @@ public abstract class StandardGameController extends GameController {
         return logicBoard.legalMoves(empty, deconstructedPreviousMove);
     }
 
+    // it's more convenient to call above function with stack of previous moves
     public static Set<Move> legalMoves(LogicBoard logicBoard, Stack<Move> previousMoves) {
-        if(previousMoves.empty())
+        if (previousMoves.empty())
             return legalMoves(logicBoard, (Move) null);
         else
             return legalMoves(logicBoard, previousMoves.peek());
@@ -54,9 +57,15 @@ public abstract class StandardGameController extends GameController {
                 previousMoves.push(currentMove);
                 currentMove = null;
 
-                System.out.println(evaluate(board.logicBoard, getCurrentPlayer()));
-
                 getCurrentPlayer().intelligence.close();
+
+                // games without human would play to fast for one to follow them
+                if (!humanPlaying())
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
                 if (board.outcome() != empty)
                     break;
@@ -75,12 +84,8 @@ public abstract class StandardGameController extends GameController {
         if (stop)
             return;
 
-        boolean hasHuman = false;
-        for (Player player : players)
-            if (player.intelligence instanceof Human)
-                hasHuman = true;
-
-        if (hasHuman)
+        // waits a second, so human can see outcome of the board
+        if (humanPlaying())
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -89,6 +94,13 @@ public abstract class StandardGameController extends GameController {
 
         if (!stop)
             onWin(board.outcome());
+    }
+
+    private boolean humanPlaying() {
+        for (Player player : players)
+            if (player.intelligence instanceof Human)
+                return true;
+        return false;
     }
 
     @Override
@@ -105,12 +117,8 @@ public abstract class StandardGameController extends GameController {
         if (logicBoard.outcome() != empty)
             return Double.NEGATIVE_INFINITY;
 
-        if (logicBoard instanceof FinalLogicBoard) {
-            return 0;
-        } else if (logicBoard instanceof TwoDimensionalLogicBoard) {
-            double value = evaluateWinningLines(((TwoDimensionalLogicBoard) logicBoard).getLogicBoards(), player);
-            return value;
-        }
+        if (logicBoard instanceof TwoDimensionalLogicBoard)
+            return evaluateWinningLines(((TwoDimensionalLogicBoard) logicBoard).getLogicBoards(), player);
 
         return 0;
     }
@@ -139,7 +147,7 @@ public abstract class StandardGameController extends GameController {
                     break;
             }
             if (countOpponent == 0 || countPlayer == 0) {
-                value += additional;
+                value += additional; // if line cannot be won by either player, it's value isn't added
             }
         }
 
@@ -205,7 +213,7 @@ public abstract class StandardGameController extends GameController {
         else if (value == Double.NEGATIVE_INFINITY)
             return -1;
         else
-            return 0.5 * value / (1 + Math.abs(value));
+            return value / (weight + Math.abs(value));
     }
 
 }

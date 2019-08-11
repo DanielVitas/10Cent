@@ -2,6 +2,7 @@ package display.frame;
 
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
+import progress.Progress;
 import settings.Settings;
 
 import javax.swing.*;
@@ -39,17 +40,11 @@ public class MainFrame extends JFrame {
         repaintThread = new RepaintThread(panel);
         repaintThread.start();
 
-        mainFrame.setUndecorated(!Settings.windowedMode);
-        if(Settings.windowedMode){
-            mainFrame.setExtendedState(JFrame.NORMAL);
-            mainFrame.setSize(Settings.windowSizeX,Settings.windowSizeY);
-            mainFrame.setLocation(Settings.windowLocationX,Settings.windowLocationY);
-        } else {
-            mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        }
+        setWindow();
     }
 
     private void onClose() {
+        Progress.save();
         saveSizeAndLoc();
         Settings.save();
     }
@@ -62,23 +57,25 @@ public class MainFrame extends JFrame {
     // takes windowedMode setting from Settings and switches to Fullscreen if false and to Windowed if true
     public synchronized static void switchToWindowed(){
         mainFrame.dispose();
-        mainFrame.setUndecorated(!Settings.windowedMode);
-        if(Settings.windowedMode){
-            mainFrame.setExtendedState(JFrame.NORMAL);
-            mainFrame.setSize(Settings.windowSizeX,Settings.windowSizeY);
-            mainFrame.setLocation(Settings.windowLocationX,Settings.windowLocationY);
-        } else {
-            mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        }
+        setWindow();
         mainFrame.setVisible(true);
     }
 
+    private static void setWindow() {
+        mainFrame.setUndecorated(!Settings.windowedMode);
+        if (Settings.windowedMode) {
+            mainFrame.setExtendedState(JFrame.NORMAL);
+            mainFrame.setSize(Settings.windowSize[0], Settings.windowSize[1]);
+            mainFrame.setLocation(Settings.windowLocation[0], Settings.windowLocation[1]);
+        } else {
+            mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        }
+    }
+
     public static void saveSizeAndLoc(){
-        if(Settings.windowedMode){
-            Settings.windowSizeX = mainFrame.getSize().width;
-            Settings.windowSizeY = mainFrame.getSize().height;
-            Settings.windowLocationX = mainFrame.getLocation().x;
-            Settings.windowLocationY = mainFrame.getLocation().y;
+        if (Settings.windowedMode) {
+            Settings.windowSize = new int[]{mainFrame.getSize().width, mainFrame.getSize().height};
+            Settings.windowLocation = new int[]{mainFrame.getLocation().x, mainFrame.getLocation().y};
         }
     }
 }

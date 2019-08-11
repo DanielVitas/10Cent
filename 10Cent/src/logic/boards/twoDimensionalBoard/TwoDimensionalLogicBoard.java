@@ -14,6 +14,10 @@ import static logic.boards.Board.undecided;
 
 public class TwoDimensionalLogicBoard extends LogicBoard {
 
+    /*
+    This board is represented by double array of logic boards.
+     */
+
     private LogicBoard[][] logicBoards;
     private Player outcome = empty;
 
@@ -28,6 +32,7 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
         return logicBoards;
     }
 
+    // this should be overridden for more advanced boards
     public LogicBoard installLogicBoard(int i, int j) {
         return new FinalLogicBoard();
     }
@@ -40,6 +45,7 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
         int size = logicBoards.length;
 
         Player o;
+
         // checks all columns
         for (int i = 0; i < size; i++) {
             o = logicBoards[i][0].outcome();
@@ -104,21 +110,30 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
     public Set<Move> legalMoves(Player player, Stack<Move> deconstructedPreviousMove) {
         if (outcome != empty)
             return new HashSet<>();
+
         if (deconstructedPreviousMove.empty())
             return allMoves(player);
+
+        // determines on witch board the next move should take place
         Move previousMove = deconstructedPreviousMove.pop();  // can't be empty
         int i = ((TwoDimensionalMove) previousMove).i;
         int j = ((TwoDimensionalMove) previousMove).j;
         LogicBoard logicBoard = logicBoards[i][j];
+
+        // if that board's outcome is already decided, player can move anywhere
         if (logicBoard.outcome() != empty)
             return allMoves(player);
+
+        // any (valid) move on determined sub-board is legal
         Set<Move> moves = new HashSet<>();
-        Set<Move> subMoves = logicBoard.legalMoves(player, new Stack<>());
+        Set<Move> subMoves = logicBoard.allMoves(player);
+
         for (Move subMove : subMoves) {
             Move move = new TwoDimensionalMove(i, j);
             move.setNextMove(subMove);
             moves.add(move);
         }
+
         return moves;
     }
 
@@ -126,10 +141,12 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
     public Set<Move> allMoves(Player player) {
         if (outcome != empty)
             return new HashSet<>();
+
         Set<Move> moves = new HashSet<>();
+
+        // populates moves with all moves from each sub-board
         for (int i = 0; i < logicBoards.length; i++)
-            for (int j = 0; j < logicBoards[i].length; j++)
-                if (logicBoards[i][j].outcome() == empty) {
+            for (int j = 0; j < logicBoards[i].length; j++) {
                     Set<Move> subMoves = logicBoards[i][j].allMoves(player);
                     for (Move subMove : subMoves) {
                         Move move = new TwoDimensionalMove(i, j);
@@ -137,6 +154,7 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
                         moves.add(move);
                     }
                 }
+
         return moves;
     }
 

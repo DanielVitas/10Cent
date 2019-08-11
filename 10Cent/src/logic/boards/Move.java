@@ -8,7 +8,8 @@ import java.util.Stack;
 public abstract class Move {
 
     /*
-    Each Board comes with respective Move.
+    Each Board comes with respective Move. Move is linked to the move on the respective sub-board. This way moves form
+    a chain.
      */
 
     private Move nextMove;

@@ -20,9 +20,10 @@ public abstract class LogicBoard {
 
     public abstract void play(Move move);
 
-    // player is necessary as move is always bound to one
+    // obtains set of legal moves depending on previous move, player is necessary as move is always bound to one
     public abstract Set<Move> legalMoves(Player player, Stack<Move> deconstructedPreviousMove);
 
+    // returns set of all possible moves (with no regard to previous move)
     public abstract Set<Move> allMoves(Player player);
 
     public abstract LogicBoard clone();

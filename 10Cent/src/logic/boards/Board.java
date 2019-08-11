@@ -12,7 +12,9 @@ import logic.players.undecided.Undecided;
 public abstract class Board extends DisplayObject {
 
     /*
-    Board on which the game is played. Implementation of sub-boards is left to the final classes.
+    Board on which the game is played. Implementation of sub-boards is left to the final classes. Board serves visual
+    purposes and is connected with LogicBoard, that serves game purposes. Other functions will mostly interact with
+    Board, LogicBoard is used only for some calculations in Intelligence.
      */
 
     public final static Player empty = new Empty();
@@ -26,7 +28,7 @@ public abstract class Board extends DisplayObject {
         this.dimension = dimension;
     }
 
-    // returns true iff move is legal - change to void?
+    // returns true iff move is legal
     public boolean play(Move move) {
         assert validMove(move);
 

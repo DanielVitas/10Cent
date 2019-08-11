@@ -39,6 +39,7 @@ public class TwoDimensionalBoard extends Board {
         slotDimension = slotDimension();
         edgeDimension = edgeDimension();
 
+        // constructor creates all the necessary boards and assigns moves to them
         boards = new Board[size][size];
 
         logicBoard = new TwoDimensionalLogicBoard(size) {
@@ -62,6 +63,7 @@ public class TwoDimensionalBoard extends Board {
             }
     }
 
+    // these functions exist to simplify later styling and clean functional parts of code
     private Coordinates slotCoordinates(int i, int j) {
         double x = (slotDimension.width + edgeDimension.width) * i + edgeDimension.width;
         double y = (slotDimension.height + edgeDimension.height) * j + edgeDimension.height;

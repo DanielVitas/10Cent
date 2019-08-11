@@ -8,7 +8,6 @@ import display.widgets.label.Align;
 import display.widgets.label.Label;
 import display.widgets.buttons.NormalButton;
 import display.widgets.sliders.NormalSlider;
-import settings.DefaultSettings;
 import settings.Settings;
 
 import java.awt.*;
@@ -92,7 +91,7 @@ public class SettingsScreen extends Screen{
         NormalButton resetButton = new NormalButton("Defaults", 5, new Dimension(30, 8)) {
             @Override
             public void clicked() {
-                DefaultSettings.setDefaultSettings();
+                Settings.defaults();
                 Settings.save();
                 Controller.back();
             }

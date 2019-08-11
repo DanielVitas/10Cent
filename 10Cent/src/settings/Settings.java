@@ -15,25 +15,23 @@ public final class Settings {
     public static double soundVolume;
     public static double musicVolume;
     public static boolean windowedMode;
-    public static int windowSizeX;
-    public static int windowSizeY;
-    public static int windowLocationX;
-    public static int windowLocationY;
+    public static int[] windowSize;
+    public static int[] windowLocation;
 
-    // settingCount is the number of settings
-    private static final int settingCount = 8;
-
+    public static void defaults() {
+        globalVolume = 50;
+        soundVolume = 50;
+        musicVolume = 50;
+        windowedMode = true;
+        windowSize = new int[]{800, 800};
+        windowLocation = new int[]{20, 20};
+    }
 
     // initializes settings, this is only called once at the start
     public static void initialize() {
-        Settings.read();
-        AudioPlayer.updateSound();
-    }
-
-    // reads and applies settings
-    public static void setup() {
+        defaults();
         read();
-        apply();
+        AudioPlayer.updateSound();
     }
 
     public static void save() {
@@ -42,76 +40,50 @@ public final class Settings {
     }
 
     private static void read() {
-        int counter = 0;
         try{
             BufferedReader in = new BufferedReader(new FileReader(SETTINGS_FILE));
 
             while (in.ready()) {
                 String line = in.readLine().trim().replaceAll("\\s", "");
 
-                if (line.equals("")) continue;
-                if (line.charAt(0) == '#') continue;
+                if (line.equals(""))
+                    continue;
+                if (line.charAt(0) == '#')
+                    continue;
 
                 String[] splitLine = line.split("=");
 
-                if (splitLine.length != 2) {
-                    System.out.println("Corrupted file, writing default settings.");
-                    DefaultSettings.setDefaultSettings();
-                    break;
-                }
+                if (splitLine.length != 2)
+                    continue;
 
                 switch (splitLine[0]){
-                    case("globalVolume"):
+                    case ("globalVolume"):
                         globalVolume = Double.valueOf(splitLine[1]);
-                        counter++;
                         break;
-
-                    case("soundVolume"):
+                    case ("soundVolume"):
                         soundVolume = Double.valueOf(splitLine[1]);
-                        counter++;
                         break;
-
-                    case("musicVolume"):
+                    case ("musicVolume"):
                         musicVolume = Double.valueOf(splitLine[1]);
-                        counter++;
                         break;
-
-                    case("windowedMode"):
+                    case ("windowedMode"):
                         windowedMode = Boolean.valueOf(splitLine[1]);
-                        counter++;
                         break;
-
-                    case("windowSizeX"):
-                        windowSizeX = Integer.valueOf(splitLine[1]);
-                        counter++;
+                    case ("windowSize"):
+                        String[] windowSizeXY = splitLine[1].split(",");
+                        windowSize = new int[]{Integer.valueOf(windowSizeXY[0]), Integer.valueOf(windowSizeXY[1])};
                         break;
-
-                    case("windowSizeY"):
-                        windowSizeY = Integer.valueOf(splitLine[1]);
-                        counter++;
+                    case ("windowLocation"):
+                        String[] windowLocationXY = splitLine[1].split(",");
+                        windowLocation = new int[]{Integer.valueOf(windowLocationXY[0]), Integer.valueOf(windowLocationXY[1])};
                         break;
-
-                    case("windowLocationX"):
-                        windowLocationX = Integer.valueOf(splitLine[1]);
-                        counter++;
-                        break;
-
-                    case("windowLocationY"):
-                        windowLocationY = Integer.valueOf(splitLine[1]);
-                        counter++;
-                        break;
-
                 }
 
             }
+
             in.close();
-            if(counter!=settingCount){
-                System.out.println("Settings file was corrupted, writing new settings.");
-                DefaultSettings.setDefaultSettings();
-            }
         } catch (Exception e) {
-            System.out.println("Settings file does not exist or is corrupted. Writing default settings.");
-            DefaultSettings.setDefaultSettings();
+            e.printStackTrace(); // exceptions can arise from user messing with settings file
         }
     }
 
@@ -120,25 +92,23 @@ public final class Settings {
         AudioPlayer.updateSound();
     }
 
-    protected static void write() {
-        try{
+    private static void write() {
+        try {
             PrintWriter out = new PrintWriter(new FileWriter(SETTINGS_FILE));
-            DefaultSettings.writeDefaultHead(out);
-            out.println("# Audio");
+
+            out.println("# audio");
             out.println("globalVolume = " + globalVolume);
             out.println("soundVolume = " + soundVolume);
             out.println("musicVolume = " + musicVolume);
             out.println();
-            out.println("# Screen");
+
+            out.println("# screen");
             out.println("windowedMode = " + windowedMode);
-            out.println("windowSizeX = " + windowSizeX);
-            out.println("windowSizeY = " + windowSizeY);
-            out.println("windowLocationX = " + windowLocationX);
-            out.println("windowLocationY = " + windowLocationY);
+            out.println(String.format("windowSize = %d, %d", windowSize[0], windowSize[1]));
+            out.println(String.format("windowLocation = %d, %d", windowLocation[0], windowLocation[1]));
             out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

@@ -30,13 +30,14 @@ public class FinalLogicBoard extends LogicBoard {
 
     @Override
     public Set<Move> legalMoves(Player player, Stack<Move> deconstructedPreviousMove) {
-        if (outcome() == empty)
-            return allMoves(player);
-        return new HashSet<>();
+        return allMoves(player);
     }
 
     @Override
     public Set<Move> allMoves(Player player) {
+        if (outcome() != empty)
+            return new HashSet<>();
+
         Set<Move> moves = new HashSet<>();
         moves.add(new FinalMove(player));
         return moves;
