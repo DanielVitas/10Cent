@@ -13,10 +13,12 @@ import display.widgets.dropdownMenu.PlayerDropdownMenu;
 import display.widgets.label.Label;
 import display.widgets.label.TextLabel;
 import fonts.CustomFonts;
+import logic.boards.LogicBoard;
 import logic.game.GameController;
 import logic.game.StandardGameController;
 import logic.intelligence.Human;
 import logic.intelligence.Intelligence;
+import logic.intelligence.MiniMax;
 import logic.intelligence.RandomAI;
 import logic.players.Player;
 import logic.players.bird.Bird;
@@ -167,7 +169,7 @@ public class CampaignScreen extends Screen {
                 String game = null;
                 Screen nextScreen = null;
                 Player protagonist = Player.parsePlayer(Progress.selectedPlayer, new Human());
-                Intelligence intelligence = new RandomAI();
+                Intelligence intelligence;
                 Player enemy;
                 Player[] players;
                 GameController gameController;
@@ -178,6 +180,12 @@ public class CampaignScreen extends Screen {
                 switch (stage) {
                     case Stage.STAGE1:
                         game = Games.TIC_TAC_TOE;
+                        intelligence = new MiniMax(2) {
+                            @Override
+                            protected double evaluate(LogicBoard logicBoard, Player player) {
+                                return StandardGameController.basicEvaluate(logicBoard, player);
+                            }
+                        };
                         if (protagonist instanceof Nought)
                             enemy = new Heart(intelligence);
                         else
@@ -212,6 +220,7 @@ public class CampaignScreen extends Screen {
                         break;
                     case Stage.STAGE2:
                         game = Games.SUPER_TIC_TAC_TOE;
+                        intelligence = new MiniMax(9001); // he's just that good ;)
                         if (protagonist instanceof Bird)
                             enemy = new Heart(intelligence);
                         else
@@ -246,6 +255,7 @@ public class CampaignScreen extends Screen {
                         break;
                     case Stage.STAGE3:
                         game = Games.ULTIMATE_TIC_TAC_TOE;
+                        intelligence = new MiniMax(2);
                         if (protagonist instanceof Crown)
                             enemy = new Heart(intelligence);
                         else
@@ -280,6 +290,7 @@ public class CampaignScreen extends Screen {
                         break;
                     case Stage.STAGE4:
                         game = Games.ULTIMATE_TIC_TAC_TOE;
+                        intelligence = new MiniMax(6);
                         if (protagonist instanceof Scratch)
                             enemy = new Heart(intelligence);
                         else

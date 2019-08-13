@@ -25,6 +25,7 @@ public abstract class Screen {
     // loads all necessary components
     public abstract void load(MainFrame mainFrame);
 
+    // unloads upon switching to another screen
     public void unload(MainFrame mainFrame) {
         for (DisplayComponent displayComponent : displayComponents)
             mainFrame.panel.removeDisplayComponent(displayComponent);

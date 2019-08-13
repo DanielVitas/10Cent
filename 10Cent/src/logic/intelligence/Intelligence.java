@@ -1,6 +1,7 @@
 package logic.intelligence;
 
 import logic.game.GameController;
+import logic.players.Player;
 
 public abstract class Intelligence {
 
@@ -9,19 +10,22 @@ public abstract class Intelligence {
      */
 
     public GameController  gameController;
+    protected Player player;
 
-    public Intelligence() {
-
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
-    // sets Controller's current move
+    // sets Controller's current move (does NOT play it directly!)
     public abstract void play();
 
+    // called when the player turn ends
     public abstract void close();
 
+    // called from GameController's terminate - is called when switching screens
     public abstract void terminate();
 
-    public static Intelligence parseIntelligence(String string, Integer... depths) {
+    public static Intelligence parseIntelligence(String string, Integer... args) {
         Intelligence intelligence = null;
         switch (string) {
             case Human.NAME:
@@ -31,7 +35,7 @@ public abstract class Intelligence {
                 intelligence = new RandomAI();
                 break;
             case MiniMax.NAME:
-                intelligence = new MiniMax(depths[0]);
+                intelligence = new MiniMax(args[0]);
                 break;
         }
         return intelligence;

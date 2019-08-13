@@ -14,6 +14,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static display.screens.Games.allGames;
+
 public final class Progress {
 
     /*
@@ -50,7 +52,8 @@ public final class Progress {
     }
 
     public static void addGame(String game) {
-        gamesPlayed.add(game);
+        if (!gamesPlayed.contains(game) && contained(game, allGames))
+            gamesPlayed.add(game);
     }
 
     public static Player[] getPlayers() {
@@ -72,11 +75,13 @@ public final class Progress {
     }
 
     public static void addPlayer(String playerName) {
-        players.add(playerName);
+        if (!players.contains(playerName) && contained(playerName, allPlayers))
+            players.add(playerName);
     }
 
     public static void addOldPlayer(String playerName) {
-        oldPlayers.add(playerName);
+        if (!oldPlayers.contains(playerName) && contained(playerName, allPlayers))
+            oldPlayers.add(playerName);
     }
 
     public static void defaults() {
@@ -104,7 +109,7 @@ public final class Progress {
             BufferedReader in = new BufferedReader(new FileReader(PROGRESS_FILE));
 
             while (in.ready()) {
-                String line = in.readLine().trim().replaceAll("\\s", "");
+                String line = in.readLine(); // we don't remove spaces, because game names are space sensitive
 
                 if (line.equals(""))
                     continue;
@@ -116,36 +121,35 @@ public final class Progress {
                 if (splitLine.length != 2)
                     continue;
 
-                switch (splitLine[0]){
+                switch (splitLine[0].trim()){
                     case ("campaignDialog"):
-                        campaignDialog = Boolean.parseBoolean(splitLine[1]);
+                        campaignDialog = Boolean.parseBoolean(splitLine[1].trim());
                         break;
                     case ("easy"):
-                        easy = Boolean.parseBoolean(splitLine[1]);
+                        easy = Boolean.parseBoolean(splitLine[1].trim());
                         break;
                     case ("newestStage"):
-                        newestStage = Integer.parseInt(splitLine[1]);
+                        newestStage = Integer.parseInt(splitLine[1].trim());
                         break;
                     case ("players"):
                         String[] playerArray = splitLine[1].split(",");
                         for (String player : playerArray)
-                            addPlayer(player);
+                            addPlayer(player.trim());
                         break;
                     case ("oldPlayers"):
                         String[] oldPlayerArray = splitLine[1].split(",");
                         for (String player : oldPlayerArray)
-                            addOldPlayer(player);
+                            addOldPlayer(player.trim());
                         break;
                     case ("selectedPlayer"):
-                        selectedPlayer = splitLine[1];
+                        selectedPlayer = splitLine[1].trim();
                         break;
                     case ("gamesPlayed"):
                         String[] gameArray = splitLine[1].split(",");
                         for (String game : gameArray)
-                            addGame(game);
+                            addGame(game.trim());
                         break;
                 }
-
             }
 
             in.close();
@@ -202,6 +206,13 @@ public final class Progress {
                 out.print(", ");
             out.print(s);
         }
+    }
+
+    public static boolean contained(String item, String[] stringArray) {
+        for (String s : stringArray)
+            if (s.equals(item))
+                return true;
+        return false;
     }
 
 }

@@ -31,16 +31,23 @@ public abstract class GameController extends Thread {
             player.intelligence.gameController = this;
     }
 
-    public Player getPlayerOnTurnCount(int turnCount) {
-        return players[(turnCount+this.turnCount) % players.length];
+    public Move previousMove() {
+        if (!previousMoves.empty())
+            return previousMoves.peek();
+        return null;
     }
 
-    public Player getCurrentPlayer() {
-        return players[turnCount % players.length];
+    public Player getPlayer(int additionalTurns) {
+        return players[(turnCount + additionalTurns) % players.length];
+    }
+
+    public Player currentPlayer() {
+        return getPlayer(0);
     }
 
     public abstract void onWin(Player player);
 
+    // is called when switching from game screen to another
     public void terminate() {
         stop = true;
         if (gameController == this)

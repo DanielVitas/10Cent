@@ -25,4 +25,10 @@ public class NumberFieldInput extends InputField {
         return Character.isDigit(keyChar);
     }
 
+    // only natural numbers are valid
+    @Override
+    public boolean isValid() {
+        return getNumber() > 0 && !isEmpty();
+    }
+
 }

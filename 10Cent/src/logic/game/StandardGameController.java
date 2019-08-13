@@ -19,7 +19,7 @@ public abstract class StandardGameController extends GameController {
     Implementation of GameController. It's suited for tic-tac-toe and ultimate tic-tac-toe.
      */
 
-    private static double weight = 5.; // value greater than 0, determines ratio - greater the weight, lesser the ratio
+    private static double weight = 10.; // value greater than 0, determines ratio - greater the weight, lesser the ratio
 
     public StandardGameController(Player[] players) {
         super(players);
@@ -30,22 +30,15 @@ public abstract class StandardGameController extends GameController {
     public static Set<Move> legalMoves(LogicBoard logicBoard, Move previousMove) {
         if (previousMove == null)
             return logicBoard.allMoves(empty);
+
         Stack<Move> deconstructedPreviousMove = previousMove.deconstruct();
         deconstructedPreviousMove.pop(); // pop's final move
         return logicBoard.legalMoves(empty, deconstructedPreviousMove);
     }
 
-    // it's more convenient to call above function with stack of previous moves
-    public static Set<Move> legalMoves(LogicBoard logicBoard, Stack<Move> previousMoves) {
-        if (previousMoves.empty())
-            return legalMoves(logicBoard, (Move) null);
-        else
-            return legalMoves(logicBoard, previousMoves.peek());
-    }
-
     @Override
     public void run() {
-        getCurrentPlayer().intelligence.play();
+        currentPlayer().intelligence.play();
 
         while (!stop) {
 
@@ -57,12 +50,12 @@ public abstract class StandardGameController extends GameController {
                 previousMoves.push(currentMove);
                 currentMove = null;
 
-                getCurrentPlayer().intelligence.close();
+                currentPlayer().intelligence.close();
 
                 // games without human would play to fast for one to follow them
                 if (!humanPlaying())
                     try {
-                        Thread.sleep(200);
+                        Thread.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -71,7 +64,7 @@ public abstract class StandardGameController extends GameController {
                     break;
 
                 turnCount++;
-                getCurrentPlayer().intelligence.play();
+                currentPlayer().intelligence.play();
             }
 
             try {
@@ -96,6 +89,7 @@ public abstract class StandardGameController extends GameController {
             onWin(board.outcome());
     }
 
+    // checks if there exists a player with human intelligence
     private boolean humanPlaying() {
         for (Player player : players)
             if (player.intelligence instanceof Human)
@@ -110,11 +104,20 @@ public abstract class StandardGameController extends GameController {
         super.terminate();
     }
 
+    public static double basicEvaluate(LogicBoard logicBoard, Player player) {
+        if (logicBoard.outcome() == player)
+            return Double.POSITIVE_INFINITY;
+        else if (logicBoard.outcome() != empty)
+            return Double.NEGATIVE_INFINITY;
+        else
+            return 0;
+    }
+
     // evaluates logicBord regarding player
     public static double evaluate(LogicBoard logicBoard, Player player) {
         if (logicBoard.outcome() == player)
             return Double.POSITIVE_INFINITY;
-        if (logicBoard.outcome() != empty)
+        else if (logicBoard.outcome() != empty)
             return Double.NEGATIVE_INFINITY;
 
         if (logicBoard instanceof TwoDimensionalLogicBoard)

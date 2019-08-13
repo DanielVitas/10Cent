@@ -20,6 +20,8 @@ public abstract class Player {
     public Intelligence intelligence;
 
     public Player(Intelligence intelligence) {
+        if (intelligence != null)
+            intelligence.setPlayer(this);
         this.intelligence = intelligence;
     }
 

@@ -16,6 +16,11 @@ public final class Games {
     public final static String TIC_TAC_TOE = "Tic-tac-toe";
     public final static String SUPER_TIC_TAC_TOE = "Super Tic-tac-toe";
     public final static String ULTIMATE_TIC_TAC_TOE = "Ultimate Tic-tac-toe";
+    public static String[] allGames = new String[]{
+            TIC_TAC_TOE,
+            SUPER_TIC_TAC_TOE,
+            ULTIMATE_TIC_TAC_TOE
+    };
 
 
     public static void ticTacToe(int size, Coordinates coordinates, Dimension dimension, GameController gameController, GameScreen screen, MainFrame mainFrame) {

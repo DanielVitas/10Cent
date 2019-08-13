@@ -19,7 +19,7 @@ public class Human extends Intelligence {
 
     @Override
     public void play() {
-        Set<Move> moves = StandardGameController.legalMoves(gameController.board.logicBoard, gameController.previousMoves);
+        Set<Move> moves = StandardGameController.legalMoves(gameController.board.logicBoard, gameController.previousMove());
         for (Move move : moves)
             tokens.add(gameController.board.getToken(move));
         for (Token token : tokens)

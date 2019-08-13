@@ -78,7 +78,6 @@ public final class Settings {
                         windowLocation = new int[]{Integer.valueOf(windowLocationXY[0]), Integer.valueOf(windowLocationXY[1])};
                         break;
                 }
-
             }
 
             in.close();

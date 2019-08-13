@@ -141,7 +141,8 @@ public class PracticeScreen extends Screen {
         depthInput2.coordinates = new Coordinates(75,46);
     }
 
-    public void closeOther(DropdownMenu menu) {
+    // when another dropdown menu is opened, every other is closed
+    private void closeOther(DropdownMenu menu) {
         for (DropdownMenu dropdownMenu : dropdownMenus)
             if (dropdownMenu != menu)
                 dropdownMenu.backup();
@@ -175,7 +176,7 @@ public class PracticeScreen extends Screen {
             public void clicked() {
                 Intelligence intelligence1;
                 if (showDepthInput1)
-                    if (depthInput1.isEmpty())
+                    if (!depthInput1.isValid())
                         return;
                     else
                         intelligence1 = Intelligence.parseIntelligence(intelligence1Menu.getValue(), depthInput1.getNumber());
@@ -184,7 +185,7 @@ public class PracticeScreen extends Screen {
 
                 Intelligence intelligence2;
                 if (showDepthInput2)
-                    if (depthInput2.isEmpty())
+                    if (!depthInput2.isValid())
                         return;
                     else
                         intelligence2 = Intelligence.parseIntelligence(intelligence2Menu.getValue(), depthInput2.getNumber());

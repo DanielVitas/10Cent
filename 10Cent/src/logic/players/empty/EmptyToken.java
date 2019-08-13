@@ -89,8 +89,8 @@ public class EmptyToken extends Token {
     public void click(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
         // first two conditions are redundant
         if (gameController.awaitingPlayer && waiting) {
-            move.setPlayer(gameController.getCurrentPlayer());
-            gameController.getCurrentPlayer().intelligence.close();
+            move.setPlayer(gameController.currentPlayer());
+            gameController.currentPlayer().intelligence.close();
             gameController.currentMove = move;
         }
     }

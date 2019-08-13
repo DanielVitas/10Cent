@@ -72,6 +72,9 @@ public abstract class InputField extends DisplayObject implements InputComponent
     // not every char should be legal - sometimes you want only numbers, ...
     public abstract boolean isLegal(char keyChar);
 
+    // validates input as whole (example: 0 is not a valid natural number, while 01 or 10 are)
+    public abstract  boolean isValid();
+
     @Override
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         super.paint(coordinates, scale, g);

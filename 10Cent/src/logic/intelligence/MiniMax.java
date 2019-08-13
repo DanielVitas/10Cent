@@ -3,17 +3,17 @@ package logic.intelligence;
 import logic.boards.LogicBoard;
 import logic.boards.Move;
 import logic.game.StandardGameController;
+import logic.players.Player;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import java.util.Set;
 
-public class MiniMax extends Intelligence{
+import static logic.boards.Board.empty;
+
+public class MiniMax extends Intelligence {
+
     /*
-        the AI is currently recursive but we would want it to be iterative
+    Intelligence playing with well known mini-max algorithm. It includes alpha-beta pruning.
      */
-
 
     public final static String NAME = "Minimax";
     private int depth;
@@ -22,66 +22,56 @@ public class MiniMax extends Intelligence{
         this.depth = depth;
     }
 
+    protected double evaluate(LogicBoard logicBoard, Player player) {
+        return StandardGameController.evaluate(logicBoard, player);
+    }
 
     @Override
     public void play() {
-        Move nextMove = getMove(gameController.board.logicBoard.clone(), gameController.previousMoves);
-        nextMove.setPlayer(gameController.getCurrentPlayer());
-        gameController.currentMove = nextMove;
+        Move move = bestMove(gameController.board.logicBoard, gameController.previousMove(), 0,
+                Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY).move;
+        move.setPlayer(gameController.currentPlayer()); // if all moves are losing, player for the move is not set
+        gameController.currentMove = move;
     }
 
-    private Move getMove(LogicBoard logicBoard, Stack<Move> previousMove) {
-        List<Move> moves = new ArrayList<>(StandardGameController.legalMoves(logicBoard, previousMove));
-        Double bestDouble = Double.NEGATIVE_INFINITY;
-        Move bestMove = moves.get(0);
+    private EvaluatedMove bestMove(LogicBoard logicBoard, Move previousMove, int additionalTurn, double alpha, double beta) {
+        Player outcome = logicBoard.outcome();
+        if (additionalTurn == depth || outcome != empty) {
+            EvaluatedMove evaluatedMove = new EvaluatedMove(previousMove, 0);
+            evaluatedMove.rating = evaluate(logicBoard, player);
+            return evaluatedMove;
+        }
 
-        LogicBoard testLogicBoard = logicBoard.clone();
-        bestMove.setPlayer(gameController.getPlayerOnTurnCount(0));
-        testLogicBoard.play(bestMove);
+        Player currentPlayer = gameController.getPlayer(additionalTurn);
+        Set<Move> moves = StandardGameController.legalMoves(logicBoard, previousMove); // cannot be empty
 
-        bestDouble = evaluateMove(depth - 1, testLogicBoard, bestMove, false);
+        EvaluatedMove currentBestMove = new EvaluatedMove(moves.iterator().next(),
+                currentPlayer == player ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY);
 
-
-        for(Move move: moves) {
-            if(move==bestMove)
-                continue;
+        for (Move move : moves) {
             LogicBoard newLogicBoard = logicBoard.clone();
-            move.setPlayer(gameController.getPlayerOnTurnCount(0));
+            move.setPlayer(currentPlayer);
             newLogicBoard.play(move);
-            Double evaluatedMove = evaluateMove(depth - 1, newLogicBoard, move, false);
-            if(evaluatedMove > bestDouble) {
-                bestDouble = evaluatedMove;
-                bestMove = move;
+            double rating = bestMove(newLogicBoard, move, additionalTurn +  1, alpha, beta).rating;
+
+            if (currentPlayer == player) {
+                if (rating > currentBestMove.rating) {
+                    currentBestMove = new EvaluatedMove(move, rating);
+                    alpha = Math.max(alpha, rating);
+                }
+            } else {
+                if (rating < currentBestMove.rating) {
+                    currentBestMove = new EvaluatedMove(move, rating);
+                    beta = Math.min(beta, rating);
+                }
             }
+
+            if (alpha >= beta)
+                break; // future calculations are irrelevant
         }
-        return bestMove;
+        return currentBestMove;
     }
 
-    private double evaluateMove(int depth, LogicBoard logicBoard, Move previousMove, Boolean maximizing) {
-        List<Move> validMoves = new ArrayList<>(StandardGameController.legalMoves(logicBoard, previousMove));
-        List<Double> moveValues = new ArrayList<>();
-
-        if(depth==0 || validMoves.isEmpty()) {
-            moveValues.add(StandardGameController.evaluate(logicBoard, gameController.getCurrentPlayer()));
-        }else {
-            for(Move move : validMoves) {
-                LogicBoard newLogicBoard = logicBoard.clone();
-                move.setPlayer(gameController.getPlayerOnTurnCount(this.depth - depth));
-                newLogicBoard.play(move);
-
-                moveValues.add(evaluateMove(depth - 1, newLogicBoard, move, !maximizing));
-            }
-        }
-/*
-        if(gameController.getCurrentPlayer() == gameController.getPlayerOnTurnCount(this.depth - depth)) {
-            return Collections.max(moveValues);
-        }
-        return Collections.min(moveValues);*/
-        if(maximizing) {
-            return Collections.max(moveValues);
-        }
-        return Collections.min(moveValues);
-    }
 
     @Override
     public void close() {
@@ -92,5 +82,4 @@ public class MiniMax extends Intelligence{
     public void terminate() {
 
     }
-
 }
