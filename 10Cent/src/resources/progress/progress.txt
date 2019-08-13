@@ -1,0 +1,9 @@
+# do NOT temper with this file, unless you know what you are doing
+
+campaignDialog = false
+easy = true
+newestStage = 3
+players = Nought, Bird
+oldPlayers = Cross, Nought, Nought
+selectedPlayer = Cross
+gamesPlayed = Tic-tac-toe, SuperTic-tac-toe
