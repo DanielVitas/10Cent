@@ -15,16 +15,14 @@ import java.awt.*;
 
 import static display.screens.story.Exposition.font;
 import static display.screens.story.Exposition.titleFont;
+import static display.screens.story.Exposition.titleLabel;
 
 public class Denouement extends Screen {
 
     @Override
     public void load(MainFrame mainFrame) {
         String title = "Denouement";
-
-        display.widgets.label.Label titleLabel = new Label(title, titleFont, Color.BLACK, new display.frame.misc.Dimension(80, 8), Align.CENTER);
-        titleLabel.coordinates = new Coordinates(10, 10);
-        addDisplayComponent(titleLabel, mainFrame.panel);
+        addDisplayComponent(titleLabel(title), mainFrame.panel);
 
         String text = "As you win the match, the ceiling starts to crumble. You dash towards the exit and " +
                 "leave terrifying being behind. You barely make it in time - the dark cave is sealed behind " +

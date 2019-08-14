@@ -95,6 +95,7 @@ public final class Progress {
         gamesPlayed = new ArrayList<>();
     }
 
+    // called once at the start of the program
     public static void load() {
         defaults();
         read();

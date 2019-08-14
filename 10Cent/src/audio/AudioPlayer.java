@@ -4,63 +4,60 @@ import display.images.Images;
 import javafx.embed.swing.JFXPanel;
 import settings.Settings;
 
+import javax.sound.sampled.FloatControl;
 import java.nio.file.Paths;
 
 public class AudioPlayer {
+
     /*
     This is a "static" object providing sound and music playing functions.
      */
 
-    public static final String FILEPATH_MUSIC = Paths.get(Images.RESOURCES_PATH,"audio", "songs").toString();
-    public static final String FILEPATH_SOUND = Paths.get(Images.RESOURCES_PATH,"audio", "sounds").toString();
+    // these paths cannot be defined in respective enums
+    public static final String MUSIC_PATH = Paths.get(Images.RESOURCES_PATH,"audio", "music").toString();
+    public static final String SOUNDS_PATH = Paths.get(Images.RESOURCES_PATH,"audio", "sounds").toString();
 
-    private static MusicPlayer[] musicPlayers;
-    private static SoundPlayer[] soundPlayers;
+    private static Music[] music;
+    private static Sound[] sounds;
 
-    public static void setup(){
-        // MediaPlayer from javafx library needs Toolkit to be initialized, JFXPanel does it for us.
-        new JFXPanel();
+    private static Music currentlyPlayingMusic;
 
-        musicPlayers = MusicPlayer.values();
-        soundPlayers = SoundPlayer.values();
+    // called once at the start of the program
+    public static void load() {
+        new JFXPanel(); // initializes toolkit for playing music
+
+        music = Music.values();
+        sounds = Sound.values();
     }
 
-    // MusicPlayer methods
-    public static void play(MusicPlayer musicPlayer) {
-        musicPlayer.mediaPlayer.play();
-    }
-
-    public static void pause(MusicPlayer musicPlayer) {
-        musicPlayer.mediaPlayer.pause();
-    }
-
-    public static void stop(MusicPlayer musicPlayer) {
-        musicPlayer.mediaPlayer.stop();
-    }
-
-
-    // SoundPlayer methods
-    public static void play(SoundPlayer soundPlayer) {
-        soundPlayer.mediaPlayer.stop();
-        soundPlayer.mediaPlayer.play();
-    }
-
-    public static void pause(SoundPlayer soundPlayer) {
-        soundPlayer.mediaPlayer.pause();
-    }
-
-    public static void stop(SoundPlayer soundPlayer) {
-        soundPlayer.mediaPlayer.stop();
-    }
-
-    // Other methods
-    public static void updateSound() {
-        for (MusicPlayer player : musicPlayers) {
-            player.mediaPlayer.setVolume(Settings.globalVolume*player.localVolume*Settings.musicVolume/1000000);
+    // only one music can be playing at once
+    public static void play(Music music) {
+        if (currentlyPlayingMusic != null && currentlyPlayingMusic != music) {
+            currentlyPlayingMusic.mediaPlayer.stop();
         }
-        for (SoundPlayer player : soundPlayers) {
-            player.mediaPlayer.setVolume(Settings.globalVolume*player.localVolume*Settings.soundVolume/1000000);
+        currentlyPlayingMusic = music;
+        music.play();
+    }
+
+    public static void play(Sound sound) {
+        sound.play();
+    }
+
+    // volume is applied to all sounds beforehand, as it's rarely changed after startup
+    public static void applyVolume() {
+
+        for (Music music : music)
+            music.mediaPlayer.setVolume(Settings.musicVolume * music.volume * Settings.globalVolume);
+
+        for (Sound sound : sounds) {
+            FloatControl floatControl = (FloatControl) sound.clip.getControl(FloatControl.Type.MASTER_GAIN);
+            floatControl.setValue(scale(Settings.soundVolume * sound.volume * Settings.globalVolume));
         }
+    }
+
+    // scales volume as the scale it's applied on is by default exponential - we prefer linear
+    private static float scale(double volume) {
+        return 20f * (float) Math.log10(volume);
     }
 
 }

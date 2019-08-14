@@ -1,5 +1,7 @@
 package display.screens;
 
+import audio.AudioPlayer;
+import audio.Music;
 import display.frame.MainFrame;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
@@ -150,6 +152,8 @@ public class PracticeScreen extends Screen {
 
     @Override
     public void load(MainFrame mainFrame) {
+        AudioPlayer.play(Music.PRACTICE);
+
         for (DropdownMenu menu : dropdownMenus)
             addDisplayComponent(menu, mainFrame.panel);
 

@@ -19,13 +19,16 @@ public class Exposition extends Screen {
     public static Font titleFont = CustomFonts.getFont(CustomFonts.CALLIGRAPHY, 20);
     public static Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.PLAIN, 3);
 
+    public static Label titleLabel(String title) {
+        Label label = new Label(title, titleFont, Color.BLACK, new Dimension(80, 8), Align.CENTER);
+        label.coordinates = new Coordinates(10, 10);
+        return label;
+    }
+
     @Override
     public void load(MainFrame mainFrame) {
         String title = "Exposition";
-
-        Label titleLabel = new Label(title, titleFont, Color.BLACK, new Dimension(80, 8), Align.CENTER);
-        titleLabel.coordinates = new Coordinates(10, 10);
-        addDisplayComponent(titleLabel, mainFrame.panel);
+        addDisplayComponent(titleLabel(title), mainFrame.panel);
 
         String text = "We live in a society where tic-tac-toe is everything. Wealth, number of tokens one has acquired, " +
                 "prestige, number of tournaments one has won, and power, number of games one has played.\n\n" +

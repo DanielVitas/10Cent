@@ -22,7 +22,7 @@ public class MiniMax extends Intelligence {
         this.depth = depth;
     }
 
-    protected double evaluate(LogicBoard logicBoard, Player player) {
+    protected double evaluate(LogicBoard logicBoard) {
         return StandardGameController.evaluate(logicBoard, player);
     }
 
@@ -38,7 +38,7 @@ public class MiniMax extends Intelligence {
         Player outcome = logicBoard.outcome();
         if (additionalTurn == depth || outcome != empty) {
             EvaluatedMove evaluatedMove = new EvaluatedMove(previousMove, 0);
-            evaluatedMove.rating = evaluate(logicBoard, player);
+            evaluatedMove.rating = evaluate(logicBoard);
             return evaluatedMove;
         }
 

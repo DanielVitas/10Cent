@@ -19,19 +19,19 @@ public final class Settings {
     public static int[] windowLocation;
 
     public static void defaults() {
-        globalVolume = 50;
-        soundVolume = 50;
-        musicVolume = 50;
+        globalVolume = 0.5;
+        soundVolume = 0.5;
+        musicVolume = 0.5;
         windowedMode = true;
         windowSize = new int[]{800, 800};
         windowLocation = new int[]{20, 20};
     }
 
-    // initializes settings, this is only called once at the start
-    public static void initialize() {
+    // called only once at the start of the program
+    public static void load() {
         defaults();
         read();
-        AudioPlayer.updateSound();
+        AudioPlayer.applyVolume();
     }
 
     public static void save() {
@@ -58,13 +58,13 @@ public final class Settings {
 
                 switch (splitLine[0]){
                     case ("globalVolume"):
-                        globalVolume = Double.valueOf(splitLine[1]);
+                        globalVolume = getVolume(Double.valueOf(splitLine[1]));
                         break;
                     case ("soundVolume"):
-                        soundVolume = Double.valueOf(splitLine[1]);
+                        soundVolume = getVolume(Double.valueOf(splitLine[1]));
                         break;
                     case ("musicVolume"):
-                        musicVolume = Double.valueOf(splitLine[1]);
+                        musicVolume = getVolume(Double.valueOf(splitLine[1]));
                         break;
                     case ("windowedMode"):
                         windowedMode = Boolean.valueOf(splitLine[1]);
@@ -86,9 +86,18 @@ public final class Settings {
         }
     }
 
+    // changes double to a valid one (0 - 1)
+    private static double getVolume(double volume) {
+        if (volume < 0)
+            return 0;
+        else if (volume > 1)
+            return 1;
+        return volume;
+    }
+
     private static void apply() {
         MainFrame.switchToWindowed();
-        AudioPlayer.updateSound();
+        AudioPlayer.applyVolume();
     }
 
     private static void write() {

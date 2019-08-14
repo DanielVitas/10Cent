@@ -15,16 +15,14 @@ import java.awt.*;
 
 import static display.screens.story.Exposition.font;
 import static display.screens.story.Exposition.titleFont;
+import static display.screens.story.Exposition.titleLabel;
 
 public class FallingAction extends Screen {
 
     @Override
     public void load(MainFrame mainFrame) {
         String title = "Falling Action";
-
-        display.widgets.label.Label titleLabel = new Label(title, titleFont, Color.BLACK, new display.frame.misc.Dimension(80, 8), Align.CENTER);
-        titleLabel.coordinates = new Coordinates(10, 10);
-        addDisplayComponent(titleLabel, mainFrame.panel);
+        addDisplayComponent(titleLabel(title), mainFrame.panel);
 
         String text = "The king falls to the ground. He is defeated - finally. Before you could celebrate, " +
                 "king starts his disgusting laugh. \"You think you have won?\" says king: \"I am a mere pawn, " +

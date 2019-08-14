@@ -6,6 +6,8 @@ import progress.Progress;
 import settings.Settings;
 
 import javax.swing.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -33,6 +35,16 @@ public class MainFrame extends JFrame {
                 super.windowClosing(windowEvent);
             }
         });
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent componentEvent) {
+                saveSizeAndLocation();
+            }
+            @Override
+            public void componentMoved(ComponentEvent componentEvent) {
+                saveSizeAndLocation();
+            }
+        });
 
         panel = new MainPanel(new Dimension(600, 600));
         add(panel);
@@ -45,7 +57,7 @@ public class MainFrame extends JFrame {
 
     private void onClose() {
         Progress.save();
-        saveSizeAndLoc();
+        saveSizeAndLocation();
         Settings.save();
     }
 
@@ -72,7 +84,7 @@ public class MainFrame extends JFrame {
         }
     }
 
-    public static void saveSizeAndLoc(){
+    public static void saveSizeAndLocation(){
         if (Settings.windowedMode) {
             Settings.windowSize = new int[]{mainFrame.getSize().width, mainFrame.getSize().height};
             Settings.windowLocation = new int[]{mainFrame.getLocation().x, mainFrame.getLocation().y};

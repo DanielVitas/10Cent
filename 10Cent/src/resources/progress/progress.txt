@@ -2,8 +2,8 @@
 
 campaignDialog = false
 easy = true
-newestStage = 3
-players = Nought, Bird
-oldPlayers = Cross, Nought, Bird
-selectedPlayer = Bird
+newestStage = 4
+players = Nought, Bird, Crown
+oldPlayers = 
+selectedPlayer = Cross
 gamesPlayed = Tic-tac-toe, Super Tic-tac-toe, Ultimate Tic-tac-toe

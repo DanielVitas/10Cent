@@ -1,9 +1,9 @@
 # audio
-globalVolume = 50.0
-soundVolume = 50.0
-musicVolume = 50.0
+globalVolume = 1.0
+soundVolume = 0.197823664129531
+musicVolume = 1.0
 
 # screen
 windowedMode = true
-windowSize = 464, 569
-windowLocation = 390, 96
+windowSize = 421, 553
+windowLocation = 291, 75

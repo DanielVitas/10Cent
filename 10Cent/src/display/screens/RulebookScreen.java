@@ -54,13 +54,14 @@ public class RulebookScreen extends Screen {
         String text = null;
         switch (game) {
             case Games.TIC_TAC_TOE:
-                text = "Standard tic-tac-toe is very simple. Two players exchange turns playing their tokens " +
-                        "on the 3x3 board. Obviously you cannot play token in a slot any token is already at. First player " +
-                        "to place 3 tokens in a row (either horizontally, vertically or diagonally) wins.";
+                text = "Two players exchange turns playing their tokens on the 3x3 board. You cannot play token " +
+                        "in a slot any token is already at. First player to place 3 tokens in any row (either horizontally, " +
+                        "vertically or diagonally) wins the game.";
                 break;
             case Games.SUPER_TIC_TAC_TOE:
-                text = "In " + Games.SUPER_TIC_TAC_TOE + " players exchange turns placing their tokens on the " +
-                        "4x4 board. This board consists of 4 smaller 2x2 boards. Player can win each of the smaller " +
+                text = "Two players exchange turns placing their tokens on the " +
+                        "4x4 board. This board consists of 4 smaller 2x2 boards. Fist player to win any 2 of the smaller " +
+                        "boards wins the game. Players can win each of the smaller " +
                         "boards by placing 2 tokens anywhere on them. When one player makes a move in " +
                         "a smaller board that determines where in the larger board other player must play. If that " +
                         "board is already won player can play anywhere.\n\n" +
@@ -73,7 +74,8 @@ public class RulebookScreen extends Screen {
                 text = Games.ULTIMATE_TIC_TAC_TOE + " is the combination between ordinary tic-tac-toe and " + Games.SUPER_TIC_TAC_TOE + ". " +
                         "Players exchange turns placing their tokens on the 9x9 board. This board consists of 9 smaller 3x3 " +
                         "boards. Player can win each of the smaller boards by placing 3 tokens in a row (either horizontally, " +
-                        "vertically or diagonally). When one player makes a move in a smaller board that determines where in " +
+                        "vertically or diagonally). First payer to win 3 smaller boards in any row (either horizontally, " +
+                        "vertically or diagonally) wins the game. (When one player makes a move in a smaller board that determines where in " +
                         "the larger board other player must play. If that smaller board is either won or full (undecided) " +
                         "player can move anywhere.\n\n" +
                         "For example, if the first player plays in the most top-right slot, he has played on top-right " +

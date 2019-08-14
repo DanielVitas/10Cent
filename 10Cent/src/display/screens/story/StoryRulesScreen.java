@@ -30,10 +30,10 @@ public class StoryRulesScreen extends Screen {
     @Override
     public void load(MainFrame mainFrame) {
         display.widgets.label.Label label = new Label(game, titleFont, Color.BLACK, new display.frame.misc.Dimension(80, 8), Align.CENTER);
-        label.coordinates = new Coordinates(10, 10);
+        label.coordinates = new Coordinates(10, 5);
         addDisplayComponent(label, mainFrame.panel);
 
-        rules(game, new Coordinates(10, 25), new Dimension(80, 8), this, mainFrame);
+        rules(game, new Coordinates(10, 18), new Dimension(80, 8), this, mainFrame);
 
         addDefaultContinueButton(mainFrame);
     }

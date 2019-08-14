@@ -27,6 +27,7 @@ public final class CustomFonts {
     public final static String QUITE_MAGICAL = "quite-magical";
     public final static String HUMBLE_CAFE = "humble-cafe";
 
+    // called once at the start of the program
     public static void load() {
         ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 

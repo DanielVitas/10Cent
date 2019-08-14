@@ -1,5 +1,7 @@
 package display.screens;
 
+import audio.AudioPlayer;
+import audio.Music;
 import display.frame.DisplayComponent;
 import display.frame.DisplayObject;
 import display.frame.MainFrame;
@@ -19,7 +21,6 @@ import logic.game.StandardGameController;
 import logic.intelligence.Human;
 import logic.intelligence.Intelligence;
 import logic.intelligence.MiniMax;
-import logic.intelligence.RandomAI;
 import logic.players.Player;
 import logic.players.bird.Bird;
 import logic.players.crown.Crown;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static display.screens.MainMenuScreen.storyScreen;
+import static display.screens.story.Exposition.titleFont;
 
 public class CampaignScreen extends Screen {
 
@@ -48,6 +50,8 @@ public class CampaignScreen extends Screen {
 
     @Override
     public void load(MainFrame mainFrame) {
+        AudioPlayer.play(Music.MAIN_MENU);
+
         // from here player will select their token
         Player[] players = Progress.getPlayers();
         List<String> oldPlayers = Progress.getOldPlayers();
@@ -182,8 +186,8 @@ public class CampaignScreen extends Screen {
                         game = Games.TIC_TAC_TOE;
                         intelligence = new MiniMax(2) {
                             @Override
-                            protected double evaluate(LogicBoard logicBoard, Player player) {
-                                return StandardGameController.basicEvaluate(logicBoard, player);
+                            protected double evaluate(LogicBoard logicBoard) {
+                                return StandardGameController.basicEvaluate(logicBoard, super.player);
                             }
                         };
                         if (protagonist instanceof Nought)
@@ -209,7 +213,10 @@ public class CampaignScreen extends Screen {
                         nextScreen = new GameScreen(gameController) {
                             @Override
                             public void loadEnvironment(MainFrame mainFrame) {
+                                AudioPlayer.play(Music.BATTLE1);
 
+                                String name = "Guard";
+                                addDisplayComponent(nameLabel(name), mainFrame.panel);
                             }
 
                             @Override
@@ -244,7 +251,10 @@ public class CampaignScreen extends Screen {
                         nextScreen = new GameScreen(gameController) {
                             @Override
                             public void loadEnvironment(MainFrame mainFrame) {
+                                AudioPlayer.play(Music.BATTLE2);
 
+                                String name = "Wizard";
+                                addDisplayComponent(nameLabel(name), mainFrame.panel);
                             }
 
                             @Override
@@ -279,7 +289,10 @@ public class CampaignScreen extends Screen {
                         nextScreen = new GameScreen(gameController) {
                             @Override
                             public void loadEnvironment(MainFrame mainFrame) {
+                                AudioPlayer.play(Music.BATTLE3);
 
+                                String name = "King";
+                                addDisplayComponent(nameLabel(name), mainFrame.panel);
                             }
 
                             @Override
@@ -314,7 +327,10 @@ public class CampaignScreen extends Screen {
                         nextScreen = new GameScreen(gameController) {
                             @Override
                             public void loadEnvironment(MainFrame mainFrame) {
+                                AudioPlayer.play(Music.BATTLE4);
 
+                                String name = "Monster";
+                                addDisplayComponent(nameLabel(name), mainFrame.panel);
                             }
 
                             @Override
@@ -333,6 +349,12 @@ public class CampaignScreen extends Screen {
         startButton.coordinates = new Coordinates(78,90);
         stageDetailsObjects.add(startButton);
         addDisplayComponent(startButton, mainFrame.panel);
+    }
+
+    private Label nameLabel(String name) {
+        Label label = new Label(name, titleFont, Color.BLACK, new display.frame.misc.Dimension(60, 8), Align.CENTER);
+        label.coordinates = new Coordinates(20, 5);
+        return label;
     }
 
     private void stageDescription(int stage, MainFrame mainFrame) {
@@ -361,10 +383,10 @@ public class CampaignScreen extends Screen {
                         "All the games you have played, tokens you've acquired - time for final showdown has come.";
                 break;
             case Stage.STAGE4:
-                title = "Monster";
+                title = "Peak";
 
                 text = "Late at night roars can be heard from the top of the mountain. The citizens have asked you, " +
-                        "as the world's best tic-tac-toe player, to find the truth to them. Ambiguous feeling " +
+                        "the world's best tic-tac-toe player, to find the truth to them. Ambiguous feeling " +
                         "overwhelms you when entering dark cave near the mountain peak. You become certain that what hides " +
                         "here is not human.";
                 break;

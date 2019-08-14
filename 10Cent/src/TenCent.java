@@ -16,8 +16,8 @@ public class TenCent {
         CustomFonts.load();
         Progress.load();
         Images.load();
-        AudioPlayer.setup();
-        Settings.initialize();
+        AudioPlayer.load();
+        Settings.load();
 
         MainFrame mainFrame = new MainFrame();
 

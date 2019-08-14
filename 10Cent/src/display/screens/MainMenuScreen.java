@@ -1,5 +1,7 @@
 package display.screens;
 
+import audio.AudioPlayer;
+import audio.Music;
 import display.frame.MainFrame;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
@@ -24,6 +26,8 @@ public class MainMenuScreen extends Screen {
 
     @Override
     public void load(MainFrame mainFrame) {
+        AudioPlayer.play(Music.MAIN_MENU);
+
         display.widgets.label.Label titleLabel = new Label("Ultimate Tic-tac-toe", titleFont, Color.RED, new display.frame.misc.Dimension(80, 8), Align.CENTER);
         titleLabel.coordinates = new Coordinates(10, 20);
         addDisplayComponent(titleLabel, mainFrame.panel);

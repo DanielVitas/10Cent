@@ -1,7 +1,7 @@
 package display.widgets.buttons;
 
 import audio.AudioPlayer;
-import audio.SoundPlayer;
+import audio.Sound;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
@@ -13,8 +13,6 @@ import display.widgets.dropdownMenu.DropdownMenu;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.nio.file.Paths;
-
-import static display.frame.MainPanel.drawRectangle;
 
 public abstract class DropdownButton extends Button {
 
@@ -49,7 +47,7 @@ public abstract class DropdownButton extends Button {
 
     @Override
     public void click(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
-        AudioPlayer.play(SoundPlayer.BUTTON);
+        AudioPlayer.play(Sound.BUTTON);
         super.click(coordinates, scale, mouseEvent);
     }
 

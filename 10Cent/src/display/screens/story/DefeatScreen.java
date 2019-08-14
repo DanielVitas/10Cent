@@ -1,5 +1,7 @@
 package display.screens.story;
 
+import audio.AudioPlayer;
+import audio.Music;
 import display.frame.MainFrame;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
@@ -28,6 +30,8 @@ public class DefeatScreen extends Screen {
 
     @Override
     public void load(MainFrame mainFrame) {
+        AudioPlayer.play(Music.DEFEAT);
+
         String title = "Defeat";
         String text = "";
         switch (stage) {

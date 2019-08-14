@@ -15,16 +15,14 @@ import java.awt.*;
 
 import static display.screens.story.Exposition.font;
 import static display.screens.story.Exposition.titleFont;
+import static display.screens.story.Exposition.titleLabel;
 
 public class Climax extends Screen {
 
     @Override
     public void load(MainFrame mainFrame) {
         String title = "Climax";
-
-        display.widgets.label.Label titleLabel = new Label(title, titleFont, Color.BLACK, new display.frame.misc.Dimension(80, 8), Align.CENTER);
-        titleLabel.coordinates = new Coordinates(10, 10);
-        addDisplayComponent(titleLabel, mainFrame.panel);
+        addDisplayComponent(titleLabel(title), mainFrame.panel);
 
         String text = "After a close victory only fear and doubt cross your mind. Realising how many variations " +
                 "of tic-tac-toe are in this world scares you, but it also fills you with intrigue. What kind of " +

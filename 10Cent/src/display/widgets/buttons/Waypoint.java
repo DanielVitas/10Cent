@@ -1,7 +1,7 @@
 package display.widgets.buttons;
 
 import audio.AudioPlayer;
-import audio.SoundPlayer;
+import audio.Sound;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
@@ -121,7 +121,7 @@ public abstract class Waypoint extends Button {
         switch (active) {
             case UNLOCKED:
             case NEXT:
-                AudioPlayer.play(SoundPlayer.BUTTON);
+                AudioPlayer.play(Sound.BUTTON);
                 break;
             case LOCKED:
                 break;

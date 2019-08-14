@@ -109,13 +109,14 @@ public abstract class StandardGameController extends GameController {
             return Double.POSITIVE_INFINITY;
         else if (logicBoard.outcome() != empty)
             return Double.NEGATIVE_INFINITY;
-        else
-            return 0;
+        return 0;
     }
 
     // evaluates logicBord regarding player
     public static double evaluate(LogicBoard logicBoard, Player player) {
-        if (logicBoard.outcome() == player)
+        if (logicBoard.outcome() == undecided)
+            return 0;
+        else if (logicBoard.outcome() == player)
             return Double.POSITIVE_INFINITY;
         else if (logicBoard.outcome() != empty)
             return Double.NEGATIVE_INFINITY;
@@ -130,82 +131,73 @@ public abstract class StandardGameController extends GameController {
     private static double evaluateWinningLines(LogicBoard[][] logicBoards, Player player) {
         double value = 0;
 
-        int countPlayer;
-        int countOpponent;
-        double additional;
+        int[] counter = new int[2];
+        double[] additional = new double[1];
         int size = logicBoards.length;
 
         // evaluates columns
         for (int i = 0; i < size; i++) {
-            countPlayer = 0;
-            countOpponent = 0;
-            additional = 0;
-            for (int j = 0; j < size; j++) {
-                if (logicBoards[i][j].outcome() == player)
-                    countPlayer++;
-                else if (logicBoards[i][j].outcome() != empty && logicBoards[i][j].outcome() != undecided)
-                    countOpponent++;
-                additional += ratio(evaluate(logicBoards[i][j], player));
-                if (countOpponent > 0 && countPlayer > 0)
+            resetCounters(counter, additional);
+            for (int j = 0; j < size; j++)
+                if (countOutcome(logicBoards, player, i, j, counter, additional))
                     break;
-            }
-            if (countOpponent == 0 || countPlayer == 0) {
-                value += additional; // if line cannot be won by either player, it's value isn't added
+            if (counter[0] == 0 || counter[1] == 0) {
+                value += additional[0]; // if line cannot be won by either player, it's value isn't added
             }
         }
 
         // evaluate rows
         for (int j = 0; j < size; j++) {
-            countPlayer = 0;
-            countOpponent = 0;
-            additional = 0;
-            for (int i = 0; i < size; i++) {
-                if (logicBoards[i][j].outcome() == player)
-                    countPlayer++;
-                else if (logicBoards[i][j].outcome() != empty && logicBoards[i][j].outcome() != undecided)
-                    countOpponent++;
-                additional += ratio(evaluate(logicBoards[i][j], player));
-                if (countOpponent > 0 && countPlayer > 0)
+            resetCounters(counter, additional);
+            for (int i = 0; i < size; i++)
+                if (countOutcome(logicBoards, player, i, j, counter, additional))
                     break;
-            }
-            if (countOpponent == 0 || countPlayer == 0)
-                value += additional;
+            if (counter[0] == 0 || counter[1] == 0)
+                value += additional[0];
         }
 
         // evaluate diagonals
-        countPlayer = 0;
-        countOpponent = 0;
-        additional = 0;
-        for (int i = 0; i < size; i++) {
-            int j = i;
-            if (logicBoards[i][j].outcome() == player)
-                countPlayer++;
-            else if (logicBoards[i][j].outcome() != empty && logicBoards[i][j].outcome() != undecided)
-                countOpponent++;
-            additional += ratio(evaluate(logicBoards[i][j], player));
-            if (countOpponent > 0 && countPlayer > 0)
+        resetCounters(counter, additional);
+        for (int i = 0; i < size; i++)
+            if (countOutcome(logicBoards, player, i, i, counter, additional))
                 break;
-        }
-        if (countOpponent == 0 || countPlayer == 0)
-            value += additional;
+        if (counter[0] == 0 || counter[1] == 0)
+            value += additional[0];
 
-        countPlayer = 0;
-        countOpponent = 0;
-        additional = 0;
-        for (int i = 0; i < size; i++) {
-            int j = size - i - 1;
-            if (logicBoards[i][j].outcome() == player)
-                countPlayer++;
-            else if (logicBoards[i][j].outcome() != empty && logicBoards[i][j].outcome() != undecided)
-                countOpponent++;
-            additional += ratio(evaluate(logicBoards[i][j], player));
-            if (countOpponent > 0 && countPlayer > 0)
+        resetCounters(counter, additional);
+        for (int i = 0; i < size; i++)
+            if (countOutcome(logicBoards, player, i, size - i - 1, counter, additional))
                 break;
-        }
-        if (countOpponent == 0 || countPlayer == 0)
-            value += additional;
+        if (counter[0] == 0 || counter[1] == 0)
+            value += additional[0];
 
         return value;
+    }
+
+    private static void resetCounters(int[] counter, double[] additional) {
+        counter[0] = 0;
+        counter[1] = 0;
+        additional[0] = 0.;
+    }
+
+    // returns whether the loop should break
+    private static boolean countOutcome(LogicBoard[][] logicBoards, Player player, int i, int j, int[] counter, double[] additional) {
+        Player outcome = logicBoards[i][j].outcome();
+
+        if (outcome == player)
+            counter[0]++;
+        else if (outcome == undecided) {
+            // no one can win
+            counter[0]++;
+            counter[1]++;
+        } else if (outcome != empty)
+            counter[1]++;
+
+        if (counter[0] > 0 && counter[1] > 0)
+            return true; // this line cannot be won by either player
+
+        additional[0] += ratio(evaluate(logicBoards[i][j], player));
+        return false;
     }
 
     // gets ratio from value - main usage is to calculate average of +- infinity with other values

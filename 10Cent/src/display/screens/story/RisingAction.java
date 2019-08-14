@@ -15,16 +15,14 @@ import java.awt.*;
 
 import static display.screens.story.Exposition.titleFont;
 import static display.screens.story.Exposition.font;
+import static display.screens.story.Exposition.titleLabel;
 
 public class RisingAction extends Screen {
 
     @Override
     public void load(MainFrame mainFrame) {
         String title = "Rising Action";
-
-        display.widgets.label.Label titleLabel = new Label(title, titleFont, Color.BLACK, new Dimension(80, 8), Align.CENTER);
-        titleLabel.coordinates = new Coordinates(10, 10);
-        addDisplayComponent(titleLabel, mainFrame.panel);
+        addDisplayComponent(titleLabel(title), mainFrame.panel);
 
         String text = "You've beaten the gate guard and have progressed further into the capital. Once most " +
                 "magnificent city, crowded with joyful people, now a mere shadow of what it used to be. It saddens " +
