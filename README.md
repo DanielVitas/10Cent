@@ -8,7 +8,5 @@ Projektna naloga pri predmetu Programiranje 2. Vsa potrebna navodila so razlože
 - [x] audio
 - [x] settings
 - [x] minimax AI
---------------------------
 - [x] campaign
 - [x] practice
-- [x] music
