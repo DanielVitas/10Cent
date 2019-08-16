@@ -1,5 +1,5 @@
 # 10Cent
-Projektna naloga pri predmetu Programiranje 2.
+Projektna naloga pri predmetu Programiranje 2. Vsa potrebna navodila so razložena v igri.
 
 # TODO
 - [x] osnove izrisovanja
@@ -7,9 +7,6 @@ Projektna naloga pri predmetu Programiranje 2.
 - [x] polepsava graficnih elementov
 - [x] audio
 - [x] settings
-- [ ] minimax AI
---------------------------
+- [x] minimax AI
 - [x] campaign
 - [x] practice
---------------------------
-- [x] shranjevanje progressa
