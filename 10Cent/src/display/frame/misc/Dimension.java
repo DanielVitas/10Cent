@@ -27,6 +27,7 @@ public class Dimension {
         return (int) (height + 0.5);
     }
 
+    // used when creating shapes
     public java.awt.Dimension getAwtDimension() {
         return new java.awt.Dimension(getIntegerWidth(), getIntegerHeight());
     }

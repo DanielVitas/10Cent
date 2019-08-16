@@ -19,20 +19,19 @@ import static display.screens.Games.allGames;
 public final class Progress {
 
     /*
-    Keeps track of current progress - tokens unlocked, stages beaten,...
+    Keeps track of current progress - tokens unlocked, stages beaten,... Also manages saving and reading it.
+    NOTE: player is kind of token - tokens are objects actually placed on board
      */
 
-    public static final String PROGRESS_FILE = Paths.get(Images.RESOURCES_PATH, "progress", "progress.txt").toString();
-    public static String DEFAULT_PLAYER = Cross.NAME;
+    private static final String PROGRESS_FILE = Paths.get(Images.RESOURCES_PATH, "progress", "progress.txt").toString();
+    private static String DEFAULT_PLAYER = Cross.NAME;
 
-    public static boolean campaignDialog;  // campaign dialog will display
-    // currently selected mode - easy goes first, hard second
-    public static boolean easy;
-    public static int newestStage;
-    // currently selected player
-    public static String selectedPlayer;
+    public static boolean campaignDialog;  // true if campaign dialog will display
+    public static boolean easy;  // currently selected mode - easy goes first, hard second
+    public static int newestStage;  // newest stage unlocked
+    public static String selectedPlayer;  // currently selected player
 
-    // remembers which games player has player - for displaying rules
+    // remembers which games player has played - for displaying rules
     private static List<String> gamesPlayed;
     // tokens player has unlocked
     private static List<String> players;
@@ -47,15 +46,18 @@ public final class Progress {
             Heart.NAME
     };
 
+    // checks whether the game was already played
     public static boolean isPlayed(String game) {
         return gamesPlayed.contains(game);
     }
 
+    // adds game to games played
     public static void addGame(String game) {
         if (!gamesPlayed.contains(game) && contained(game, allGames))
             gamesPlayed.add(game);
     }
 
+    // returns currently selected player - parsed of course
     public static Player[] getPlayers() {
         Player[] players = new Player[Progress.players.size()];
         for (int i = 0; i < players.length; i++)
@@ -63,10 +65,12 @@ public final class Progress {
         return players;
     }
 
+    // returns old players
     public static List<String> getOldPlayers() {
         return oldPlayers;
     }
 
+    // returns array of all players - parsed
     public static Player[] getAllPlayers() {
         Player[] players = new Player[Progress.allPlayers.length];
         for (int i = 0; i < players.length; i++)
@@ -74,17 +78,20 @@ public final class Progress {
         return players;
     }
 
+    // adds player (unlocks)
     public static void addPlayer(String playerName) {
         if (!players.contains(playerName) && contained(playerName, allPlayers))
             players.add(playerName);
     }
 
+    // adds player to seen players
     public static void addOldPlayer(String playerName) {
         if (!oldPlayers.contains(playerName) && contained(playerName, allPlayers))
             oldPlayers.add(playerName);
     }
 
-    public static void defaults() {
+    // default progress - minimal
+    private static void defaults() {
         campaignDialog = true;
         easy = true;
         newestStage = Stage.STAGE1;
@@ -105,12 +112,13 @@ public final class Progress {
         write();
     }
 
+    // read is identical in structure to one from settings
     private static void read() {
         try{
             BufferedReader in = new BufferedReader(new FileReader(PROGRESS_FILE));
 
             while (in.ready()) {
-                String line = in.readLine(); // we don't remove spaces, because game names are space sensitive
+                String line = in.readLine();  // don't remove spaces, because game names are space sensitive
 
                 if (line.equals(""))
                     continue;
@@ -155,7 +163,7 @@ public final class Progress {
 
             in.close();
         } catch (Exception e) {
-            e.printStackTrace(); // exceptions can arise from user messing with settings file
+            e.printStackTrace(); // catches all exceptions - IO, ones that araise from parsing
         }
     }
 
@@ -209,7 +217,8 @@ public final class Progress {
         }
     }
 
-    public static boolean contained(String item, String[] stringArray) {
+    // function isn't called to often so there is no need for more appropriate data type
+    private static boolean contained(String item, String[] stringArray) {
         for (String s : stringArray)
             if (s.equals(item))
                 return true;

@@ -139,7 +139,7 @@ public class SettingsScreen extends Screen{
     @Override
     public void unload(MainFrame mainFrame) {
         super.unload(mainFrame);
-        revertOriginal(); // any way it unloads, original sound setting should be applied (those change when saving)
+        revertOriginal();  // any way it unloads, original sound setting should be applied (those change when saving)
     }
 
 }

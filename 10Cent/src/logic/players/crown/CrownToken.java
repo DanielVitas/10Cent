@@ -9,9 +9,9 @@ import logic.players.Token;
 
 import java.nio.file.Paths;
 
-public class CrownToken extends Token {
+class CrownToken extends Token {
 
-    public CrownToken(Player player, Move move, GameController gameController, Dimension dimension) {
+    CrownToken(Player player, Move move, GameController gameController, Dimension dimension) {
         super(player, move, gameController, dimension, Paths.get(Images.RESOURCES_PATH,"images", "tokens", "crown").toString());
     }
 

@@ -29,15 +29,15 @@ public class Label extends DisplayObject {
         this.align = align;
     }
 
-    public static double getHeight(Font font, Graphics g) {
+    private static double getHeight(Font font, Graphics g) {
         return g.getFontMetrics(font).getHeight();
     }
 
-    public static double getWidth(String text, Font font, Graphics g) {
+    private static double getWidth(String text, Font font, Graphics g) {
         return g.getFontMetrics(font).stringWidth(text);
     }
 
-    public static Font scaleFont(Font font, Scale scale) {
+    static Font scaleFont(Font font, Scale scale) {
         double newFontSize = font.getSize() * Math.min(scale.horizontal, scale.vertical);
         return font.deriveFont((float) newFontSize);
     }

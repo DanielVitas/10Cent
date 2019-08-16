@@ -93,8 +93,8 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
                 return o;
             }
 
-        if (allMoves(empty).isEmpty()) {
-            outcome = undecided;
+        if (allMovesEffective(empty).isEmpty()) {
+            outcome = undecided;  // all slots have been filled
             return outcome;
         }
 
@@ -108,11 +108,11 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
 
     @Override
     public Set<Move> legalMoves(Player player, Stack<Move> deconstructedPreviousMove) {
-        if (outcome != empty)
+        if (outcome() != empty)
             return new HashSet<>();
 
         if (deconstructedPreviousMove.empty())
-            return allMoves(player);
+            return allMoves(player);  // happens only on first turn
 
         // determines on witch board the next move should take place
         Move previousMove = deconstructedPreviousMove.pop();  // can't be empty
@@ -124,12 +124,12 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
         if (logicBoard.outcome() != empty)
             return allMoves(player);
 
-        // any (valid) move on determined sub-board is legal
+        // any (valid - can't place token on already taken slot) move on determined sub-board is legal
         Set<Move> moves = new HashSet<>();
         Set<Move> subMoves = logicBoard.allMoves(player);
 
         for (Move subMove : subMoves) {
-            Move move = new TwoDimensionalMove(i, j);
+            Move move = new TwoDimensionalMove(i, j);  // starts chain in appropriate slot
             move.setNextMove(subMove);
             moves.add(move);
         }
@@ -139,21 +139,25 @@ public class TwoDimensionalLogicBoard extends LogicBoard {
 
     @Override
     public Set<Move> allMoves(Player player) {
-        if (outcome != empty)
+        if (outcome() != empty)
             return new HashSet<>();
+        return allMovesEffective(player);
+    }
 
+    // doesn't check whether board is already decided
+    private Set<Move> allMovesEffective(Player player) {
         Set<Move> moves = new HashSet<>();
 
         // populates moves with all moves from each sub-board
         for (int i = 0; i < logicBoards.length; i++)
             for (int j = 0; j < logicBoards[i].length; j++) {
-                    Set<Move> subMoves = logicBoards[i][j].allMoves(player);
-                    for (Move subMove : subMoves) {
-                        Move move = new TwoDimensionalMove(i, j);
-                        move.setNextMove(subMove);
-                        moves.add(move);
-                    }
+                Set<Move> subMoves = logicBoards[i][j].allMoves(player);
+                for (Move subMove : subMoves) {
+                    Move move = new TwoDimensionalMove(i, j);
+                    move.setNextMove(subMove);
+                    moves.add(move);
                 }
+            }
 
         return moves;
     }

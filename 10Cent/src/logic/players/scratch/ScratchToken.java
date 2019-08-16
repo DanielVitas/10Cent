@@ -9,9 +9,9 @@ import logic.players.Token;
 
 import java.nio.file.Paths;
 
-public class ScratchToken extends Token {
+class ScratchToken extends Token {
 
-    public ScratchToken(Player player, Move move, GameController gameController, Dimension dimension) {
+    ScratchToken(Player player, Move move, GameController gameController, Dimension dimension) {
         super(player, move, gameController, dimension, Paths.get(Images.RESOURCES_PATH,"images", "tokens", "scratch").toString());
     }
 

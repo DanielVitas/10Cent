@@ -21,7 +21,7 @@ import java.nio.file.Paths;
 public abstract class PlayerButton extends Button {
 
     /*
-    PlayerButton is clickable image of token. It can also display "new" tag.
+    PlayerButton is clickable image of token. It can also display "new" tag. It's part of PlayerDropdownMenu.
      */
 
     private static Font font = CustomFonts.getFont(CustomFonts.PAINTER, 3);
@@ -31,10 +31,10 @@ public abstract class PlayerButton extends Button {
     private Token token;
     public Label newLabel;
     private boolean changeable;
-    public boolean suppressLabel = false;
-    private boolean seeable;
+    public boolean suppressLabel = false;  // use is evident in PlayerDropdownMenu
+    private boolean seeable;  // if hovering over it adds the player to seen players
 
-    public PlayerButton(DropdownMenu dropdownMenu, boolean seeable, boolean isNew, boolean changeable, Player player, Dimension dimension) {
+    protected PlayerButton(DropdownMenu dropdownMenu, boolean seeable, boolean isNew, boolean changeable, Player player, Dimension dimension) {
         super(dimension, Paths.get(Images.RESOURCES_PATH,"images", "buttons", "player").toString());
 
         this.dropdownMenu = dropdownMenu;

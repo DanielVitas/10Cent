@@ -5,7 +5,8 @@ import audio.Music;
 import display.frame.MainFrame;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
-import display.widgets.input.NumberFieldInput;
+import display.widgets.input.NumberInputField;
+import display.widgets.input.LetterInputField;
 import display.widgets.label.Align;
 import display.widgets.label.Label;
 import display.widgets.buttons.NormalButton;
@@ -40,13 +41,16 @@ public class PracticeScreen extends Screen {
     private PlayerDropdownMenu player2Menu;
 
     private boolean showDepthInput1 = false;
-    private NumberFieldInput depthInput1;
+    private NumberInputField depthInput1;
     private boolean showDepthInput2 = false;
-    private NumberFieldInput depthInput2;
+    private NumberInputField depthInput2;
+
+    private LetterInputField player1NameInput;
+    private LetterInputField player2NameInput;
 
     private DropdownMenu[] dropdownMenus;
 
-    public PracticeScreen(MainFrame mainFrame) {
+    PracticeScreen(MainFrame mainFrame) {
         // creates various dropdown menus - this is necessary due to them having somewhat complicated structure
         String[] games = new String[]{Games.TIC_TAC_TOE, Games.SUPER_TIC_TAC_TOE, Games.ULTIMATE_TIC_TAC_TOE};
 
@@ -136,11 +140,17 @@ public class PracticeScreen extends Screen {
                 gameModeMenu, intelligence1Menu, intelligence2Menu, player1Menu, player2Menu
         };
 
-        depthInput1 = new NumberFieldInput(2, "Depth", Align.LEFT, new Dimension(15, 8));
-        depthInput1.coordinates = new Coordinates(75,36);
+        depthInput1 = new NumberInputField(7, "Depth", Align.LEFT, new Dimension(12, 8));
+        depthInput1.coordinates = new Coordinates(72,36);
 
-        depthInput2 = new NumberFieldInput(2, "Depth", Align.LEFT, new Dimension(15, 8));
-        depthInput2.coordinates = new Coordinates(75,46);
+        depthInput2 = new NumberInputField(7, "Depth", Align.LEFT, new Dimension(12, 8));
+        depthInput2.coordinates = new Coordinates(72,46);
+
+        player1NameInput = new LetterInputField(13, "Player One", Align.LEFT, new Dimension(23, 8));
+        player1NameInput.coordinates = new Coordinates(5,36);
+
+        player2NameInput = new LetterInputField(13, "Player Two", Align.LEFT, new Dimension(23, 8));
+        player2NameInput.coordinates = new Coordinates(5,46);
     }
 
     // when another dropdown menu is opened, every other is closed
@@ -163,38 +173,23 @@ public class PracticeScreen extends Screen {
         if (showDepthInput2)
             addDisplayComponent(depthInput2, mainFrame.panel);
 
+        addDisplayComponent(player1NameInput, mainFrame.panel);
+        addDisplayComponent(player2NameInput, mainFrame.panel);
+
         Label gameModeLabel = new Label("Game Mode", font, Color.BLACK, new display.frame.misc.Dimension(25,8), Align.LEFT);
         gameModeLabel.coordinates = new Coordinates(5,16);
         addDisplayComponent(gameModeLabel, mainFrame.panel);
 
-        Label player1Label = new Label("Player 1", font, Color.BLACK, new display.frame.misc.Dimension(25,8), Align.LEFT);
-        player1Label.coordinates = new Coordinates(5,36);
-        addDisplayComponent(player1Label, mainFrame.panel);
-
-        Label player2Label = new Label("Player 2", font, Color.BLACK, new display.frame.misc.Dimension(25,8), Align.LEFT);
-        player2Label.coordinates = new Coordinates(5,46);
-        addDisplayComponent(player2Label, mainFrame.panel);
-
         NormalButton startButton = new NormalButton("Start", 5, new Dimension(20, 8)) {
             @Override
             public void clicked() {
-                Intelligence intelligence1;
-                if (showDepthInput1)
-                    if (!depthInput1.isValid())
-                        return;
-                    else
-                        intelligence1 = Intelligence.parseIntelligence(intelligence1Menu.getValue(), depthInput1.getNumber());
-                else
-                    intelligence1 = Intelligence.parseIntelligence(intelligence1Menu.getValue());
+                Intelligence intelligence1 = getIntelligence(showDepthInput1, intelligence1Menu, depthInput1);
+                if (intelligence1 == null)
+                    return;
 
-                Intelligence intelligence2;
-                if (showDepthInput2)
-                    if (!depthInput2.isValid())
-                        return;
-                    else
-                        intelligence2 = Intelligence.parseIntelligence(intelligence2Menu.getValue(), depthInput2.getNumber());
-                else
-                    intelligence2 = Intelligence.parseIntelligence(intelligence2Menu.getValue());
+                Intelligence intelligence2 = getIntelligence(showDepthInput2, intelligence2Menu, depthInput2);
+                if (intelligence2 == null)
+                    return;
 
                 Player player1 = Player.parsePlayer(player1Menu.getValue(), intelligence1);
                 Player player2 = Player.parsePlayer(player2Menu.getValue(), intelligence2);
@@ -211,10 +206,10 @@ public class PracticeScreen extends Screen {
 
                             }
                         };
-                        Controller.switchScreen(new GameScreen(gameController) {
+                        Controller.switchScreen(new GameScreen(gameController, mainFrame) {
                             @Override
                             public void loadEnvironment(MainFrame mainFrame) {
-
+                                standardEnvironmentSetup(getPlayerNames(), mainFrame.panel);
                             }
 
                             @Override
@@ -230,10 +225,10 @@ public class PracticeScreen extends Screen {
 
                             }
                         };
-                        Controller.switchScreen(new GameScreen(gameController) {
+                        Controller.switchScreen(new GameScreen(gameController, mainFrame) {
                             @Override
                             public void loadEnvironment(MainFrame mainFrame) {
-
+                                standardEnvironmentSetup(getPlayerNames(), mainFrame.panel);
                             }
 
                             @Override
@@ -249,10 +244,10 @@ public class PracticeScreen extends Screen {
 
                             }
                         };
-                        Controller.switchScreen(new GameScreen(gameController) {
+                        Controller.switchScreen(new GameScreen(gameController, mainFrame) {
                             @Override
                             public void loadEnvironment(MainFrame mainFrame) {
-
+                                standardEnvironmentSetup(getPlayerNames(), mainFrame.panel);
                             }
 
                             @Override
@@ -277,6 +272,30 @@ public class PracticeScreen extends Screen {
         addDisplayComponent(rulebookButton, mainFrame.panel);
 
         addDefaultBackButton(mainFrame);
+    }
+
+    // returns pair of player names
+    private String[] getPlayerNames() {
+        String[] names = new String[2];
+        if (player1NameInput.isValid())
+            names[0] = player1NameInput.getText();
+        else
+            names[0] = player1NameInput.getDefaultText();
+        if (player2NameInput.isValid())
+            names[1] = player2NameInput.getText();
+        else
+            names[1] = player2NameInput.getDefaultText();
+        return names;
+    }
+
+    // returns null, if clicked function should return
+    private Intelligence getIntelligence(boolean showDepthInput, NormalDropdownMenu intelligenceMenu, NumberInputField depthInput) {
+        if (showDepthInput)
+            if (!depthInput.isValid())
+                return null;
+            else
+                return Intelligence.parseIntelligence(intelligenceMenu.getValue(), depthInput.getNumber());
+        return Intelligence.parseIntelligence(intelligenceMenu.getValue());
     }
 
     @Override

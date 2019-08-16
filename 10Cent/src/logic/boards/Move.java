@@ -14,10 +14,6 @@ public abstract class Move {
 
     private Move nextMove;
 
-    public Move() {
-
-    }
-
     public Move getNextMove() {
         return nextMove;
     }
@@ -29,6 +25,7 @@ public abstract class Move {
             nextMove.setNextMove(move);
     }
 
+    // player is effectively set in the FinalMove
     public void setPlayer(Player player) {
         if (this instanceof FinalMove)
             ((FinalMove) this).player = player;
@@ -36,6 +33,7 @@ public abstract class Move {
             nextMove.setPlayer(player);
     }
 
+    // player from the final move in the chain - only one that has information about it
     public Player getPlayer() {
         if (this instanceof FinalMove)
             return ((FinalMove) this).player;
@@ -53,6 +51,7 @@ public abstract class Move {
         return stack;
     }
 
+    // used when cloning boards
     public abstract Move clone();
 
 }

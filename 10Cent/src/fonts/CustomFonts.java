@@ -21,11 +21,6 @@ public final class CustomFonts {
 
     public final static String CALLIGRAPHY = "calligraphy";
     public final static String PAINTER = "painter";
-    public final static String BIRDS_OF_PARADISE = "birds-of-paradise";
-    public final static String YOUTH_TOUCH = "youth-touch";
-    public final static String QUICK_KISS = "quick-kiss";
-    public final static String QUITE_MAGICAL = "quite-magical";
-    public final static String HUMBLE_CAFE = "humble-cafe";
 
     // called once at the start of the program
     public static void load() {
@@ -33,11 +28,6 @@ public final class CustomFonts {
 
         addFont(CALLIGRAPHY);
         addFont(PAINTER);
-        addFont(BIRDS_OF_PARADISE);
-        addFont(YOUTH_TOUCH);
-        addFont(QUICK_KISS);
-        addFont(QUITE_MAGICAL);
-        addFont(HUMBLE_CAFE);
     }
 
     // adds ttf file to fonts
@@ -45,14 +35,13 @@ public final class CustomFonts {
         addFont(fontName, "ttf");
     }
 
+    // creates and registers specified font
     private static void addFont(String fontName, String type) {
         File file = new File(Paths.get(FONT_PATH, fontName + "." + type).toString());
         Font font = null;
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, file);
-        } catch (FontFormatException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
         ge.registerFont(font);

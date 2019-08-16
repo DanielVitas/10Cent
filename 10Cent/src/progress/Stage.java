@@ -3,7 +3,7 @@ package progress;
 public final class Stage {
 
     /*
-    Binds stage names to numbers.
+    Binds stage names to numbers - although names aren't too creative.
      */
 
     public final static int STAGE1 = 1;

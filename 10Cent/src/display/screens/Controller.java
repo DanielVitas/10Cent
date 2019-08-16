@@ -17,7 +17,7 @@ public final class Controller {
         switchScreen(new MainMenuScreen());
     }
 
-    public static void switchScreen(Screen screen) {
+    static void switchScreen(Screen screen) {
         screen.setPreviousScreen(Controller.screen);
         if (Controller.screen != null) {
             Controller.screen.active = false;
@@ -39,7 +39,7 @@ public final class Controller {
         Controller.screen = screen;
     }
 
-    public static void back() {
+    static void back() {
         if (screen.getPreviousScreen() == null)
             return;
         screen.active = false;
@@ -48,7 +48,5 @@ public final class Controller {
         screen.getPreviousScreen().load(mainFrame);
         screen = screen.getPreviousScreen();
     }
-
-
 
 }

@@ -14,20 +14,12 @@ public class Scale {
         this.vertical = vertical;
     }
 
-    public Scale multiply(Scale scale) {
-        return new Scale(horizontal * scale.horizontal, vertical * scale.vertical);
-    }
-
-    public Scale multiply(float horizontal, float vertical) {
-        return new Scale(this.horizontal * horizontal, this.vertical * vertical);
-    }
-
+    // calculates inverse scale - throws exception if scale = (0, 0)
     public Scale inverse() {
-        if (horizontal == 0 || vertical == 0)
-            System.out.println("Warning: non-existing inverse of " + this);
         return new Scale(1 / horizontal, 1 / vertical);
     }
 
+    // calculates average scale - used when scaling brush size when painting
     public double average() {
         return Math.sqrt(horizontal * horizontal + vertical * vertical);
     }

@@ -17,16 +17,17 @@ public class MainFrame extends JFrame {
     JFrame with more suitable constructor and a few additional fields and methods.
      */
 
-    public static int targetedFrameRate = 60;
+    public static int targetedFrameRate = 60;  // this determines default refresh rate
 
     public MainPanel panel;
-    private RepaintThread repaintThread;
     private static MainFrame mainFrame;
 
     // constructor sets up various things - from panel, size to repaintThread
     public MainFrame() {
-        super("Ultimate Tic-tac-toe");
+        super("Ultimate Tic-tac-toe");  // creates window with given name
         mainFrame = this;
+
+        // sets closing operation
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -35,6 +36,8 @@ public class MainFrame extends JFrame {
                 super.windowClosing(windowEvent);
             }
         });
+
+        // saves settings on resize
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent componentEvent) {
@@ -46,10 +49,12 @@ public class MainFrame extends JFrame {
             }
         });
 
+        // creates new main panel
         panel = new MainPanel(new Dimension(600, 600));
         add(panel);
 
-        repaintThread = new RepaintThread(panel);
+        // repaint thread constantly repaints frame
+        RepaintThread repaintThread = new RepaintThread(panel);
         repaintThread.start();
 
         setWindow();
@@ -57,7 +62,7 @@ public class MainFrame extends JFrame {
 
     private void onClose() {
         Progress.save();
-        saveSizeAndLocation();
+        saveSizeAndLocation();  // should already be saved when resizing, but doesn't hurt to make sure
         Settings.save();
     }
 
@@ -84,7 +89,8 @@ public class MainFrame extends JFrame {
         }
     }
 
-    public static void saveSizeAndLocation(){
+    // saves size and location to settings respective variables
+    private static void saveSizeAndLocation(){
         if (Settings.windowedMode) {
             Settings.windowSize = new int[]{mainFrame.getSize().width, mainFrame.getSize().height};
             Settings.windowLocation = new int[]{mainFrame.getLocation().x, mainFrame.getLocation().y};

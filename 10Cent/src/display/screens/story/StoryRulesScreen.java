@@ -17,6 +17,10 @@ import static display.screens.RulebookScreen.rules;
 
 public class StoryRulesScreen extends Screen {
 
+    /*
+    Displays rules of the game player is playing, if it hasn't been played before.
+     */
+
     private static Font titleFont = CustomFonts.getFont(CustomFonts.CALLIGRAPHY, 15);
 
     private String game;
@@ -33,11 +37,12 @@ public class StoryRulesScreen extends Screen {
         label.coordinates = new Coordinates(10, 5);
         addDisplayComponent(label, mainFrame.panel);
 
-        rules(game, new Coordinates(10, 18), new Dimension(80, 8), this, mainFrame);
+        rules(game, new Coordinates(10, 20), new Dimension(80, 8), this, mainFrame);
 
         addDefaultContinueButton(mainFrame);
     }
 
+    // this is different from function in Exposition
     private void addDefaultContinueButton(MainFrame mainFrame) {
         NormalButton continueButton = new NormalButton("Continue", 5, new Dimension(40,8)) {
             @Override

@@ -28,6 +28,7 @@ public class Coordinates extends Point2D {
         return new Coordinates(this.x + coordinates.x, this.y + coordinates.y);
     }
 
+    // returns coordinates with opposite values of x and y
     public Coordinates flip() {
         return new Coordinates(-this.x, -this.y);
     }

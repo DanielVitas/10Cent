@@ -1,6 +1,5 @@
 package display.images;
 
-import display.frame.DisplayComponent;
 import display.frame.DisplayObject;
 import display.frame.misc.Coordinates;
 import display.frame.misc.Dimension;
@@ -17,7 +16,7 @@ public class Animation extends DisplayObject implements Runnable {
 
     public Dimension dimension;
 
-    public Image image;
+    private Image image;
     private String[] imagePaths;
     private long[] delays;
     private boolean loop;
@@ -47,11 +46,6 @@ public class Animation extends DisplayObject implements Runnable {
         thread = null;
     }
 
-    // this will end thread even if it's sleeping
-    public void interrupt() {
-        thread.interrupt();
-    }
-
     // images will be displayed in alphabetical order - names are usually of format "image*number*"
     public Animation(String directoryPath, long[] delays, boolean loop) {
         this(Images.getFilePaths(directoryPath), delays, loop);
@@ -64,7 +58,6 @@ public class Animation extends DisplayObject implements Runnable {
             length += delays[i % delays.length];
         return length;
     }
-
 
     // System sleeps for the length of animation
     public void sleep() {
@@ -80,6 +73,7 @@ public class Animation extends DisplayObject implements Runnable {
 
     @Override
     public void run() {
+        // animation needs to play at least once
         do {
             for (int i = 0; i < imagePaths.length; i++) {
                 if (stop)

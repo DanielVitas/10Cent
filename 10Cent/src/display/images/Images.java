@@ -2,7 +2,6 @@ package display.images;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -34,6 +33,7 @@ public final class Images {
         }
     }
 
+    // should be used to add images
     public static void add(String imagePath) {
         try {
             Image image = ImageIO.read(new File(imagePath));
@@ -44,7 +44,7 @@ public final class Images {
     }
 
     // gets all file paths from specified directory and all sub-directories
-    public static List<String> getAllPaths(String directoryPath){
+    private static List<String> getAllPaths(String directoryPath){
         List<File> directories = new ArrayList<>();
         List<String> paths = new ArrayList<>();
         for (File file: Objects.requireNonNull(new File(directoryPath).listFiles())) {
@@ -71,7 +71,8 @@ public final class Images {
         return paths;
     }
 
-    public static String[] getFileNames(String directoryPath) {
+    // get all file names from specified directory
+    private static String[] getFileNames(String directoryPath) {
         File[] fileList = new File(directoryPath).listFiles();
         String[] fileNames = new String[Objects.requireNonNull(fileList).length];
         for (int i = 0; i < fileNames.length; i++)
@@ -79,7 +80,8 @@ public final class Images {
         return fileNames;
     }
 
-    public static String[] getFilePaths(String directoryPath) {
+    // get all file paths from specified directory
+    static String[] getFilePaths(String directoryPath) {
         String[] filePaths = getFileNames(directoryPath);
         for (int i = 0; i < filePaths.length; i++)
             filePaths[i] = Paths.get(directoryPath, filePaths[i]).toString();

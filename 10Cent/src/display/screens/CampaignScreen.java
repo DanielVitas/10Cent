@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static display.screens.MainMenuScreen.storyScreen;
-import static display.screens.story.Exposition.titleFont;
 
 public class CampaignScreen extends Screen {
 
@@ -148,10 +147,7 @@ public class CampaignScreen extends Screen {
             @Override
             public void select(DisplayObject displayObject) {
                 ((ToggleButton) displayObject).animateClicked();
-                if (displayObject == button1)
-                    Progress.easy = true;
-                else
-                    Progress.easy = false;
+                Progress.easy = displayObject == button1;
                 super.select(displayObject);
             }
 
@@ -179,6 +175,7 @@ public class CampaignScreen extends Screen {
                 GameController gameController;
                 Coordinates coordinates = new Coordinates(20, 20);
                 Dimension dimension = new Dimension(60, 60);
+                final boolean hard = toggleSwitch.getSelected() == button2;
 
                 // sets up tokens and game depending on stage selected
                 switch (stage) {
@@ -187,6 +184,7 @@ public class CampaignScreen extends Screen {
                         intelligence = new MiniMax(2) {
                             @Override
                             protected double evaluate(LogicBoard logicBoard) {
+                                // with ordinary evaluate it wouldn't be beatable
                                 return StandardGameController.basicEvaluate(logicBoard, super.player);
                             }
                         };
@@ -195,7 +193,7 @@ public class CampaignScreen extends Screen {
                         else
                             enemy = new Nought(intelligence);
                         players = new Player[] {protagonist, enemy};
-                        if (toggleSwitch.getSelected() == button2)
+                        if (hard)
                             players = reverse(players);
                         gameController = new StandardGameController(players) {
                             @Override
@@ -210,13 +208,12 @@ public class CampaignScreen extends Screen {
                                     }
                             }
                         };
-                        nextScreen = new GameScreen(gameController) {
+                        nextScreen = new GameScreen(gameController, mainFrame) {
                             @Override
                             public void loadEnvironment(MainFrame mainFrame) {
                                 AudioPlayer.play(Music.BATTLE1);
 
-                                String name = "Guard";
-                                addDisplayComponent(nameLabel(name), mainFrame.panel);
+                                standardEnvironmentSetup(playerNames("Guard", hard), mainFrame.panel);
                             }
 
                             @Override
@@ -233,7 +230,7 @@ public class CampaignScreen extends Screen {
                         else
                             enemy = new Bird(intelligence);
                         players = new Player[] {protagonist, enemy};
-                        if (toggleSwitch.getSelected() == button2)
+                        if (hard)
                             players = reverse(players);
                         gameController = new StandardGameController(players) {
                             @Override
@@ -248,13 +245,12 @@ public class CampaignScreen extends Screen {
                                     }
                             }
                         };
-                        nextScreen = new GameScreen(gameController) {
+                        nextScreen = new GameScreen(gameController, mainFrame) {
                             @Override
                             public void loadEnvironment(MainFrame mainFrame) {
                                 AudioPlayer.play(Music.BATTLE2);
 
-                                String name = "Wizard";
-                                addDisplayComponent(nameLabel(name), mainFrame.panel);
+                                standardEnvironmentSetup(playerNames("Wizard", hard), mainFrame.panel);
                             }
 
                             @Override
@@ -271,7 +267,7 @@ public class CampaignScreen extends Screen {
                         else
                             enemy = new Crown(intelligence);
                         players = new Player[] {protagonist, enemy};
-                        if (toggleSwitch.getSelected() == button2)
+                        if (hard)
                             players = reverse(players);
                         gameController = new StandardGameController(players) {
                             @Override
@@ -286,13 +282,12 @@ public class CampaignScreen extends Screen {
                                     }
                             }
                         };
-                        nextScreen = new GameScreen(gameController) {
+                        nextScreen = new GameScreen(gameController, mainFrame) {
                             @Override
                             public void loadEnvironment(MainFrame mainFrame) {
                                 AudioPlayer.play(Music.BATTLE3);
 
-                                String name = "King";
-                                addDisplayComponent(nameLabel(name), mainFrame.panel);
+                                standardEnvironmentSetup(playerNames("King", hard), mainFrame.panel);
                             }
 
                             @Override
@@ -309,7 +304,7 @@ public class CampaignScreen extends Screen {
                         else
                             enemy = new Scratch(intelligence);
                         players = new Player[] {protagonist, enemy};
-                        if (toggleSwitch.getSelected() == button2)
+                        if (hard)
                             players = reverse(players);
                         gameController = new StandardGameController(players) {
                             @Override
@@ -324,13 +319,12 @@ public class CampaignScreen extends Screen {
                                     }
                             }
                         };
-                        nextScreen = new GameScreen(gameController) {
+                        nextScreen = new GameScreen(gameController, mainFrame) {
                             @Override
                             public void loadEnvironment(MainFrame mainFrame) {
                                 AudioPlayer.play(Music.BATTLE4);
 
-                                String name = "Monster";
-                                addDisplayComponent(nameLabel(name), mainFrame.panel);
+                                standardEnvironmentSetup(playerNames("Monster", hard), mainFrame.panel);
                             }
 
                             @Override
@@ -351,10 +345,28 @@ public class CampaignScreen extends Screen {
         addDisplayComponent(startButton, mainFrame.panel);
     }
 
-    private Label nameLabel(String name) {
-        Label label = new Label(name, titleFont, Color.BLACK, new display.frame.misc.Dimension(60, 8), Align.CENTER);
-        label.coordinates = new Coordinates(20, 5);
-        return label;
+    private String[] playerNames(String opponentName, boolean hard) {
+        String name = "Mystery man";
+        switch (Progress.newestStage) {
+            case Stage.STAGE1:
+                name = "Nobody";
+                break;
+            case Stage.STAGE2:
+                name = "Player";
+                break;
+            case Stage.STAGE3:
+                name = "Rebel";
+                break;
+            case Stage.STAGE4:
+                name = "Hero";
+                break;
+            case Stage.THE_END:
+                name = "Zero"; // with no geass ;)
+                break;
+        }
+        if (hard)
+            return new String[]{opponentName, name};
+        return new String[]{name, opponentName};
     }
 
     private void stageDescription(int stage, MainFrame mainFrame) {
@@ -428,8 +440,7 @@ public class CampaignScreen extends Screen {
         return Active.LOCKED;
     }
 
-    // games cannot be previous screens therefore campaign screen is set as it's previous which is redundant - override
-    // fixes that
+    // games cannot be previous screens therefore campaign screen is set as it's previous which is redundant
     @Override
     public void setPreviousScreen(Screen screen) {
         if (screen instanceof CampaignScreen)

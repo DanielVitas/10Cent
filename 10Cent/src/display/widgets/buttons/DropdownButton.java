@@ -23,7 +23,7 @@ public abstract class DropdownButton extends Button {
     public Label label;
     private DropdownMenu dropdownMenu;
 
-    public DropdownButton(DropdownMenu dropdownMenu, String text, int fontSize, Dimension dimension) {
+    protected DropdownButton(DropdownMenu dropdownMenu, String text, int fontSize, Dimension dimension) {
         super(dimension, Paths.get(Images.RESOURCES_PATH,"images", "buttons", "dropdown").toString());
 
         this.dropdownMenu = dropdownMenu;

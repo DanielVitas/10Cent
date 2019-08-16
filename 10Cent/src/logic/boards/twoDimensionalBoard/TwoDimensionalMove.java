@@ -1,13 +1,12 @@
 package logic.boards.twoDimensionalBoard;
 
 import logic.boards.Move;
-import logic.boards.finalBoard.FinalMove;
 
 public class TwoDimensionalMove extends Move {
 
-    public int i, j;
+    int i, j;
 
-    public TwoDimensionalMove(int i, int j) {
+    TwoDimensionalMove(int i, int j) {
         this.i = i;
         this.j = j;
     }
@@ -18,14 +17,6 @@ public class TwoDimensionalMove extends Move {
         if (getNextMove() != null)
             twoDimensionalMove.setNextMove(getNextMove().clone());
         return twoDimensionalMove;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof TwoDimensionalMove))
-            return false;
-        return i == ((TwoDimensionalMove) o).i && j == ((TwoDimensionalMove) o).j &&
-                getNextMove().equals(((TwoDimensionalMove) o).getNextMove());
     }
 
 }

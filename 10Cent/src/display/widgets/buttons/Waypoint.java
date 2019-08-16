@@ -23,7 +23,7 @@ public abstract class Waypoint extends Button {
 
     private Active active;
 
-    public Waypoint(Active active, Dimension dimension) {
+    protected Waypoint(Active active, Dimension dimension) {
         super(dimension, Paths.get(Images.RESOURCES_PATH,"images", "buttons", "waypoint").toString());
 
         this.active = active;

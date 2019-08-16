@@ -30,6 +30,7 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
         // this is actually default background color
         setBackground(Color.decode("#EEEEEE"));
 
+        // adds all listeners
         addMouseListener(this);
         addMouseMotionListener(this);
         addKeyListener(this);
@@ -46,6 +47,13 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
 
     public void removeDisplayComponent(DisplayComponent displayComponent) {
         displayComponents.remove(displayComponent);
+    }
+
+    // is usually called from the newly selected input component
+    public static void setInputComponent(InputComponent inputComponent) {
+        if (selectedInputComponent != null)
+            selectedInputComponent.deselect();
+        selectedInputComponent = inputComponent;
     }
 
     /*
@@ -77,7 +85,7 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
             for (DisplayComponent displayComponent : displayComponents)
                 displayComponent.paint(displayComponent.getCoordinates().scale(MainFrame.getScale()), MainFrame.getScale(), g);
         } catch (ConcurrentModificationException e) {
-            e.printStackTrace();  // occasionally a single frame is lost due to this - it was deemed irrelevant
+            // occasionally a single frame is lost due to this - it was deemed irrelevant (therefore ignored)
         }
     }
 
@@ -107,16 +115,16 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
             Coordinates mouseCoordinates = Mouse.getCoordinates(mouseEvent);
             Coordinates coordinates = Mouse.hovered.getCoordinates().flip().add(mouseCoordinates);
             if (Mouse.hovered.contains(coordinates, Scale.noScale, mouseEvent)) {
-                if (selectedInputComponent != null) {
-                    selectedInputComponent.deselect();
-                    selectedInputComponent = null;
-                }
+                setInputComponent(null);
                 Mouse.hovered.click(coordinates, Scale.noScale, mouseEvent);
             } else {
                 Mouse.hovered.release(coordinates, Scale.noScale, mouseEvent);
             }
+        } else {
+            setInputComponent(null);
         }
         Mouse.pressed = false;
+        onMove(mouseEvent); // so it hovers hovered object if any
     }
 
     @Override
@@ -143,6 +151,19 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
         if (Mouse.pressed)
             return;
         Coordinates mouseCoordinates = Mouse.getCoordinates(mouseEvent);
+
+        if (onMove(mouseEvent))
+            return;
+
+        // mouse isn't hovering any object
+        if (Mouse.hovered != null)
+            Mouse.hovered.unhover(mouseCoordinates, Scale.noScale, mouseEvent);
+        Mouse.hovered = null;
+    }
+
+    // returns true, if mouse is hovering any object
+    private boolean onMove(MouseEvent mouseEvent) {
+        Coordinates mouseCoordinates = Mouse.getCoordinates(mouseEvent);
         for (DisplayComponent displayComponent : reverse(displayComponents)) {
             Coordinates coordinates = displayComponent.getCoordinates().flip().add(mouseCoordinates);
             if (displayComponent.contains(coordinates, Scale.noScale, mouseEvent)) {
@@ -152,12 +173,10 @@ public class MainPanel extends JPanel  implements MouseListener, MouseMotionList
                     displayComponent.hover(coordinates, Scale.noScale, mouseEvent);
                     Mouse.hovered = displayComponent;
                 }
-                return;
+                return true;
             }
         }
-        if (Mouse.hovered != null)
-            Mouse.hovered.unhover(mouseCoordinates, Scale.noScale, mouseEvent);
-        Mouse.hovered = null;
+        return false;
     }
 
     /*

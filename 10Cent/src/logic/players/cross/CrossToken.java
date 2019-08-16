@@ -9,9 +9,9 @@ import logic.players.Token;
 
 import java.nio.file.Paths;
 
-public class CrossToken extends Token {
+class CrossToken extends Token {
 
-    public CrossToken(Player player, Move move, GameController gameController, Dimension dimension) {
+    CrossToken(Player player, Move move, GameController gameController, Dimension dimension) {
         super(player, move, gameController, dimension, Paths.get(Images.RESOURCES_PATH,"images", "tokens", "cross").toString());
     }
 

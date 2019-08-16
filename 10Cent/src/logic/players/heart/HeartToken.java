@@ -9,9 +9,9 @@ import logic.players.Token;
 
 import java.nio.file.Paths;
 
-public class HeartToken extends Token {
+class HeartToken extends Token {
 
-    public HeartToken(Player player, Move move, GameController gameController, Dimension dimension) {
+    HeartToken(Player player, Move move, GameController gameController, Dimension dimension) {
         super(player, move, gameController, dimension, Paths.get(Images.RESOURCES_PATH,"images", "tokens", "heart").toString());
     }
 

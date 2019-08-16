@@ -24,7 +24,7 @@ public class PlayerDropdownMenu extends DropdownMenu {
     private Dimension dimension;
     private Player[] players;
 
-    public PlayerDropdownMenu(Player[] players, boolean seeable, List<String> oldPlayers, Align align, int row, Dimension dimension) {
+    protected PlayerDropdownMenu(Player[] players, boolean seeable, List<String> oldPlayers, Align align, int row, Dimension dimension) {
         super(getNames(players));
         this.players = players;
         this.dimension = dimension;

@@ -15,14 +15,14 @@ public abstract class Slider extends DisplayObject {
      */
 
     protected Dimension dimension;
-    protected Node node;
+    Node node;
 
-    public Slider(Dimension dimension) {
+    Slider(Dimension dimension) {
         this.dimension = dimension;
     }
 
     // node MUST be set, before slider is added to panel
-    public void setNode(Node node) {
+    void setNode(Node node) {
         if (this.node != null)
             removeSubComponent(this.node);
         this.node = node;

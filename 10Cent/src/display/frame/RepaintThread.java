@@ -12,7 +12,7 @@ public class RepaintThread extends Thread {
 
     private JPanel panel;
 
-    public RepaintThread(JPanel panel) {
+    RepaintThread(JPanel panel) {
         this.panel = panel;
         setName("Repaint thread");
     }
@@ -29,4 +29,5 @@ public class RepaintThread extends Thread {
             }
         }
     }
+
 }

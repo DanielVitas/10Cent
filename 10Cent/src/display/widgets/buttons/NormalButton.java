@@ -21,7 +21,7 @@ public abstract class NormalButton extends Button {
 
     public Label label;
 
-    public NormalButton(String text, int fontSize, Dimension dimension) {
+    protected NormalButton(String text, int fontSize, Dimension dimension) {
         super(dimension, Paths.get(Images.RESOURCES_PATH,"images", "buttons", "normal").toString());
 
         Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.BOLD, fontSize);

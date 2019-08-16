@@ -21,13 +21,12 @@ public class DisplayObject implements DisplayComponent {
 
     public Coordinates coordinates = new Coordinates(0, 0);
     public int displayPriority = 0;
-    public List<DisplayComponent> subComponents = new ArrayList<>();  // used by default paint method
+    private List<DisplayComponent> subComponents = new ArrayList<>();  // used by default paint method
     protected List<Shape> hitBoxes = new ArrayList<>();  // hit-boxes should be empty if object is not interactive
 
-    // currentAnimation, animations and adiitional few functions are used for objects with a single main animation -
-    // most objects
+    // currentAnimation, animations and additional few functions are used for objects with a single main animation
     private Animation currentAnimation;
-    public Map<String, Animation> animations = new HashMap<>();
+    protected Map<String, Animation> animations = new HashMap<>();
 
     protected void addSubComponent(DisplayComponent subComponent) {
         subComponents.add(subComponent);
@@ -38,11 +37,13 @@ public class DisplayObject implements DisplayComponent {
         subComponents.remove(subComponent);
     }
 
-    public void addAnimation(String name, Animation animation) {
+    // this should be used when adding animations
+    protected void addAnimation(String name, Animation animation) {
         animations.put(name, animation);
     }
 
-    public void animate(String name) {
+    // animates given animation name if it exists
+    protected void animate(String name) {
         if (currentAnimation != null) {
             if (!currentAnimation.isStatic)
                 currentAnimation.stop();
@@ -58,7 +59,7 @@ public class DisplayObject implements DisplayComponent {
         }
     }
 
-    // paint's recursive structure was designed with TwoDimensionalBoard in mind
+    // paint's chaining structure was designed with TwoDimensionalBoard in mind
     @Override
     public void paint(Coordinates coordinates, Scale scale, Graphics g) {
         for (DisplayComponent subComponent : subComponents)
@@ -85,7 +86,7 @@ public class DisplayObject implements DisplayComponent {
         return false;
     }
 
-    // hover and unhover often have similar structure, as objects are generally just group of simpler objects
+    // hover and unhover often have similar structure in implementation, as objects are generally just group of simpler objects
     @Override
     public void hover(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
 

@@ -12,6 +12,10 @@ import static logic.boards.Board.empty;
 
 public class FinalLogicBoard extends LogicBoard {
 
+    /*
+    LogicBoard that belongs to the FinalBoard.
+     */
+
     private Player player;
 
     public FinalLogicBoard() {

@@ -15,10 +15,10 @@ import static display.frame.MainPanel.drawRectangle;
 public class NormalNode extends Node {
 
     /*
-    Shaped like
+    Shaped like a box.
      */
 
-    private String directoryPath = Paths.get(Images.RESOURCES_PATH, "images", "sliders", "nodes", "normal").toString();
+    private static final String DIRECTORY_PATH = Paths.get(Images.RESOURCES_PATH, "images", "sliders", "nodes", "normal").toString();
 
     public NormalNode(Slider slider, Dimension dimension) {
         super(slider);
@@ -26,7 +26,7 @@ public class NormalNode extends Node {
         this.dimension = dimension;
         hitBoxes.add(new Rectangle(dimension.getAwtDimension()));
 
-        String path = Paths.get(directoryPath, "default").toString();
+        String path = Paths.get(DIRECTORY_PATH, "default").toString();
         Animation animation = new Animation(path, new long[]{500}, true);
         animation.dimension = dimension;
         addAnimation("default", animation);

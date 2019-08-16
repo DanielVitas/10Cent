@@ -20,7 +20,7 @@ public abstract class Node extends DisplayObject {
     // coordinates originally grabbed by mouse
     private Coordinates grabbedCoordinates;
 
-    public Node(Slider slider) {
+    Node(Slider slider) {
         this.slider = slider;
     }
 

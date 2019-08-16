@@ -1,5 +1,6 @@
 package logic.game;
 
+import display.screens.GameScreen;
 import logic.boards.Board;
 import logic.boards.Move;
 import logic.players.Player;
@@ -12,18 +13,18 @@ public abstract class GameController extends Thread {
     GameController should be created for every game separately. It controls the game's flow.
      */
 
-    // generally only 1 gameController is active at the time, but it can have "sub-gameControllers"
+    // only one gameController is active at the time
     public static GameController gameController;
-    public boolean hasStarted = false;
-    public boolean stop = false;
+    boolean stop = false;  // stop softly stops thread running the game
 
+    public GameScreen gameScreen;  // screen on which the game is played - is set from that screen
     protected Player[] players;
     public Board board;
-    protected int turnCount = 0;
-    public boolean awaitingPlayer = false;
+    int turnCount = 0;  // keeps track of turns passed - also determines player on turn
+    public boolean awaitingPlayer = false;  // is set to true while waiting for human to play
 
-    public Stack<Move> previousMoves = new Stack<>();
-    public Move currentMove;
+    Stack<Move> previousMoves = new Stack<>();  // stack of all previous moves
+    public Move currentMove;  // is set by intelligence
 
     public GameController(Player[] players) {
         this.players = players;
@@ -31,20 +32,30 @@ public abstract class GameController extends Thread {
             player.intelligence.gameController = this;
     }
 
+    // is called whenever player conducting turn is switched (after)
+    void onPlayerSwitch() {
+        if (gameScreen != null)
+            gameScreen.onPlayerSwitch(turnCount);
+    }
+
+    // gets previous move played
     public Move previousMove() {
         if (!previousMoves.empty())
             return previousMoves.peek();
         return null;
     }
 
+    // gets player on turn after additionalTurns turns
     public Player getPlayer(int additionalTurns) {
         return players[(turnCount + additionalTurns) % players.length];
     }
 
+    // gets player currently on turn
     public Player currentPlayer() {
         return getPlayer(0);
     }
 
+    // is called when game ends with winner passed as parameter (can be undecided)
     public abstract void onWin(Player player);
 
     // is called when switching from game screen to another
@@ -58,10 +69,9 @@ public abstract class GameController extends Thread {
     public void start() {
         stop = false;
         if (gameController != null)
-            gameController.terminate();
+            gameController.terminate();  // should already be terminated, but doesn't hurt to make sure
         gameController = this;
         super.start();
-        hasStarted = true;
     }
 
 }

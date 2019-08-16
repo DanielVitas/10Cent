@@ -8,15 +8,15 @@ import display.frame.misc.Dimension;
 import display.frame.misc.Scale;
 import display.images.Animation;
 import display.images.Images;
+import display.widgets.buttons.Button;
 import display.widgets.label.Align;
 import display.widgets.label.Label;
+
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.nio.file.Paths;
-
-import static display.frame.MainPanel.drawRectangle;
 
 public abstract class InputField extends DisplayObject implements InputComponent {
 
@@ -33,7 +33,7 @@ public abstract class InputField extends DisplayObject implements InputComponent
     private Label defaultLabel;
     private Label inputLabel;
 
-    public InputField(int maxCharacters, String defaultText, Align align, Dimension dimension) {
+    InputField(int maxCharacters, String defaultText, Align align, Dimension dimension) {
         this.maxCharacters = maxCharacters;
         this.dimension = dimension;
 
@@ -51,6 +51,11 @@ public abstract class InputField extends DisplayObject implements InputComponent
         animation.dimension = dimension;
         addAnimation("default", animation);
 
+        path = Paths.get(directoryPath, "hovered").toString();
+        animation = new Animation(path, new long[]{500}, true);
+        animation.dimension = dimension;
+        addAnimation("hovered", animation);
+
         path = Paths.get(directoryPath, "pressed").toString();
         animation = new Animation(path, new long[]{500}, true);
         animation.dimension = dimension;
@@ -59,6 +64,30 @@ public abstract class InputField extends DisplayObject implements InputComponent
         animate("default");
 
         hitBoxes.add(new Rectangle(dimension.getAwtDimension()));
+    }
+
+    public String getDefaultText() {
+        return defaultLabel.text;
+    }
+
+    private void animateDefault() {
+        if (MainPanel.selectedInputComponent == this)
+            animateClicked();
+        else
+            animate("default");
+    }
+
+    private void animateHovered() {
+        if (MainPanel.selectedInputComponent != this)
+            animate("hovered");
+    }
+
+    private void animatePressed() {
+        animate("pressed");
+    }
+
+    private void animateClicked() {
+        animatePressed();
     }
 
     public boolean isEmpty() {
@@ -80,28 +109,46 @@ public abstract class InputField extends DisplayObject implements InputComponent
         super.paint(coordinates, scale, g);
 
         // if no text is entered it should display what kind of input it expects
-        if (inputLabel.text.length() == 0)
+        if (inputLabel.text.length() == 0 && MainPanel.selectedInputComponent != this)
             defaultLabel.paint(coordinates.add(defaultLabel.coordinates.scale(scale)), scale, g);
         else
             inputLabel.paint(coordinates.add(inputLabel.coordinates.scale(scale)), scale, g);
 
-        Graphics2D g2 = (Graphics2D) g;
-        g.setColor(Color.BLACK);
-        g2.setStroke(new BasicStroke((float) (0.3 * scale.average())));
+        Button.drawBoarder(0.3, coordinates, dimension, scale, g);
+    }
 
-        drawRectangle(coordinates, dimension.scale(scale), g);
+    @Override
+    public void hover(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
+        animateHovered();
+    }
+
+    @Override
+    public void unhover(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
+        animateDefault();
+    }
+
+    @Override
+    public void press(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
+        animatePressed();
+    }
+
+    @Override
+    public void release(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
+        animateDefault();
     }
 
     @Override
     public void click(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
-        animate("pressed");
-        MainPanel.selectedInputComponent = this;
+        animateClicked();
+        MainPanel.setInputComponent(this);
     }
-
 
     @Override
     public void typeKey(KeyEvent keyEvent) {
-        if (inputLabel.text.length() >= maxCharacters)
+        if (keyEvent.getKeyChar() == '\b')
+            if (inputLabel.text.length() > 0)
+                inputLabel.text = inputLabel.text.substring(0, inputLabel.text.length() - 1);
+        if (inputLabel.text.length() >= maxCharacters || keyEvent.getKeyChar() == '\b' || keyEvent.getKeyChar() == '\n')
             return;
         char c = keyEvent.getKeyChar();
         if (isLegal(c))
@@ -110,16 +157,8 @@ public abstract class InputField extends DisplayObject implements InputComponent
 
     @Override
     public void releaseKey(KeyEvent keyEvent) {
-        switch (keyEvent.getKeyCode()) {
-            case KeyEvent.VK_BACK_SPACE:
-                if (inputLabel.text.length() > 0)
-                    inputLabel.text = inputLabel.text.substring(0, inputLabel.text.length() - 1);
-                break;
-            case KeyEvent.VK_ENTER:
-                deselect();
-                MainPanel.selectedInputComponent = null;
-                break;
-        }
+        if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER)
+            MainPanel.setInputComponent(null);
     }
 
     @Override

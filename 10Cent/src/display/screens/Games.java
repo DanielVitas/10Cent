@@ -13,9 +13,9 @@ public final class Games {
     Used to save space in other classes where it is more crucial.
      */
 
-    public final static String TIC_TAC_TOE = "Tic-tac-toe";
-    public final static String SUPER_TIC_TAC_TOE = "Super Tic-tac-toe";
-    public final static String ULTIMATE_TIC_TAC_TOE = "Ultimate Tic-tac-toe";
+    final static String TIC_TAC_TOE = "Tic-tac-toe";
+    final static String SUPER_TIC_TAC_TOE = "Super Tic-tac-toe";
+    final static String ULTIMATE_TIC_TAC_TOE = "Ultimate Tic-tac-toe";
     public static String[] allGames = new String[]{
             TIC_TAC_TOE,
             SUPER_TIC_TAC_TOE,
@@ -23,7 +23,7 @@ public final class Games {
     };
 
 
-    public static void ticTacToe(int size, Coordinates coordinates, Dimension dimension, GameController gameController, GameScreen screen, MainFrame mainFrame) {
+    static void ticTacToe(int size, Coordinates coordinates, Dimension dimension, GameController gameController, GameScreen screen, MainFrame mainFrame) {
         if (screen.board == null) {
             screen.board = new TwoDimensionalBoard(dimension, null, gameController, size);
             setBoard(coordinates, gameController, screen, mainFrame);
@@ -31,7 +31,7 @@ public final class Games {
         screen.addDisplayComponent(screen.board, mainFrame.panel);
     }
 
-    public static void ultimateTicTacToe(int size, Coordinates coordinates, Dimension dimension, GameController gameController, GameScreen screen, MainFrame mainFrame) {
+    static void ultimateTicTacToe(int size, Coordinates coordinates, Dimension dimension, GameController gameController, GameScreen screen, MainFrame mainFrame) {
         if (screen.board == null) {
             screen.board = new TwoDimensionalBoard(dimension, null, gameController, size) {
                 @Override

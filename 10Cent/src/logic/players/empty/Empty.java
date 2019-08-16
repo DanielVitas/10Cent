@@ -8,6 +8,10 @@ import logic.players.Token;
 
 public class Empty extends Player {
 
+    /*
+    Marks the slots that can still be played on.
+     */
+
     public Empty() {
         super(null);
     }

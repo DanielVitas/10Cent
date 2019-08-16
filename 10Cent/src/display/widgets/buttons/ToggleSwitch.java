@@ -17,7 +17,7 @@ public abstract class ToggleSwitch extends DisplayObject {
     private DisplayObject hoveredObject;
     protected DisplayObject selectedObject;
 
-    public ToggleSwitch(DisplayObject[] displayObjects) {
+    protected ToggleSwitch(DisplayObject[] displayObjects) {
         this.displayObjects = displayObjects;
         for (DisplayObject displayObject : displayObjects)
             addSubComponent(displayObject);

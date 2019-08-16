@@ -21,7 +21,7 @@ public abstract class StandardGameController extends GameController {
 
     private static double weight = 10.; // value greater than 0, determines ratio - greater the weight, lesser the ratio
 
-    public StandardGameController(Player[] players) {
+    protected StandardGameController(Player[] players) {
         super(players);
     }
 
@@ -36,34 +36,27 @@ public abstract class StandardGameController extends GameController {
         return logicBoard.legalMoves(empty, deconstructedPreviousMove);
     }
 
+    // run should be fluid (no lengthy calculations are to be preformed here)
     @Override
     public void run() {
+        onPlayerSwitch();
         currentPlayer().intelligence.play();
 
         while (!stop) {
-
             if (currentMove != null) {
-                awaitingPlayer = false;
-
                 board.play(currentMove);
 
                 previousMoves.push(currentMove);
                 currentMove = null;
 
-                currentPlayer().intelligence.close();
-
-                // games without human would play to fast for one to follow them
-                if (!humanPlaying())
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                currentPlayer().intelligence.close();  // human player is already closed at this point
 
                 if (board.outcome() != empty)
                     break;
 
                 turnCount++;
+                onPlayerSwitch();  // thread sleeps
+
                 currentPlayer().intelligence.play();
             }
 
@@ -104,6 +97,7 @@ public abstract class StandardGameController extends GameController {
         super.terminate();
     }
 
+    // is used when ordinary evaluation is too strong
     public static double basicEvaluate(LogicBoard logicBoard, Player player) {
         if (logicBoard.outcome() == player)
             return Double.POSITIVE_INFINITY;
@@ -132,7 +126,7 @@ public abstract class StandardGameController extends GameController {
         double value = 0;
 
         int[] counter = new int[2];
-        double[] additional = new double[1];
+        double[] additional = new double[1];  // array is used as a box
         int size = logicBoards.length;
 
         // evaluates columns
@@ -142,11 +136,11 @@ public abstract class StandardGameController extends GameController {
                 if (countOutcome(logicBoards, player, i, j, counter, additional))
                     break;
             if (counter[0] == 0 || counter[1] == 0) {
-                value += additional[0]; // if line cannot be won by either player, it's value isn't added
+                value += additional[0];  // if line cannot be won by either player, it's value isn't added
             }
         }
 
-        // evaluate rows
+        // evaluates rows
         for (int j = 0; j < size; j++) {
             resetCounters(counter, additional);
             for (int i = 0; i < size; i++)
@@ -156,7 +150,7 @@ public abstract class StandardGameController extends GameController {
                 value += additional[0];
         }
 
-        // evaluate diagonals
+        // evaluates diagonals
         resetCounters(counter, additional);
         for (int i = 0; i < size; i++)
             if (countOutcome(logicBoards, player, i, i, counter, additional))

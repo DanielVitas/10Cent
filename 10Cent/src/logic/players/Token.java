@@ -11,13 +11,14 @@ import java.nio.file.Paths;
 public abstract class Token extends DisplayObject {
 
     /*
-    Tokens are visual marks on the board. One is created every time a player moves and it is bound to that move.
+    Tokens are visual marks on the board. One is created every time a player moves and it is bound to that move. Tokens
+    should not be created directly, but rather through it's player's newToken.
      */
 
     public Player player;
     protected String directoryPath;  // contains animation directories
-    protected Dimension dimension;
-    protected Move move;
+    protected Dimension dimension;  // for displaying
+    protected Move move;  // token in game is bound to a certain move
     protected GameController gameController;
 
     public Token(Player player, Move move, GameController gameController, Dimension dimension, String directoryPath) {
@@ -54,6 +55,7 @@ public abstract class Token extends DisplayObject {
         animate("default");
     }
 
+    // this will cause thread to sleep
     public void animatePlace() {
         animate("place");
         animations.get("place").sleep();

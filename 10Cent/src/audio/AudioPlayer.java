@@ -14,12 +14,14 @@ public class AudioPlayer {
      */
 
     // these paths cannot be defined in respective enums
-    public static final String MUSIC_PATH = Paths.get(Images.RESOURCES_PATH,"audio", "music").toString();
-    public static final String SOUNDS_PATH = Paths.get(Images.RESOURCES_PATH,"audio", "sounds").toString();
+    static final String MUSIC_PATH = Paths.get(Images.RESOURCES_PATH,"audio", "music").toString();
+    static final String SOUNDS_PATH = Paths.get(Images.RESOURCES_PATH,"audio", "sounds").toString();
 
+    // stores all music and sounds - used when setting volume
     private static Music[] music;
     private static Sound[] sounds;
 
+    // only one music should be playing at the time
     private static Music currentlyPlayingMusic;
 
     // called once at the start of the program
@@ -30,22 +32,21 @@ public class AudioPlayer {
         sounds = Sound.values();
     }
 
-    // only one music can be playing at once
+    // plays music
     public static void play(Music music) {
-        if (currentlyPlayingMusic != null && currentlyPlayingMusic != music) {
+        if (currentlyPlayingMusic != null && currentlyPlayingMusic != music)
             currentlyPlayingMusic.mediaPlayer.stop();
-        }
         currentlyPlayingMusic = music;
         music.play();
     }
 
+    // plays sound
     public static void play(Sound sound) {
         sound.play();
     }
 
     // volume is applied to all sounds beforehand, as it's rarely changed after startup
     public static void applyVolume() {
-
         for (Music music : music)
             music.mediaPlayer.setVolume(Settings.musicVolume * music.volume * Settings.globalVolume);
 
@@ -55,7 +56,7 @@ public class AudioPlayer {
         }
     }
 
-    // scales volume as the scale it's applied on is by default exponential - we prefer linear
+    // scales sound's volume as the scale it's applied on is by default exponential - with scale it becomes linear
     private static float scale(double volume) {
         return 20f * (float) Math.log10(volume);
     }

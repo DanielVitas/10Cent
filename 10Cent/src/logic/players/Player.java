@@ -14,7 +14,9 @@ import logic.players.nought.Nought;
 public abstract class Player {
 
     /*
-    Main function of player is storing intelligence and tokens - latter are linked to the player.
+    Main function of player is storing intelligence and tokens - latter are linked to the player. Structure of making a
+    new class for every player might seem exhausting, but it was done to enable maximum customization - leaving final
+    implementation of animations and other eye candies to each player.
      */
 
     public Intelligence intelligence;
@@ -25,8 +27,10 @@ public abstract class Player {
         this.intelligence = intelligence;
     }
 
+    // returns instance of token belonging to this player
     public abstract Token newToken(Move move, GameController gameController, Dimension dimension);
 
+    // returns instance of player depending on string given
     public static Player parsePlayer(String string, Intelligence intelligence) {
         Player player = null;
         switch (string) {

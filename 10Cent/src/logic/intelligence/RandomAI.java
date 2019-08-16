@@ -23,10 +23,10 @@ public class RandomAI extends Intelligence {
     @Override
     public void play() {
         List<Move> moves = new ArrayList<>(StandardGameController.legalMoves(gameController.board.logicBoard,
-                gameController.previousMove()));
+                gameController.previousMove()));  // gets all legal moves
 
-        Move randomMove = moves.get(random.nextInt(moves.size()));
-        randomMove.setPlayer(gameController.currentPlayer());
+        Move randomMove = moves.get(random.nextInt(moves.size()));  // picks a random move
+        randomMove.setPlayer(gameController.currentPlayer());  // move has player set to empty by default
         gameController.currentMove = randomMove;
     }
 

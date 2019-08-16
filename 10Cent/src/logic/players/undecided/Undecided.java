@@ -8,6 +8,10 @@ import logic.players.Token;
 
 public class Undecided extends Player {
 
+    /*
+    Marks the slots that are full and have no winner.
+     */
+
     public Undecided() {
         super(null);
     }

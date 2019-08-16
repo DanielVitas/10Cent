@@ -45,7 +45,7 @@ public class FinalBoard extends Board {
             return false;
 
         token = move.getPlayer().newToken(move, gameController, dimension);
-        token.animatePlace();
+        token.animatePlace();  // thread sleeps
 
         return true;
     }

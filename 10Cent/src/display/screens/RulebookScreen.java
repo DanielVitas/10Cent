@@ -25,7 +25,7 @@ public class RulebookScreen extends Screen {
     private String game;
     private List<DisplayComponent> temporaryComponents = new ArrayList<>();
 
-    public RulebookScreen(String game) {
+    RulebookScreen(String game) {
         this.game = game;
     }
 

@@ -76,7 +76,7 @@ public class MainMenuScreen extends Screen {
     }
 
     // gets current story screen
-    public static Screen storyScreen() {
+    static Screen storyScreen() {
         Screen screen = null;
         switch (Progress.newestStage) {
             case Stage.STAGE1:

@@ -31,6 +31,7 @@ public class TextLabel extends DisplayObject {
         this.align = align;
     }
 
+    // it slices up text as necessary on spaces
     private List<String> sliceUp(String[] words, List<String> lines, Font font, Dimension dimension, Graphics g) {
         if (words.length == 0)
             return lines;
@@ -47,11 +48,11 @@ public class TextLabel extends DisplayObject {
         return sliceUp(new String[]{}, lines, font, dimension, g);
     }
 
-    public static double getHeight(Font font, Graphics g) {
+    private static double getHeight(Font font, Graphics g) {
         return g.getFontMetrics(font).getHeight();
     }
 
-    public static double getWidth(String text, Font font, Graphics g) {
+    private static double getWidth(String text, Font font, Graphics g) {
         return g.getFontMetrics(font).stringWidth(text);
     }
 

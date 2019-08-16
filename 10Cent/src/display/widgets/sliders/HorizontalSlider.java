@@ -12,7 +12,7 @@ public abstract class HorizontalSlider extends Slider {
 
     private Double value = 0.5;
 
-    public HorizontalSlider(Dimension dimension) {
+    HorizontalSlider(Dimension dimension) {
         super(dimension);
     }
 
@@ -21,7 +21,7 @@ public abstract class HorizontalSlider extends Slider {
         value += deltaX;
     }
 
-    public double getValue() {
+    protected double getValue() {
         return value;
     }
 

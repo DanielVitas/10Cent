@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 public enum Sound {
 
     /*
-    Sounds are played immediately when queued. They are short and usually of "wav" format.
+    Sounds are shorter than music and don't cycle. They are short and usually of "wav" format.
      */
 
     BUTTON("button.wav", 1);
@@ -20,6 +20,7 @@ public enum Sound {
         this.volume = volume;
 
         try {
+            // setting up sound is somewhat lengthy, but it's more consistent and faster than with Clips
             File soundFile = new File(Paths.get(AudioPlayer.SOUNDS_PATH, fileName).toString());
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
             AudioFormat format = audioStream.getFormat();
@@ -31,7 +32,8 @@ public enum Sound {
         }
     }
 
-    public void play() {
+    // package private - always play sounds with AudioPlayer.play
+    void play() {
         clip.stop();
         clip.setMicrosecondPosition(0);
         clip.start();

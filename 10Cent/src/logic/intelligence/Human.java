@@ -21,9 +21,9 @@ public class Human extends Intelligence {
     public void play() {
         Set<Move> moves = StandardGameController.legalMoves(gameController.board.logicBoard, gameController.previousMove());
         for (Move move : moves)
-            tokens.add(gameController.board.getToken(move));
+            tokens.add(gameController.board.getToken(move));  // gathers tokens for all legal moves
         for (Token token : tokens)
-            ((EmptyToken) token).setWaiting(true);
+            ((EmptyToken) token).setWaiting(true);  // animates them
         gameController.awaitingPlayer = true;
     }
 
@@ -31,7 +31,7 @@ public class Human extends Intelligence {
     public void close() {
         for (Token token : tokens)
             if (token instanceof EmptyToken)
-                ((EmptyToken) token).setWaiting(false);
+                ((EmptyToken) token).setWaiting(false);  // makes them display default animation again
         tokens.clear();
     }
 

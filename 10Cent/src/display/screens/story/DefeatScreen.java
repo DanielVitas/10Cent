@@ -4,11 +4,7 @@ import audio.AudioPlayer;
 import audio.Music;
 import display.frame.MainFrame;
 import display.frame.misc.Coordinates;
-import display.frame.misc.Dimension;
-import display.screens.CampaignScreen;
-import display.screens.Controller;
 import display.screens.Screen;
-import display.widgets.buttons.NormalButton;
 import display.widgets.label.Align;
 import display.widgets.label.Label;
 import display.widgets.label.TextLabel;
@@ -17,7 +13,13 @@ import progress.Stage;
 
 import java.awt.*;
 
+import static display.screens.story.Exposition.addDefaultContinueButton;
+
 public class DefeatScreen extends Screen {
+
+    /*
+    Is displayed when losing a campaign game.
+     */
 
     private static Font titleFont = CustomFonts.getFont(CustomFonts.CALLIGRAPHY, 20);
     private static Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.PLAIN, 3);
@@ -64,17 +66,6 @@ public class DefeatScreen extends Screen {
         addDisplayComponent(textLabel, mainFrame.panel);
 
         addDefaultContinueButton(this, mainFrame);
-    }
-
-    public static void addDefaultContinueButton(Screen screen, MainFrame mainFrame) {
-        NormalButton continueButton = new NormalButton("Continue", 5, new Dimension(40,8)) {
-            @Override
-            public void clicked() {
-                Controller.switchScreenWithoutBacking(new CampaignScreen());
-            }
-        };
-        continueButton.coordinates = new Coordinates(30,90);
-        screen.addDisplayComponent(continueButton, mainFrame.panel);
     }
 
 }

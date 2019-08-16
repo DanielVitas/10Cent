@@ -25,11 +25,13 @@ public class TwoDimensionalBoard extends Board {
     private Board[][] boards;
     private int size;
     public Token token;
+    // following two variables determine ratio between slot and edge
     private Dimension slotRelativeDimension = new Dimension(10, 10);
     private Dimension edgeRelativeDimension = new Dimension(1, 1);
+    // actual dimensions for slot and edge
     private Dimension slotDimension;
     private Dimension edgeDimension;
-    private Board hoveredSubBoard;
+    private Board hoveredSubBoard;  // currently hovered sub-board
 
     public TwoDimensionalBoard(Dimension dimension, Move move, GameController gameController, int size) {
         super(dimension);
@@ -45,7 +47,7 @@ public class TwoDimensionalBoard extends Board {
         logicBoard = new TwoDimensionalLogicBoard(size) {
             @Override
             public LogicBoard installLogicBoard(int i, int j) {
-                return installBoard(slotDimension,null).logicBoard;  // move does not matter here
+                return installBoard(slotDimension,null).logicBoard;  // move does not matter here (, nor does dimension)
             }
         };
 
@@ -56,7 +58,7 @@ public class TwoDimensionalBoard extends Board {
                     currentMove = new TwoDimensionalMove(i, j);
                 } else {
                     currentMove = move.clone();
-                    currentMove.setNextMove(new TwoDimensionalMove(i, j));
+                    currentMove.setNextMove(new TwoDimensionalMove(i, j));  // this board is not first in chain of moves (boards)
                 }
                 boards[i][j] = installBoard(slotDimension, currentMove);
                 boards[i][j].coordinates = slotCoordinates(i, j);
@@ -94,7 +96,7 @@ public class TwoDimensionalBoard extends Board {
 
         if (outcome() != empty) {
             token = outcome().newToken(move, gameController, dimension);
-            token.animatePlace();
+            token.animatePlace();  // thread will sleep for the duration of the animation
         }
 
         return true;
@@ -132,16 +134,17 @@ public class TwoDimensionalBoard extends Board {
 
             // paints lines
             for (int i = 1; i < size; i++) {
-                Coordinates c1 = coordinates.add(slotCoordinates(i, 0).add(-edgeDimension.width / 2, 0).scale(scale));
-                Coordinates c2 = coordinates.add(slotCoordinates(i, size).add(-edgeDimension.width / 2, 0).scale(scale));
+                Coordinates c1 = coordinates.add(slotCoordinates(i, 0).add(-edgeDimension.width / 2, -edgeDimension.height / 2).scale(scale));
+                Coordinates c2 = coordinates.add(slotCoordinates(i, size).add(-edgeDimension.width / 2, -edgeDimension.height / 2).scale(scale));
                 drawLine(c1, c2, g);
             }
             for (int j = 1; j < size; j++) {
-                Coordinates c1 = coordinates.add(slotCoordinates(0, j).add(0, -edgeDimension.height / 2).scale(scale));
-                Coordinates c2 = coordinates.add(slotCoordinates(size, j).add(0, -edgeDimension.height / 2).scale(scale));
+                Coordinates c1 = coordinates.add(slotCoordinates(0, j).add(-edgeDimension.width / 2, -edgeDimension.height / 2).scale(scale));
+                Coordinates c2 = coordinates.add(slotCoordinates(size, j).add(-edgeDimension.width / 2, -edgeDimension.height / 2).scale(scale));
                 drawLine(c1, c2, g);
             }
 
+            // paints sub-boards
             for (int i = 0; i < size; i++)
                 for (int j = 0; j < size; j++)
                     boards[i][j].paint(coordinates.add(boards[i][j].coordinates.scale(scale)),
@@ -150,7 +153,7 @@ public class TwoDimensionalBoard extends Board {
     }
 
     /*
-    Overrides methods in same fashion as it's done in MainPanel.
+    Overrides methods in same fashion as it's done in MainPanel - this is downside of having chained structure.
      */
 
     @Override

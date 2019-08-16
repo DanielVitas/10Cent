@@ -9,9 +9,9 @@ import logic.players.Token;
 
 import java.nio.file.Paths;
 
-public class NoughtToken extends Token {
+class NoughtToken extends Token {
 
-    public NoughtToken(Player player, Move move, GameController gameController, Dimension dimension) {
+    NoughtToken(Player player, Move move, GameController gameController, Dimension dimension) {
         super(player, move, gameController, dimension, Paths.get(Images.RESOURCES_PATH,"images", "tokens", "nought").toString());
     }
 

@@ -10,13 +10,13 @@ public abstract class Intelligence {
      */
 
     public GameController  gameController;
-    protected Player player;
+    protected Player player;  // player that this intelligence should benefit (usually player on turn)
 
     public void setPlayer(Player player) {
         this.player = player;
     }
 
-    // sets Controller's current move (does NOT play it directly!)
+    // sets Controller's current move (does NOT play it directly!) - no lengthy calculations are allowed here
     public abstract void play();
 
     // called when the player turn ends
@@ -25,6 +25,7 @@ public abstract class Intelligence {
     // called from GameController's terminate - is called when switching screens
     public abstract void terminate();
 
+    // creates intelligence from given string and additional parameter for depth if required
     public static Intelligence parseIntelligence(String string, Integer... args) {
         Intelligence intelligence = null;
         switch (string) {

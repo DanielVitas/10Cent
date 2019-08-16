@@ -9,8 +9,13 @@ import java.nio.file.Paths;
 
 public final class Settings {
 
-    public static final String SETTINGS_FILE = Paths.get(Images.RESOURCES_PATH, "settings", "settings.txt").toString();
+    /*
+    Settings store volume settings and location and size of the window. It writes them in text file.
+     */
 
+    private static final String SETTINGS_FILE = Paths.get(Images.RESOURCES_PATH, "settings", "settings.txt").toString();
+
+    // public variables - should be set directly
     public static double globalVolume;
     public static double soundVolume;
     public static double musicVolume;
@@ -18,6 +23,7 @@ public final class Settings {
     public static int[] windowSize;
     public static int[] windowLocation;
 
+    // default settings
     public static void defaults() {
         globalVolume = 0.5;
         soundVolume = 0.5;
@@ -29,16 +35,18 @@ public final class Settings {
 
     // called only once at the start of the program
     public static void load() {
-        defaults();
+        defaults();  // if any settings are missing, default ones are applied
         read();
         AudioPlayer.applyVolume();
     }
 
+    // saves settings
     public static void save() {
         apply();
         write();
     }
 
+    // reads settings - does not apply them
     private static void read() {
         try{
             BufferedReader in = new BufferedReader(new FileReader(SETTINGS_FILE));
@@ -49,13 +57,14 @@ public final class Settings {
                 if (line.equals(""))
                     continue;
                 if (line.charAt(0) == '#')
-                    continue;
+                    continue;  // comments stat with #
 
                 String[] splitLine = line.split("=");
 
                 if (splitLine.length != 2)
-                    continue;
+                    continue;  // makes sure that there are two strings
 
+                // sets all variables
                 switch (splitLine[0]){
                     case ("globalVolume"):
                         globalVolume = getVolume(Double.valueOf(splitLine[1]));
@@ -82,7 +91,7 @@ public final class Settings {
 
             in.close();
         } catch (Exception e) {
-            e.printStackTrace(); // exceptions can arise from user messing with settings file
+            e.printStackTrace();  // common exceptions we want cought are IOException and all that arise from parsing
         }
     }
 
@@ -95,11 +104,13 @@ public final class Settings {
         return volume;
     }
 
+    // applies settings
     private static void apply() {
         MainFrame.switchToWindowed();
         AudioPlayer.applyVolume();
     }
 
+    // writes settings to settings file
     private static void write() {
         try {
             PrintWriter out = new PrintWriter(new FileWriter(SETTINGS_FILE));
@@ -119,4 +130,5 @@ public final class Settings {
             e.printStackTrace();
         }
     }
+
 }

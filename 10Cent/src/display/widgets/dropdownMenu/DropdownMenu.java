@@ -14,14 +14,14 @@ public abstract class DropdownMenu extends DisplayObject {
     DisplayObjects.
      */
 
-    protected int index = 0;
-    protected String[] values;
-    protected boolean dropeddown = false;
+    int index = 0;
+    String[] values;
+    boolean dropeddown = false;
     public DisplayObject hoveredObject;
-    protected DisplayObject displayedObject;
-    protected DisplayObject[] otherObjects;
+    DisplayObject displayedObject;
+    DisplayObject[] otherObjects;
 
-    public DropdownMenu(String[] values) {
+    DropdownMenu(String[] values) {
         this.values = values;
     }
 

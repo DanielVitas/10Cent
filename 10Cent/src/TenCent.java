@@ -20,7 +20,6 @@ public class TenCent {
         Settings.load();
 
         MainFrame mainFrame = new MainFrame();
-
         Controller.install(mainFrame);
         mainFrame.setVisible(true);
     }

@@ -15,9 +15,9 @@ public class NormalSlider extends HorizontalSlider{
     Only non-abstract implementation of slider.
      */
 
-    private String directoryPath = Paths.get(Images.RESOURCES_PATH, "images", "sliders", "normal").toString();
+    private static final String DIRECTORY_PATH = Paths.get(Images.RESOURCES_PATH, "images", "sliders", "normal").toString();
 
-    public NormalSlider(Dimension dimension) {
+    protected NormalSlider(Dimension dimension) {
         super(dimension);
 
         NormalNode node = new NormalNode(this, dimension.scale(new Scale(0.2, 1)));
@@ -26,7 +26,7 @@ public class NormalSlider extends HorizontalSlider{
 
         node.coordinates = new Coordinates(getValue() * dimension.width, 0);
 
-        String path = Paths.get(directoryPath, "default").toString();
+        String path = Paths.get(DIRECTORY_PATH, "default").toString();
         Animation animation = new Animation(path, new long[]{500}, true);
         animation.dimension = dimension.scale(new Scale(1, 0.2));
         animation.coordinates = new Coordinates(0, dimension.height * 0.4);

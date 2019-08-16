@@ -16,10 +16,10 @@ import java.awt.*;
 
 public class Exposition extends Screen {
 
-    public static Font titleFont = CustomFonts.getFont(CustomFonts.CALLIGRAPHY, 20);
+    private static Font titleFont = CustomFonts.getFont(CustomFonts.CALLIGRAPHY, 20);
     public static Font font = new Font(Label.DEFAULT_FONT_STYLE, Font.PLAIN, 3);
 
-    public static Label titleLabel(String title) {
+    static Label titleLabel(String title) {
         Label label = new Label(title, titleFont, Color.BLACK, new Dimension(80, 8), Align.CENTER);
         label.coordinates = new Coordinates(10, 10);
         return label;
@@ -42,7 +42,7 @@ public class Exposition extends Screen {
         addDefaultContinueButton(this, mainFrame);
     }
 
-    public static void addDefaultContinueButton(Screen screen, MainFrame mainFrame) {
+    static void addDefaultContinueButton(Screen screen, MainFrame mainFrame) {
         NormalButton continueButton = new NormalButton("Continue", 5, new Dimension(40,8)) {
             @Override
             public void clicked() {

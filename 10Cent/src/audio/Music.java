@@ -13,17 +13,17 @@ public enum Music {
      They are also not required to be played ASAP and usually don't overlap.
      */
 
+    // Chopin :)
     MAIN_MENU("chopin-nocturne-bflatminor.mp3", 1),
-    BATTLE1("chopin-polonaise-aflatmajor.mp3", 1),
+    BATTLE1("chopin-polonaise-aflatmajor.mp3", 0.6),
     BATTLE2("chopin-polonaise-csharpminor.mp3", 1),
     BATTLE3("chopin-nocturne-csharpminor.mp3", 1),
     BATTLE4("chopin-scherzo-bflatminor.mp3", 1),
     DEFEAT("chopin-funeralmarch-bflatminor.mp3", 1),
     PRACTICE("chopin-prelude-dflatmajor.mp3", 1);
 
-    double volume;
+    public double volume;  // volume is set for each audio file separately
     public MediaPlayer mediaPlayer;
-
 
     Music(String fileName, double volume) {
         this.volume = volume;
@@ -31,10 +31,11 @@ public enum Music {
         File musicFile = new File(Paths.get(AudioPlayer.MUSIC_PATH, fileName).toString());
         Media media = new Media(musicFile.toURI().toString());
         mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);  // music repeats after ending
     }
 
-    public void play() {
+    // package private - always play music with AudioPlayer.play
+    void play() {
         mediaPlayer.play();
     }
 

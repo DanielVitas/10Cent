@@ -22,7 +22,7 @@ public abstract class Button extends DisplayObject {
     protected String directoryPath;  // contains animation directories
     protected Dimension dimension;
 
-    public Button(Dimension dimension, String directoryPath) {
+    Button(Dimension dimension, String directoryPath) {
         this.dimension = dimension;
         this.directoryPath = directoryPath;
 

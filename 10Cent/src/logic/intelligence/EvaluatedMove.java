@@ -9,9 +9,9 @@ public class EvaluatedMove {
      */
 
     public Move move;
-    public double rating;
+    double rating;
 
-    public EvaluatedMove(Move move, double rating) {
+    EvaluatedMove(Move move, double rating) {
         this.move = move;
         this.rating = rating;
     }

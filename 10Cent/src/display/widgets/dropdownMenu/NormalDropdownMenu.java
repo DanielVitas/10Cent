@@ -18,7 +18,7 @@ public class NormalDropdownMenu extends DropdownMenu {
 
     private Dimension dimension;
 
-    public NormalDropdownMenu(String[] values, int fontSize, Dimension dimension) {
+    protected NormalDropdownMenu(String[] values, int fontSize, Dimension dimension) {
         super(values);
         this.dimension = dimension;
 

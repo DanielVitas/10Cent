@@ -18,9 +18,9 @@ public abstract class Screen {
     were intended to have various images and interesting visual effects.
      */
 
-    protected boolean active = false;
-    protected List<DisplayComponent> displayComponents = new ArrayList<>();
-    private Screen previousScreen;
+    boolean active = false;
+    private List<DisplayComponent> displayComponents = new ArrayList<>();
+    private Screen previousScreen;  // keeps track of what screen to return to
 
     // loads all necessary components
     public abstract void load(MainFrame mainFrame);
@@ -42,12 +42,13 @@ public abstract class Screen {
         removeDisplayComponentSilent(displayComponent, panel);
     }
 
-    public void removeDisplayComponentSilent(DisplayComponent displayComponent, MainPanel panel) {
+    // removes display component only from panel (effectively isn't displayed) - not from screen
+    private void removeDisplayComponentSilent(DisplayComponent displayComponent, MainPanel panel) {
         panel.removeDisplayComponent(displayComponent);
     }
 
     // back button should almost always be the same
-    protected void addDefaultBackButton(MainFrame mainFrame) {
+    void addDefaultBackButton(MainFrame mainFrame) {
         NormalButton backButton = new NormalButton("Back", 4, new Dimension(20, 8)) {
             @Override
             public void clicked() {
@@ -62,7 +63,7 @@ public abstract class Screen {
         previousScreen = screen;
     }
 
-    public Screen getPreviousScreen() {
+    Screen getPreviousScreen() {
         return previousScreen;
     }
 

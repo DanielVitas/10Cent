@@ -16,13 +16,13 @@ import java.nio.file.Paths;
 public class EmptyToken extends Token {
 
     /*
-    Animations of empty token are a bit unique.
+    Animations of empty token are a bit unique. It also responds to clicking.
      */
 
-    private boolean waiting = false;
-    private static Animation waitingAnimation;
+    private boolean waiting = false;  // if token can be clicked (or rather if it should respond to clicking)
+    private static Animation waitingAnimation;  // all empty tokens share same animation, so it's synchronized
 
-    public EmptyToken(Player player, Move move, GameController gameController, Dimension dimension) {
+    EmptyToken(Player player, Move move, GameController gameController, Dimension dimension) {
         super(player, move, gameController, dimension, Paths.get(Images.RESOURCES_PATH,"images", "tokens", "empty").toString());
     }
 
@@ -87,10 +87,10 @@ public class EmptyToken extends Token {
 
     @Override
     public void click(Coordinates coordinates, Scale scale, MouseEvent mouseEvent) {
-        // first two conditions are redundant
         if (gameController.awaitingPlayer && waiting) {
+            gameController.awaitingPlayer = false;  // this is set from here, so two tokens can't be clicked at once
+            gameController.currentPlayer().intelligence.close();  // this must also be done immediately
             move.setPlayer(gameController.currentPlayer());
-            gameController.currentPlayer().intelligence.close();
             gameController.currentMove = move;
         }
     }
