@@ -1,0 +1,9 @@
+# do NOT temper with this file, unless you know what you are doing
+
+campaignDialog = false
+easy = true
+newestStage = 1
+players = 
+oldPlayers = 
+selectedPlayer = Cross
+gamesPlayed = 

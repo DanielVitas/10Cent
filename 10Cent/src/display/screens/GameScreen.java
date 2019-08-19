@@ -50,16 +50,19 @@ public abstract class GameScreen extends Screen {
 
     // is called from gameController when it switches player on turn
     public void onPlayerSwitch(int turnCount) {
-        if (tokenDisplayed != null)
-            removeDisplayComponent(tokenDisplayed, mainFrame.panel);
-        Token token = gameController.currentPlayer().newToken(null, null, new Dimension(8, 8));
-        if (turnCount % 2 == 0)
-            token.coordinates = new Coordinates(30, 87);
-        else
-            token.coordinates = new Coordinates(30, 5);
-        tokenDisplayed = token;
-        addDisplayComponent(token, mainFrame.panel);
-        token.animatePlace();  // thread sleeps
+        // there are situations where this function is called after the screen has been switched
+        if (active) {
+            if (tokenDisplayed != null)
+                removeDisplayComponent(tokenDisplayed, mainFrame.panel);
+            Token token = gameController.currentPlayer().newToken(null, null, new Dimension(8, 8));
+            if (turnCount % 2 == 0)
+                token.coordinates = new Coordinates(30, 87);
+            else
+                token.coordinates = new Coordinates(30, 5);
+            tokenDisplayed = token;
+            addDisplayComponent(token, mainFrame.panel);
+            token.animatePlace();  // thread sleeps
+        }
     }
 
     @Override

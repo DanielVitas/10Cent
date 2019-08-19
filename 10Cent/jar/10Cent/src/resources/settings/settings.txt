@@ -1,0 +1,9 @@
+# audio
+globalVolume = 1.0
+soundVolume = 0.343774249723517
+musicVolume = 1.0
+
+# screen
+windowedMode = true
+windowSize = 582, 546
+windowLocation = 266, 279
