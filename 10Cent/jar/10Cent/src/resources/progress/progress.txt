@@ -1,6 +1,6 @@
 # do NOT temper with this file, unless you know what you are doing
 
-campaignDialog = false
+campaignDialog = true
 easy = true
 newestStage = 1
 players = 
