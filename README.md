@@ -1,5 +1,5 @@
 # 10Cent
-Projektna naloga pri predmetu Programiranje 2. Že zapakirano igro najdete [tu](10Cent/jar). Vsa potrebna navodila so razložena v igri.
+Projektna naloga pri predmetu Programiranje 2. Igro zapakirano v jar file najdete [tu](10Cent/jar). Vsa potrebna navodila so razložena v igri.
 
 # TODO
 - [x] osnove izrisovanja
