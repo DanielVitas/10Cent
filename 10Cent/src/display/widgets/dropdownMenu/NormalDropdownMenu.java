@@ -13,7 +13,7 @@ import static display.widgets.buttons.Button.drawBoarder;
 public class NormalDropdownMenu extends DropdownMenu {
 
     /*
-    Dropdown menu containing text choices.
+    Dropdown menu containing text choices (labels).
      */
 
     private Dimension dimension;

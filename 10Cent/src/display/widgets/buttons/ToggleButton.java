@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 public class ToggleButton extends NormalButton {
 
     /*
-    This button can be toggled (turned on and off).
+    This button is toggled rather than pressed - only real difference from normal button is its purpose.
      */
 
     public ToggleButton(String text, int fontSize, Dimension dimension) {

@@ -18,7 +18,7 @@ import static display.widgets.buttons.Button.drawBoarder;
 public class PlayerDropdownMenu extends DropdownMenu {
 
     /*
-    DropdownMenu for selecting token player will play with.
+    DropdownMenu for selecting token player will play with (PlayerButtons).
      */
 
     private Dimension dimension;

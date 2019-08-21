@@ -6,7 +6,7 @@ import display.widgets.label.Align;
 public class LetterInputField extends InputField {
 
     /*
-    Used to input any string.
+    Used to input alphabetic characters and spaces.
      */
 
     public LetterInputField(int maxCharacters, String defaultText, Align align, Dimension dimension) {
@@ -18,10 +18,10 @@ public class LetterInputField extends InputField {
         return Character.isLetter(keyChar) || Character.isSpaceChar(keyChar);
     }
 
-    // only natural numbers are valid
+    // blank input is also acceptable (" ")
     @Override
     public boolean isValid() {
         return !isEmpty();
-    }
+}
 
 }

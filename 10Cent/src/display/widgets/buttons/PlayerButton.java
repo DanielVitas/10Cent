@@ -27,11 +27,11 @@ public abstract class PlayerButton extends Button {
     private static Font font = CustomFonts.getFont(CustomFonts.PAINTER, 3);
 
     private DropdownMenu dropdownMenu;
-    public Player player;
-    private Token token;
-    public Label newLabel;
-    private boolean changeable;
-    public boolean suppressLabel = false;  // use is evident in PlayerDropdownMenu
+    public Player player;  // Player whose token is displayed
+    private Token token;  // displayed token
+    public Label newLabel;  // "new" label
+    private boolean changeable;  // if this PlayerButton is head of the menu (then it cannot be seen)
+    public boolean suppressLabel = false;  // if "new" label is hidden
     private boolean seeable;  // if hovering over it adds the player to seen players
 
     protected PlayerButton(DropdownMenu dropdownMenu, boolean seeable, boolean isNew, boolean changeable, Player player, Dimension dimension) {
@@ -59,6 +59,8 @@ public abstract class PlayerButton extends Button {
         if (token != null)
             removeSubComponent(token);
         this.player = player;
+
+        // when player is set so is it's token
         token = player.newToken(null, null, dimension.scale(new Scale(0.9, 0.9)));
         token.coordinates = new Coordinates(dimension.width * 0.05, dimension.height * 0.05);
         token.displayPriority = 1;

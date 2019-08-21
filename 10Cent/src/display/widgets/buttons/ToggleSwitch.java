@@ -10,7 +10,8 @@ import java.awt.event.MouseEvent;
 public abstract class ToggleSwitch extends DisplayObject {
 
     /*
-    Group of DisplayObjects of witch only one can be selected at the time.
+    Group of DisplayObjects of witch only one can be selected at the time. Functionality of all functions should be
+    evident.
      */
 
     private DisplayObject[] displayObjects;

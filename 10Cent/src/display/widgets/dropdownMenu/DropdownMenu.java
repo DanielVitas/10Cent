@@ -16,7 +16,7 @@ public abstract class DropdownMenu extends DisplayObject {
 
     int index = 0;
     String[] values;
-    boolean dropeddown = false;
+    boolean dropeddown = false;  // if menu is active (dropped down)
     public DisplayObject hoveredObject;
     DisplayObject displayedObject;
     DisplayObject[] otherObjects;
