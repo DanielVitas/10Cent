@@ -1,7 +1,7 @@
 # audio
-globalVolume = 0.5
+globalVolume = 1
 soundVolume = 0.5
-musicVolume = 0.5
+musicVolume = 1
 
 # screen
 windowedMode = true
